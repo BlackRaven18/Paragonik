@@ -1,0 +1,76 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        // ----------------------
+        // FLUTTER WEB (CHROME)
+        // ----------------------
+        {
+            "name": "paragonik (Chrome)",
+            "request": "launch",
+            "type": "dart",
+            "deviceId": "chrome"
+        },
+        {
+            "name": "paragonik (Chrome, profile)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile",
+            "deviceId": "chrome"
+        },
+        {
+            "name": "paragonik (Chrome, release)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release",
+            "deviceId": "chrome"
+        },
+
+        // ----------------------
+        // FLUTTER WINDOWS
+        // ----------------------
+        {
+            "name": "paragonik (Windows)",
+            "request": "launch",
+            "type": "dart",
+            "deviceId": "windows"
+        },
+        {
+            "name": "paragonik (Windows, profile)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile",
+            "deviceId": "windows"
+        },
+        {
+            "name": "paragonik (Windows, release)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release",
+            "deviceId": "windows"
+        },
+
+        // ----------------------
+        // FLUTTER ANDROID
+        // ----------------------
+        {
+            "name": "paragonik (Android)",
+            "request": "launch",
+            "type": "dart",
+            "deviceId": "emulator-5554" // lub nazwa twojego urządzenia (patrz niżej)
+        },
+        {
+            "name": "paragonik (Android, profile)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile",
+            "deviceId": "emulator-5554"
+        },
+        {
+            "name": "paragonik (Android, release)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release",
+            "deviceId": "emulator-5554"
+        }
+    ]
+}

@@ -1,7 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:paragonik/routing/app_router.dart';
+import 'package:paragonik/ui/core/themes/theme.dart';
+import 'package:paragonik/ui/core/themes/theme_notifier.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MainApp());
+  runApp(
+     MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => ThemeNotifier()),
+      ],
+      child: const MainApp(),
+    ),
+  );
 }
 
 class MainApp extends StatelessWidget {
@@ -9,12 +20,14 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
-      ),
+    final themeNotifier = context.watch<ThemeNotifier>();
+
+    return MaterialApp.router(
+      title: 'Paragonik',
+      routerConfig: router,
+      theme: lightTheme,
+      darkTheme: darkTheme,
+      themeMode: themeNotifier.themeMode,
     );
   }
 }
