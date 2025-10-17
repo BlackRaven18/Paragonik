@@ -1,13 +1,15 @@
 
 import 'package:go_router/go_router.dart';
+import 'package:paragonik/data/services/ocr_service.dart';
 import 'package:paragonik/ui/core/base_scaffold.dart';
 import 'package:paragonik/ui/screens/camera_screen.dart';
 import 'package:paragonik/ui/screens/receipts_screen.dart';
 import 'package:paragonik/ui/screens/settings_screen.dart';
 import 'package:paragonik/ui/screens/stats_screen.dart';
+import 'package:provider/provider.dart';
 
 final GoRouter router = GoRouter(
-  initialLocation: '/receipts',
+  initialLocation: '/camera',
   routes: [
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) {
@@ -18,7 +20,12 @@ final GoRouter router = GoRouter(
           routes: [
             GoRoute(
               path: '/camera',
-              builder: (context, state) => const CameraScreen(),
+              builder: (context, state) {
+                return Provider<OcrService>(
+                  create: (_) => OcrService(),
+                  child: const CameraScreen(),
+                );
+              }
             ),
           ],
         ),
