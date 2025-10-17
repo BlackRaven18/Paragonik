@@ -2,6 +2,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
+import 'package:paragonik/data/models/ocr_result.dart';
 import 'package:paragonik/data/services/ocr_service.dart';
 import 'package:provider/provider.dart';
 
@@ -17,9 +19,10 @@ class _CameraScreenState extends State<CameraScreen> {
   final ImagePicker _picker = ImagePicker();
 
   bool _isProcessing = false;
-  String? _extractedSum;
+  OcrResult? _ocrResult;
 
-  bool _isManuallyCorrected = false;
+  bool _isSumManuallyCorrected = false;
+  bool _isDateManuallyCorrected = false;
 
   Future<void> _getImage(ImageSource source) async {
     final XFile? pickedFile = await _picker.pickImage(
@@ -30,8 +33,8 @@ class _CameraScreenState extends State<CameraScreen> {
     if (pickedFile != null) {
       setState(() {
         _imageFile = File(pickedFile.path);
-        _extractedSum = null;
-        _isManuallyCorrected = false;
+        _isSumManuallyCorrected = false;
+        _isDateManuallyCorrected = false;
       });
     }
   }
@@ -43,9 +46,9 @@ class _CameraScreenState extends State<CameraScreen> {
 
     try {
       final ocrService = context.read<OcrService>();
-      final String? foundSum = await ocrService.extractSumFromFile(_imageFile!);
+      final OcrResult result = await ocrService.extractDataFromFile(_imageFile!);
 
-      setState(() { _extractedSum = foundSum; });
+      setState(() { _ocrResult = result; });
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Wystąpił błąd podczas przetwarzania: $e')),
@@ -65,13 +68,14 @@ class _CameraScreenState extends State<CameraScreen> {
   void _clearImage() {
     setState(() {
       _imageFile = null;
-      _extractedSum = null;
-      _isManuallyCorrected = false;
+      _ocrResult = null;
+      _isSumManuallyCorrected = false;
+      _isDateManuallyCorrected = false;
     });
   }
 
-  Future<void> _showManualInputDialog() async {
-    final amountController = TextEditingController(text: _extractedSum ?? '');
+  Future<void> _showSumInputDialog() async {
+    final amountController = TextEditingController(text: _ocrResult?.sum ?? '');
 
     final String? manuallyEnteredSum = await showDialog<String>(
       context: context,
@@ -99,10 +103,54 @@ class _CameraScreenState extends State<CameraScreen> {
     if (manuallyEnteredSum != null && manuallyEnteredSum.isNotEmpty) {
       final sanitizedSum = manuallyEnteredSum.replaceAll(',', '.');
       setState(() {
-        _extractedSum = sanitizedSum;
-        _isManuallyCorrected = true;
+        _ocrResult = OcrResult(sum: sanitizedSum, date: _ocrResult!.date);
+        _isSumManuallyCorrected = true;
       });
     }
+  }
+
+  Future<void> _showDateTimePickerDialog() async {
+    final initialDate = _ocrResult?.date ?? DateTime.now();
+    
+    final DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: initialDate,
+      firstDate: DateTime(2000),
+      lastDate: DateTime.now().add(const Duration(days: 365)),
+    );
+
+    if (pickedDate == null) return;
+
+    final TimeOfDay? pickedTime = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.fromDateTime(initialDate),
+    );
+
+    if (pickedTime == null) return;
+
+    final newDateTime = DateTime(
+      pickedDate.year,
+      pickedDate.month,
+      pickedDate.day,
+      pickedTime.hour,
+      pickedTime.minute,
+    );
+
+    setState(() {
+      _ocrResult = OcrResult(sum: _ocrResult!.sum, date: newDateTime);
+      _isDateManuallyCorrected = true;
+    });
+  }
+
+  void _saveResult() {
+    if (_ocrResult == null) return;
+    final String sumToSave = _ocrResult!.sum ?? '0.00';
+    final DateTime dateToSave = _ocrResult!.date ?? DateTime.now();
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Zapisano: ${sumToSave} PLN, Data: ${DateFormat('yyyy-MM-dd HH:mm').format(dateToSave)}')),
+    );
+    _clearImage();
   }
 
   @override
@@ -119,7 +167,7 @@ class _CameraScreenState extends State<CameraScreen> {
       return _buildInitialView();
     } else if (_isProcessing) {
       return _buildProcessingView();
-    } else if (_extractedSum != null || _imageFile != null && !_isProcessing) {
+    } else if (_ocrResult != null || _imageFile != null && !_isProcessing) {
       return _buildImageView();
     }
     return _buildInitialView();
@@ -178,14 +226,14 @@ class _CameraScreenState extends State<CameraScreen> {
             ),
           ),
         ),
-        if (_extractedSum != null) _buildResultPanel(),
+        if (_ocrResult?.sum != null) _buildResultPanel(),
         _buildActionPanel(),
       ],
     );
   }
 
   Widget _buildActionPanel() {
-    if (_extractedSum == null) {
+    if (_ocrResult == null) {
       return Padding(
         padding: const EdgeInsets.all(16.0),
         child: Row(
@@ -203,12 +251,12 @@ class _CameraScreenState extends State<CameraScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           TextButton.icon(
-            onPressed: _showManualInputDialog,
+            onPressed: _clearImage,
             icon: const Icon(Icons.edit),
-            label: const Text('Popraw'),
+            label: const Text('Anuluj'),
           ),
           ElevatedButton.icon(
-            onPressed: () => _acceptSum(_extractedSum!),
+            onPressed: () => _acceptSum(_ocrResult?.sum ?? ''),
             icon: const Icon(Icons.check_circle),
             label: const Text('Zatwierdź'),
           ),
@@ -218,16 +266,44 @@ class _CameraScreenState extends State<CameraScreen> {
   }
   
   Widget _buildResultPanel() {
-    final labelText = _isManuallyCorrected ? 'Znaleziona kwota (poprawiona):' : 'Znaleziona kwota:';
+    final sumLabelText = _isSumManuallyCorrected ? 'Kwota (poprawiona):' : 'Znaleziona kwota:';
+    final dateLabelText = _isDateManuallyCorrected ? 'Data (poprawiona):' : 'Znaleziona data:';
 
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 16.0),
+    final sumString = _ocrResult?.sum ?? 'Nie znaleziono';
+    final dateString = _ocrResult?.date != null
+        ? DateFormat('yyyy-MM-dd HH:mm').format(_ocrResult!.date!)
+        : 'Nie znaleziono';
+    
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
       child: Column(
         children: [
-          Text(labelText, style: TextStyle(fontSize: 18, color: Colors.grey.shade600)),
-          Text(
-            '${_extractedSum!} PLN',
-            style: const TextStyle(fontSize: 42, fontWeight: FontWeight.bold),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(sumLabelText, style: TextStyle(color: Colors.grey.shade600)),
+                  Text('$sumString PLN', style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+                ],
+              ),
+              IconButton(icon: const Icon(Icons.edit), onPressed: _showSumInputDialog),
+            ],
+          ),
+          const Divider(height: 20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(dateLabelText, style: TextStyle(color: Colors.grey.shade600)),
+                  Text(dateString, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                ],
+              ),
+              IconButton(icon: const Icon(Icons.edit_calendar_outlined), onPressed: _showDateTimePickerDialog),
+            ],
           ),
         ],
       ),
