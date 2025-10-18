@@ -4,10 +4,12 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:paragonik/data/models/ocr_result.dart';
+import 'package:paragonik/data/models/processed_ocr_result.dart';
 import 'package:paragonik/data/models/receipt.dart';
 import 'package:paragonik/data/services/ocr_service.dart';
 import 'package:paragonik/data/services/receipt_service.dart';
 import 'package:paragonik/notifiers/receipt_notifier.dart';
+import 'package:paragonik/ui/core/widgets/full_screen_image_viewer.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
@@ -19,14 +21,23 @@ class CameraScreen extends StatefulWidget {
 }
 
 class _CameraScreenState extends State<CameraScreen> {
-  File? _imageFile;
+  File? _originalImageFile;
+  File? _processedImageFile;
+
   final ImagePicker _picker = ImagePicker();
 
   bool _isProcessing = false;
   OcrResult? _ocrResult;
 
+  bool _showProcessedImage = true;
   bool _isSumManuallyCorrected = false;
   bool _isDateManuallyCorrected = false;
+
+  @override
+  void dispose() {
+    _processedImageFile?.delete();
+    super.dispose();
+  }
 
   Future<void> _getImage(ImageSource source) async {
     final XFile? pickedFile = await _picker.pickImage(
@@ -35,46 +46,57 @@ class _CameraScreenState extends State<CameraScreen> {
     );
 
     if (pickedFile != null) {
+      await _clearImage(); 
       setState(() {
-        _imageFile = File(pickedFile.path);
-        _isSumManuallyCorrected = false;
-        _isDateManuallyCorrected = false;
+        _originalImageFile = File(pickedFile.path);
       });
     }
   }
 
   Future<void> _processImage() async {
-    if (_imageFile == null) return;
+    if (_originalImageFile == null) return;
 
-    setState(() { _isProcessing = true; });
+    setState(() {
+      _isProcessing = true;
+    });
 
     try {
       final ocrService = context.read<OcrService>();
-      final OcrResult result = await ocrService.extractDataFromFile(_imageFile!);
+      final ProcessedOcrResult? processedResult = await ocrService
+          .extractDataFromFile(_originalImageFile!);
 
-      setState(() { _ocrResult = result; });
+      if (processedResult != null) {
+        setState(() {
+          _ocrResult = processedResult.result;
+          _processedImageFile = processedResult.processedImageFile;
+          _showProcessedImage = true;
+        });
+      }
     } catch (e) {
+      if (!mounted) return;
+
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Wystąpił błąd podczas przetwarzania: $e')),
       );
     } finally {
-      setState(() { _isProcessing = false; });
+      if (mounted){
+        setState(() {
+          _isProcessing = false;
+        });
+      }
     }
   }
 
-  void _acceptSum(String finalSum) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Kwota $finalSum PLN została zapisana!')),
-    );
-    _clearImage();
-  }
-
-  void _clearImage() {
+  Future<void> _clearImage() async {
+    await _processedImageFile?.delete();
+    
     setState(() {
-      _imageFile = null;
+      _originalImageFile = null;
+      _processedImageFile = null;
       _ocrResult = null;
       _isSumManuallyCorrected = false;
       _isDateManuallyCorrected = false;
+      _showProcessedImage = true;
     });
   }
 
@@ -95,7 +117,10 @@ class _CameraScreenState extends State<CameraScreen> {
           ),
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.of(context).pop(), child: const Text('Anuluj')),
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('Anuluj'),
+          ),
           ElevatedButton(
             onPressed: () => Navigator.of(context).pop(amountController.text),
             child: const Text('Zapisz'),
@@ -115,7 +140,7 @@ class _CameraScreenState extends State<CameraScreen> {
 
   Future<void> _showDateTimePickerDialog() async {
     final initialDate = _ocrResult?.date ?? DateTime.now();
-    
+
     final DateTime? pickedDate = await showDatePicker(
       context: context,
       initialDate: initialDate,
@@ -124,6 +149,8 @@ class _CameraScreenState extends State<CameraScreen> {
     );
 
     if (pickedDate == null) return;
+
+    if (!mounted) return;
 
     final TimeOfDay? pickedTime = await showTimePicker(
       context: context,
@@ -147,17 +174,19 @@ class _CameraScreenState extends State<CameraScreen> {
   }
 
   void _saveResult() {
-    if (_ocrResult == null || _imageFile == null) return;
+    if (_originalImageFile == null) return;
+    
+    final ocrData = _ocrResult ?? OcrResult(sum: null, date: null);
 
     final receiptNotifier = context.read<ReceiptNotifier>();
     final receiptService = context.read<ReceiptService>();
 
-    final amountToSave = double.tryParse(_ocrResult!.sum ?? '0.0') ?? 0.0;
-    final dateToSave = _ocrResult!.date ?? DateTime.now();
+    final amountToSave = double.tryParse(ocrData.sum ?? '0.0') ?? 0.0;
+    final dateToSave = ocrData.date ?? DateTime.now();
 
     final newReceipt = Receipt(
       id: const Uuid().v4(),
-      imagePath: _imageFile!.path,
+      imagePath: _originalImageFile!.path,
       amount: amountToSave,
       date: dateToSave,
       storeName: '',
@@ -166,7 +195,7 @@ class _CameraScreenState extends State<CameraScreen> {
     
     try {
       receiptService.addReceipt(
-        imageFile: _imageFile!,
+        imageFile: _originalImageFile!,
         amount: amountToSave,
         date: dateToSave,
         storeName: '', 
@@ -176,14 +205,14 @@ class _CameraScreenState extends State<CameraScreen> {
 
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Paragon został pomyślnie zapisany!'),
+          content: Text('Zapisano paragon!'),
           backgroundColor: Colors.green,
         ),
       );
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Wystąpił błąd podczas zapisu: $e'),
+          content: Text('Błąd podczas zapisu paragonu: $e'),
           backgroundColor: Colors.red,
         ),
       );
@@ -194,19 +223,15 @@ class _CameraScreenState extends State<CameraScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: _buildContent(),
-      ),
-    );
+    return Scaffold(body: Center(child: _buildContent()));
   }
 
   Widget _buildContent() {
-    if (_imageFile == null) {
+    if (_originalImageFile == null) {
       return _buildInitialView();
     } else if (_isProcessing) {
       return _buildProcessingView();
-    } else if (_ocrResult != null || _imageFile != null && !_isProcessing) {
+    } else if (_ocrResult != null || _originalImageFile != null && !_isProcessing) {
       return _buildImageView();
     }
     return _buildInitialView();
@@ -252,38 +277,88 @@ class _CameraScreenState extends State<CameraScreen> {
       ],
     );
   }
-  
+
   Widget _buildImageView() {
+    final imageToShow = _showProcessedImage && _processedImageFile != null
+        ? _processedImageFile
+        : _originalImageFile;
+
+    if (imageToShow == null) {
+      return const Center(child: Text('Brak obrazu do wyświetlenia.'));
+    }
+
     return Column(
       children: [
         Expanded(
           child: Padding(
             padding: const EdgeInsets.all(16.0),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(12),
-              child: Image.file(_imageFile!, fit: BoxFit.contain),
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => FullScreenImageViewer(
+                          imageFile: imageToShow,
+                          title: _showProcessedImage ? 'Podgląd skanu' : 'Podgląd oryginału',
+                        ),
+                      ),
+                    );
+                  },
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: Image.file(imageToShow, fit: BoxFit.contain),
+                  ),
+                ),
+                if (_processedImageFile != null)
+                  Positioned(
+                    top: 8,
+                    right: 8,
+                    child: FloatingActionButton.small(
+                      onPressed: () {
+                        setState(() { _showProcessedImage = !_showProcessedImage; });
+                      },
+                      tooltip: 'Pokaż ${_showProcessedImage ? "oryginał" : "skan"}',
+                      child: Icon(_showProcessedImage ? Icons.image_outlined : Icons.document_scanner_outlined),
+                    ),
+                  ),
+              ],
             ),
           ),
         ),
-        if (_ocrResult?.sum != null) _buildResultPanel(),
+        
+        if (_ocrResult != null) _buildResultPanel(),
+        
         _buildActionPanel(),
       ],
     );
   }
 
   Widget _buildActionPanel() {
-    if (_ocrResult == null) {
+    // If OCR hasn't been run yet (_ocrResult is null), show the "Process" button
+    if (_ocrResult == null && !_isProcessing) {
       return Padding(
         padding: const EdgeInsets.all(16.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            TextButton.icon(onPressed: _clearImage, icon: const Icon(Icons.refresh), label: const Text('Zmień zdjęcie')),
-            ElevatedButton.icon(onPressed: _processImage, icon: const Icon(Icons.checklist_rtl), label: const Text('Przetwórz')),
+            TextButton.icon(
+              onPressed: _clearImage,
+              icon: const Icon(Icons.refresh),
+              label: const Text('Zmień zdjęcie'),
+            ),
+            ElevatedButton.icon(
+              onPressed: _processImage,
+              icon: const Icon(Icons.checklist_rtl),
+              label: const Text('Przetwórz'),
+            ),
           ],
         ),
       );
     }
+
+    // If OCR has been run or is running, show the "Cancel" and "Confirm" buttons
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Row(
@@ -291,23 +366,23 @@ class _CameraScreenState extends State<CameraScreen> {
         children: [
           TextButton.icon(
             onPressed: _clearImage,
-            icon: const Icon(Icons.edit),
+            icon: const Icon(Icons.cancel_outlined),
             label: const Text('Anuluj'),
           ),
           ElevatedButton.icon(
             onPressed: () => _saveResult(),
             icon: const Icon(Icons.check_circle),
-            label: const Text('Zatwierdź'),
+            label: const Text('Zapisz'),
           ),
         ],
       ),
     );
   }
-  
   Widget _buildResultPanel() {
-    final sumLabelText = _isSumManuallyCorrected ? 'Kwota (poprawiona):' : 'Znaleziona kwota:';
-    final dateLabelText = _isDateManuallyCorrected ? 'Data (poprawiona):' : 'Znaleziona data:';
+    final sumLabelText = _isSumManuallyCorrected ? 'Kwota (Poprawiona):' : 'Kwota:';
+    final dateLabelText = _isDateManuallyCorrected ? 'Data (Poprawiona):' : 'Data:';
 
+    // **CHANGE**: Provide a default value if OCR fails
     final sumString = _ocrResult?.sum ?? 'Nie znaleziono';
     final dateString = _ocrResult?.date != null
         ? DateFormat('yyyy-MM-dd HH:mm').format(_ocrResult!.date!)
@@ -323,11 +398,23 @@ class _CameraScreenState extends State<CameraScreen> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(sumLabelText, style: TextStyle(color: Colors.grey.shade600)),
-                  Text('$sumString PLN', style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+                  Text(
+                    sumLabelText,
+                    style: TextStyle(color: Colors.grey.shade600),
+                  ),
+                  Text(
+                    '$sumString PLN',
+                    style: const TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ],
               ),
-              IconButton(icon: const Icon(Icons.edit), onPressed: _showSumInputDialog),
+              IconButton(
+                icon: const Icon(Icons.edit),
+                onPressed: _showSumInputDialog,
+              ),
             ],
           ),
           const Divider(height: 20),
@@ -337,11 +424,23 @@ class _CameraScreenState extends State<CameraScreen> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(dateLabelText, style: TextStyle(color: Colors.grey.shade600)),
-                  Text(dateString, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                  Text(
+                    dateLabelText,
+                    style: TextStyle(color: Colors.grey.shade600),
+                  ),
+                  Text(
+                    dateString,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ],
               ),
-              IconButton(icon: const Icon(Icons.edit_calendar_outlined), onPressed: _showDateTimePickerDialog),
+              IconButton(
+                icon: const Icon(Icons.edit_calendar_outlined),
+                onPressed: _showDateTimePickerDialog,
+              ),
             ],
           ),
         ],

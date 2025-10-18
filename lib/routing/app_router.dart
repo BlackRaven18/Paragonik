@@ -1,6 +1,7 @@
 // app_router.dart
 
 import 'package:go_router/go_router.dart';
+import 'package:paragonik/data/services/image_processing_service.dart';
 import 'package:paragonik/data/services/ocr_service.dart';
 import 'package:paragonik/data/services/receipt_service.dart';
 import 'package:paragonik/notifiers/receipt_notifier.dart';
@@ -18,8 +19,12 @@ final GoRouter router = GoRouter(
       builder: (context, state, navigationShell) {
         return MultiProvider(
           providers: [
-            Provider<OcrService>(create: (_) => OcrService()),
+            Provider<ImageProcessingService>(create: (_) => ImageProcessingService()),
             Provider<ReceiptService>(create: (_) => ReceiptService()),
+
+            Provider<OcrService>(
+              create: (context) => OcrService(context.read<ImageProcessingService>()),
+            ),
             ChangeNotifierProvider<ReceiptNotifier>(
               create: (context) => ReceiptNotifier(context.read<ReceiptService>()),
             ),
