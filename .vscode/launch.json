@@ -53,6 +53,12 @@
         // FLUTTER ANDROID
         // ----------------------
         {
+            "name": "paragonik (Mój telefon)",
+            "request": "launch",
+            "type": "dart",
+            "deviceId": "d08d4e2"
+        },
+        {
             "name": "paragonik (Android)",
             "request": "launch",
             "type": "dart",

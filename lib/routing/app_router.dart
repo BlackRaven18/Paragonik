@@ -1,9 +1,12 @@
+// app_router.dart
 
 import 'package:go_router/go_router.dart';
 import 'package:paragonik/data/services/ocr_service.dart';
+import 'package:paragonik/data/services/receipt_service.dart';
+import 'package:paragonik/notifiers/receipt_notifier.dart';
 import 'package:paragonik/ui/core/base_scaffold.dart';
 import 'package:paragonik/ui/screens/camera_screen.dart';
-import 'package:paragonik/ui/screens/receipts_screen.dart';
+import 'package:paragonik/ui/screens/receipts/receipts_screen.dart';
 import 'package:paragonik/ui/screens/settings_screen.dart';
 import 'package:paragonik/ui/screens/stats_screen.dart';
 import 'package:provider/provider.dart';
@@ -13,19 +16,23 @@ final GoRouter router = GoRouter(
   routes: [
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) {
-        return BaseScaffold(child: navigationShell);
+        return MultiProvider(
+          providers: [
+            Provider<OcrService>(create: (_) => OcrService()),
+            Provider<ReceiptService>(create: (_) => ReceiptService()),
+            ChangeNotifierProvider<ReceiptNotifier>(
+              create: (context) => ReceiptNotifier(context.read<ReceiptService>()),
+            ),
+          ],
+          child: BaseScaffold(child: navigationShell),
+        );
       },
       branches: [
         StatefulShellBranch(
           routes: [
             GoRoute(
               path: '/camera',
-              builder: (context, state) {
-                return Provider<OcrService>(
-                  create: (_) => OcrService(),
-                  child: const CameraScreen(),
-                );
-              }
+              builder: (context, state) => const CameraScreen(),
             ),
           ],
         ),

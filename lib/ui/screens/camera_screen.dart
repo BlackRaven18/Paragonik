@@ -4,8 +4,12 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:paragonik/data/models/ocr_result.dart';
+import 'package:paragonik/data/models/receipt.dart';
 import 'package:paragonik/data/services/ocr_service.dart';
+import 'package:paragonik/data/services/receipt_service.dart';
+import 'package:paragonik/notifiers/receipt_notifier.dart';
 import 'package:provider/provider.dart';
+import 'package:uuid/uuid.dart';
 
 class CameraScreen extends StatefulWidget {
   const CameraScreen({super.key});
@@ -143,14 +147,49 @@ class _CameraScreenState extends State<CameraScreen> {
   }
 
   void _saveResult() {
-    if (_ocrResult == null) return;
-    final String sumToSave = _ocrResult!.sum ?? '0.00';
-    final DateTime dateToSave = _ocrResult!.date ?? DateTime.now();
+    if (_ocrResult == null || _imageFile == null) return;
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Zapisano: ${sumToSave} PLN, Data: ${DateFormat('yyyy-MM-dd HH:mm').format(dateToSave)}')),
+    final receiptNotifier = context.read<ReceiptNotifier>();
+    final receiptService = context.read<ReceiptService>();
+
+    final amountToSave = double.tryParse(_ocrResult!.sum ?? '0.0') ?? 0.0;
+    final dateToSave = _ocrResult!.date ?? DateTime.now();
+
+    final newReceipt = Receipt(
+      id: const Uuid().v4(),
+      imagePath: _imageFile!.path,
+      amount: amountToSave,
+      date: dateToSave,
+      storeName: '',
+      updatedAt: DateTime.now(),
     );
-    _clearImage();
+    
+    try {
+      receiptService.addReceipt(
+        imageFile: _imageFile!,
+        amount: amountToSave,
+        date: dateToSave,
+        storeName: '', 
+      );
+
+      receiptNotifier.addReceipt(newReceipt);
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Paragon został pomyślnie zapisany!'),
+          backgroundColor: Colors.green,
+        ),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Wystąpił błąd podczas zapisu: $e'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    } finally {
+      _clearImage();
+    }
   }
 
   @override
@@ -256,7 +295,7 @@ class _CameraScreenState extends State<CameraScreen> {
             label: const Text('Anuluj'),
           ),
           ElevatedButton.icon(
-            onPressed: () => _acceptSum(_ocrResult?.sum ?? ''),
+            onPressed: () => _saveResult(),
             icon: const Icon(Icons.check_circle),
             label: const Text('Zatwierdź'),
           ),
