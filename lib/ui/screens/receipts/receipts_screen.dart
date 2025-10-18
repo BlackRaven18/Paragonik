@@ -21,7 +21,7 @@ class _ReceiptsScreenState extends State<ReceiptsScreen> {
   void initState() {
     super.initState();
     _searchController.addListener(_filterReceipts);
-    // Inicjalizujemy listę na starcie
+
     _filteredReceipts = context.read<ReceiptNotifier>().receipts;
   }
 
@@ -46,12 +46,9 @@ class _ReceiptsScreenState extends State<ReceiptsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Używamy Consumer, aby widget przebudował się po każdej zmianie w Notifierze
     return Consumer<ReceiptNotifier>(
       builder: (context, notifier, child) {
         
-        // Aktualizujemy listę za każdym razem, gdy Notifier nas powiadomi
-        // To jest klucz do reaktywności!
         if (_searchController.text.isEmpty) {
           _filteredReceipts = notifier.receipts;
         }

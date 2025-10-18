@@ -1,10 +1,7 @@
-// lib/services/database_service.dart
-
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
 class DatabaseService {
-  // Wzór Singleton - zapewnia, że mamy tylko jedną instancję bazy w całej aplikacji
   DatabaseService._privateConstructor();
   static final DatabaseService instance = DatabaseService._privateConstructor();
 
@@ -16,7 +13,6 @@ class DatabaseService {
     return _database!;
   }
 
-  // Inicjalizacja i tworzenie tabeli
   Future<Database> _initDB() async {
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, 'paragonik.db');
@@ -28,7 +24,6 @@ class DatabaseService {
     );
   }
 
-  // Ta funkcja jest wywoływana tylko raz, przy pierwszym utworzeniu bazy
   Future<void> _onCreate(Database db, int version) async {
     await db.execute('''
       CREATE TABLE receipts (

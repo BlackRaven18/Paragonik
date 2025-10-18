@@ -6,7 +6,7 @@ import 'package:paragonik/data/services/ocr_service.dart';
 import 'package:paragonik/data/services/receipt_service.dart';
 import 'package:paragonik/notifiers/receipt_notifier.dart';
 import 'package:paragonik/ui/core/base_scaffold.dart';
-import 'package:paragonik/ui/screens/camera_screen.dart';
+import 'package:paragonik/ui/screens/camera/camera_screen.dart';
 import 'package:paragonik/ui/screens/receipts/receipts_screen.dart';
 import 'package:paragonik/ui/screens/settings_screen.dart';
 import 'package:paragonik/ui/screens/stats_screen.dart';
