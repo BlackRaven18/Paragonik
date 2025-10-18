@@ -46,7 +46,7 @@ class _CameraScreenState extends State<CameraScreen> {
     );
 
     if (pickedFile != null) {
-      await _clearImage(); 
+      await _clearImage();
       setState(() {
         _originalImageFile = File(pickedFile.path);
       });
@@ -79,7 +79,7 @@ class _CameraScreenState extends State<CameraScreen> {
         SnackBar(content: Text('Wystąpił błąd podczas przetwarzania: $e')),
       );
     } finally {
-      if (mounted){
+      if (mounted) {
         setState(() {
           _isProcessing = false;
         });
@@ -89,7 +89,7 @@ class _CameraScreenState extends State<CameraScreen> {
 
   Future<void> _clearImage() async {
     await _processedImageFile?.delete();
-    
+
     setState(() {
       _originalImageFile = null;
       _processedImageFile = null;
@@ -139,13 +139,21 @@ class _CameraScreenState extends State<CameraScreen> {
   }
 
   Future<void> _showDateTimePickerDialog() async {
-    final initialDate = _ocrResult?.date ?? DateTime.now();
+    final firstDate = DateTime(2000);
+    final lastDate = DateTime.now().add(const Duration(days: 365));
+
+    var initialDate = _ocrResult?.date ?? DateTime.now();
+
+    if (initialDate.isAfter(lastDate) || initialDate.isBefore(firstDate)) {
+      initialDate = DateTime.now();
+    }
 
     final DateTime? pickedDate = await showDatePicker(
       context: context,
       initialDate: initialDate,
-      firstDate: DateTime(2000),
-      lastDate: DateTime.now().add(const Duration(days: 365)),
+      firstDate: firstDate,
+      lastDate: lastDate,
+      locale: const Locale('pl', 'PL')
     );
 
     if (pickedDate == null) return;
@@ -155,6 +163,12 @@ class _CameraScreenState extends State<CameraScreen> {
     final TimeOfDay? pickedTime = await showTimePicker(
       context: context,
       initialTime: TimeOfDay.fromDateTime(initialDate),
+      builder: (BuildContext context, Widget? child) {
+        return MediaQuery(
+          data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
+          child: child!,
+        );
+      },
     );
 
     if (pickedTime == null) return;
@@ -175,7 +189,7 @@ class _CameraScreenState extends State<CameraScreen> {
 
   void _saveResult() {
     if (_originalImageFile == null) return;
-    
+
     final ocrData = _ocrResult ?? OcrResult(sum: null, date: null);
 
     final receiptNotifier = context.read<ReceiptNotifier>();
@@ -192,13 +206,13 @@ class _CameraScreenState extends State<CameraScreen> {
       storeName: '',
       updatedAt: DateTime.now(),
     );
-    
+
     try {
       receiptService.addReceipt(
         imageFile: _originalImageFile!,
         amount: amountToSave,
         date: dateToSave,
-        storeName: '', 
+        storeName: '',
       );
 
       receiptNotifier.addReceipt(newReceipt);
@@ -231,7 +245,8 @@ class _CameraScreenState extends State<CameraScreen> {
       return _buildInitialView();
     } else if (_isProcessing) {
       return _buildProcessingView();
-    } else if (_ocrResult != null || _originalImageFile != null && !_isProcessing) {
+    } else if (_ocrResult != null ||
+        _originalImageFile != null && !_isProcessing) {
       return _buildImageView();
     }
     return _buildInitialView();
@@ -301,7 +316,9 @@ class _CameraScreenState extends State<CameraScreen> {
                       MaterialPageRoute(
                         builder: (context) => FullScreenImageViewer(
                           imageFile: imageToShow,
-                          title: _showProcessedImage ? 'Podgląd skanu' : 'Podgląd oryginału',
+                          title: _showProcessedImage
+                              ? 'Podgląd skanu'
+                              : 'Podgląd oryginału',
                         ),
                       ),
                     );
@@ -317,19 +334,26 @@ class _CameraScreenState extends State<CameraScreen> {
                     right: 8,
                     child: FloatingActionButton.small(
                       onPressed: () {
-                        setState(() { _showProcessedImage = !_showProcessedImage; });
+                        setState(() {
+                          _showProcessedImage = !_showProcessedImage;
+                        });
                       },
-                      tooltip: 'Pokaż ${_showProcessedImage ? "oryginał" : "skan"}',
-                      child: Icon(_showProcessedImage ? Icons.image_outlined : Icons.document_scanner_outlined),
+                      tooltip:
+                          'Pokaż ${_showProcessedImage ? "oryginał" : "skan"}',
+                      child: Icon(
+                        _showProcessedImage
+                            ? Icons.image_outlined
+                            : Icons.document_scanner_outlined,
+                      ),
                     ),
                   ),
               ],
             ),
           ),
         ),
-        
+
         if (_ocrResult != null) _buildResultPanel(),
-        
+
         _buildActionPanel(),
       ],
     );
@@ -378,16 +402,21 @@ class _CameraScreenState extends State<CameraScreen> {
       ),
     );
   }
+
   Widget _buildResultPanel() {
-    final sumLabelText = _isSumManuallyCorrected ? 'Kwota (Poprawiona):' : 'Kwota:';
-    final dateLabelText = _isDateManuallyCorrected ? 'Data (Poprawiona):' : 'Data:';
+    final sumLabelText = _isSumManuallyCorrected
+        ? 'Kwota (Poprawiona):'
+        : 'Kwota:';
+    final dateLabelText = _isDateManuallyCorrected
+        ? 'Data (Poprawiona):'
+        : 'Data:';
 
     // **CHANGE**: Provide a default value if OCR fails
     final sumString = _ocrResult?.sum ?? 'Nie znaleziono';
     final dateString = _ocrResult?.date != null
         ? DateFormat('yyyy-MM-dd HH:mm').format(_ocrResult!.date!)
         : 'Nie znaleziono';
-    
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
       child: Column(
