@@ -12,12 +12,13 @@ class ImagePreviewView extends StatelessWidget {
   final bool showProcessed;
   final bool isSumCorrected;
   final bool isDateCorrected;
-  
+
   final VoidCallback onProcessImage;
   final VoidCallback onClearImage;
   final VoidCallback onSaveResult;
   final VoidCallback onEditSum;
   final VoidCallback onEditDate;
+  final VoidCallback onEditStore;
   final VoidCallback onToggleImageType;
 
   const ImagePreviewView({
@@ -33,14 +34,18 @@ class ImagePreviewView extends StatelessWidget {
     required this.onSaveResult,
     required this.onEditSum,
     required this.onEditDate,
+    required this.onEditStore,
     required this.onToggleImageType,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    final imageToShow = showProcessed && processedImage != null ? processedImage : originalImage;
-    if (imageToShow == null) return const Center(child: Text('Brak obrazu do wyświetlenia.'));
+    final imageToShow = showProcessed && processedImage != null
+        ? processedImage
+        : originalImage;
+    if (imageToShow == null)
+      return const Center(child: Text('Brak obrazu do wyświetlenia.'));
 
     return Column(
       children: [
@@ -59,21 +64,33 @@ class ImagePreviewView extends StatelessWidget {
           fit: StackFit.expand,
           children: [
             GestureDetector(
-              onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => FullScreenImageViewer(
-                  imageFile: imageToShow,
-                  title: showProcessed ? 'Podgląd skanu' : 'Podgląd oryginału',
+              onTap: () => Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => FullScreenImageViewer(
+                    imageFile: imageToShow,
+                    title: showProcessed
+                        ? 'Podgląd skanu'
+                        : 'Podgląd oryginału',
+                  ),
                 ),
-              )),
-              child: ClipRRect(borderRadius: BorderRadius.circular(12), child: Image.file(imageToShow, fit: BoxFit.contain)),
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: Image.file(imageToShow, fit: BoxFit.contain),
+              ),
             ),
             if (processedImage != null)
               Positioned(
-                top: 8, right: 8,
+                top: 8,
+                right: 8,
                 child: FloatingActionButton.small(
                   onPressed: onToggleImageType,
                   tooltip: 'Pokaż ${showProcessed ? "oryginał" : "skan"}',
-                  child: Icon(showProcessed ? Icons.image_outlined : Icons.document_scanner_outlined),
+                  child: Icon(
+                    showProcessed
+                        ? Icons.image_outlined
+                        : Icons.document_scanner_outlined,
+                  ),
                 ),
               ),
           ],
@@ -82,74 +99,88 @@ class ImagePreviewView extends StatelessWidget {
     );
   }
 
-  Widget _buildResultPanel() {
-    final sumLabelText =  isSumCorrected? 'Kwota (Poprawiona):' : 'Kwota:';
-    final dateLabelText = isDateCorrected ? 'Data (Poprawiona):' : 'Data:';
+ Widget _buildResultPanel() {
+  final sumLabelText = isSumCorrected ? 'Kwota (Poprawiona):' : 'Kwota:';
+  final dateLabelText = isDateCorrected ? 'Data (Poprawiona):' : 'Data:';
+  const storeLabelText = 'Sklep:';
 
-    final sumString = ocrResult?.sum ?? 'Nie znaleziono';
-    final dateString = ocrResult?.date != null
-        ? DateFormat('yyyy-MM-dd HH:mm').format(ocrResult!.date!)
-        : 'Nie znaleziono';
-    
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
+  final sumString = ocrResult?.sum ?? 'Nie znaleziono';
+  final dateString = ocrResult?.date != null
+      ? DateFormat('yyyy-MM-dd HH:mm').format(ocrResult!.date!)
+      : 'Nie znaleziono';
+  final storeString = ocrResult?.storeName ?? 'Nie znaleziono';
+
+  return Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+    child: Column(
+      children: [
+        // --- Sekcja Kwoty (bez zmian) ---
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(sumLabelText, style: TextStyle(color: Colors.grey.shade600)),
+                Text('$sumString PLN', style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+              ],
+            ),
+            IconButton(icon: const Icon(Icons.edit), onPressed: onEditSum),
+          ],
+        ),
+        const Divider(height: 20),
+        
+        // --- ZMIENIONA SEKCJA: Data i Sklep w jednym rzędzie ---
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start, // Wyrównuje elementy do góry
+          children: [
+            // --- Lewa kolumna (Data) ---
+            Expanded(
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    sumLabelText,
-                    style: TextStyle(color: Colors.grey.shade600),
-                  ),
-                  Text(
-                    '$sumString PLN',
-                    style: const TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  Text(dateLabelText, style: TextStyle(color: Colors.grey.shade600)),
+                  Row(
+                    children: [
+                      // Używamy Flexible, aby tekst mógł się zawijać w razie potrzeby
+                      Flexible(child: Text(dateString, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold))),
+                      const SizedBox(width: 4),
+                      GestureDetector(
+                        onTap: onEditDate,
+                        child: const Icon(Icons.edit_calendar_outlined, size: 20),
+                      ),
+                    ],
                   ),
                 ],
               ),
-              IconButton(
-                icon: const Icon(Icons.edit),
-                onPressed: onEditSum,
-              ),
-            ],
-          ),
-          const Divider(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
+            ),
+            const SizedBox(width: 16), // Odstęp między kolumnami
+
+            // --- Prawa kolumna (Sklep) ---
+            Expanded(
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    dateLabelText,
-                    style: TextStyle(color: Colors.grey.shade600),
-                  ),
-                  Text(
-                    dateString,
-                    style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
+                  Text(storeLabelText, style: TextStyle(color: Colors.grey.shade600)),
+                  Row(
+                    children: [
+                      Flexible(child: Text(storeString, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold))),
+                      const SizedBox(width: 4),
+                      GestureDetector(
+                        onTap: onEditStore, // Pamiętaj, aby przekazać ten callback
+                        child: const Icon(Icons.store, size: 20),
+                      ),
+                    ],
                   ),
                 ],
               ),
-              IconButton(
-                icon: const Icon(Icons.edit_calendar_outlined),
-                onPressed: onEditDate,
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
+            ),
+          ],
+        ),
+      ],
+    ),
+  );
+}
 
   Widget _buildActionPanel() {
     if (ocrResult == null && !isProcessing) {
@@ -184,7 +215,7 @@ class ImagePreviewView extends StatelessWidget {
             label: const Text('Anuluj'),
           ),
           ElevatedButton.icon(
-            onPressed: () => onSaveResult,
+            onPressed: onSaveResult,
             icon: const Icon(Icons.check_circle),
             label: const Text('Zapisz'),
           ),

@@ -9,6 +9,13 @@ class OcrService {
 
   OcrService(this._imageProcessingService);
 
+  final Map<String, List<String>> _storeKeywords = {
+    'Biedronka': ['biedronka'],
+    'Żabka': ['żabka', 'zabka', 'abka'],
+    'Lidl': ['lidl'],
+    'Społem': ['społem', 'spo em', 'spolem'],
+  };
+
   Future<ProcessedOcrResult?> extractDataFromFile(File imageFile) async {
     File? processedImageFile;
 
@@ -30,9 +37,10 @@ class OcrService {
       final String fullText = recognizedText.text;
       final String? foundSum = _findSumInText(fullText);
       final DateTime? foundDate = _findDateInText(fullText);
+      final String? foundStore = _findStoreNameInText(fullText);
 
       return ProcessedOcrResult(
-        result: OcrResult(sum: foundSum, date: foundDate),
+        result: OcrResult(sum: foundSum, date: foundDate, storeName: foundStore),
         processedImageFile: processedImageFile,
       );
     } catch (e) {
@@ -87,6 +95,23 @@ class OcrService {
         final match = pattern.firstMatch(line);
         if (match != null) {
           return match.group(1)!.replaceAll(',', '.');
+        }
+      }
+    }
+
+    return null;
+  }
+
+  String? _findStoreNameInText(String text) {
+    final lowerCaseText = text.toLowerCase();
+
+    for (final entry in _storeKeywords.entries) {
+      final storeName = entry.key;
+      final keywords = entry.value;
+
+      for (final keyword in keywords) {
+        if (lowerCaseText.contains(keyword)) {
+          return storeName;
         }
       }
     }
