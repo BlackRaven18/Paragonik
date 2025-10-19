@@ -28,6 +28,14 @@ class ReceiptNotifier extends ChangeNotifier {
     notifyListeners(); 
   }
 
+  Future<void> deleteReceipt(String id) async {
+    await _receiptService.softDeleteReceipt(id);
+
+    _receipts.removeWhere((receipt) => receipt.id == id);
+
+    notifyListeners();
+  }
+
   void _setLoading(bool value) {
     isLoading = value;
     notifyListeners();

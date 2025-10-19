@@ -1,5 +1,3 @@
-// lib/ui/screens/receipts_screen.dart
-
 import 'package:flutter/material.dart';
 import 'package:paragonik/data/models/receipt.dart';
 import 'package:paragonik/notifiers/receipt_notifier.dart';
@@ -16,7 +14,7 @@ class ReceiptsScreen extends StatefulWidget {
 class _ReceiptsScreenState extends State<ReceiptsScreen> {
   List<Receipt> _filteredReceipts = [];
   final TextEditingController _searchController = TextEditingController();
-  
+
   @override
   void initState() {
     super.initState();
@@ -34,7 +32,7 @@ class _ReceiptsScreenState extends State<ReceiptsScreen> {
   void _filterReceipts() {
     final receiptNotifier = context.read<ReceiptNotifier>();
     final query = _searchController.text.toLowerCase();
-    
+
     setState(() {
       _filteredReceipts = receiptNotifier.receipts.where((receipt) {
         return query.isEmpty ||
@@ -44,11 +42,37 @@ class _ReceiptsScreenState extends State<ReceiptsScreen> {
     });
   }
 
+  Future<void> _handleDeleteReceipt(String id) async {
+    final shouldDelete = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Potwierdź usunięcie'),
+        content: const Text('Czy na pewno chcesz usunąć ten paragon?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: const Text('Anuluj'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: const Text('Usuń', style: TextStyle(color: Colors.red)),
+          ),
+        ],
+      ),
+    );
+
+    // Jeśli użytkownik potwierdził, wywołaj logikę usuwania
+    if (shouldDelete == true) {
+      if (!mounted) return;
+
+      context.read<ReceiptNotifier>().deleteReceipt(id);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<ReceiptNotifier>(
       builder: (context, notifier, child) {
-        
         if (_searchController.text.isEmpty) {
           _filteredReceipts = notifier.receipts;
         }
@@ -65,11 +89,16 @@ class _ReceiptsScreenState extends State<ReceiptsScreen> {
             _buildSearchBar(),
             Expanded(
               child: _filteredReceipts.isEmpty
-                  ? const Center(child: Text('Nie znaleziono pasujących paragonów.'))
+                  ? const Center(
+                      child: Text('Nie znaleziono pasujących paragonów.'),
+                    )
                   : ListView.builder(
                       itemCount: _filteredReceipts.length,
                       itemBuilder: (context, index) {
-                        return ReceiptListItem(receipt: _filteredReceipts[index]);
+                        return ReceiptListItem(
+                          receipt: _filteredReceipts[index],
+                          onDelete: _handleDeleteReceipt,
+                        );
                       },
                     ),
             ),

@@ -7,8 +7,13 @@ import 'package:paragonik/data/models/receipt.dart';
 
 class ReceiptListItem extends StatelessWidget {
   final Receipt receipt;
+  final Function(String id) onDelete;
 
-  const ReceiptListItem({required this.receipt, super.key});
+  const ReceiptListItem({
+    super.key,
+    required this.receipt,
+    required this.onDelete,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -37,8 +42,12 @@ class ReceiptListItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    receipt.storeName.isEmpty ? 'Nieznany sklep' : receipt.storeName,
-                    style: theme.textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+                    receipt.storeName.isEmpty
+                        ? 'Nieznany sklep'
+                        : receipt.storeName,
+                    style: theme.textTheme.titleMedium?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
                     overflow: TextOverflow.ellipsis,
                   ),
                   const SizedBox(height: 4),
@@ -52,7 +61,9 @@ class ReceiptListItem extends StatelessWidget {
                   const SizedBox(height: 4),
                   Text(
                     formattedDate,
-                    style: theme.textTheme.bodySmall?.copyWith(color: Colors.grey.shade600),
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      color: Colors.grey.shade600,
+                    ),
                   ),
                 ],
               ),
@@ -70,10 +81,7 @@ class ReceiptListItem extends StatelessWidget {
                 ),
                 IconButton(
                   icon: Icon(Icons.delete, color: Colors.red.shade700),
-                  onPressed: () {
-                    // TODO: Dodać logikę usuwania (najlepiej z potwierdzeniem)
-                    print('Delete receipt: ${receipt.id}');
-                  },
+                  onPressed: () => onDelete(receipt.id),
                 ),
               ],
             ),

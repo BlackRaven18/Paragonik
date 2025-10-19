@@ -34,10 +34,26 @@ class ReceiptService {
     );
   }
 
+  Future<void> softDeleteReceipt(String id) async {
+    final db = await _database;
+    final now = DateTime.now().toIso8601String();
+
+    await db.update(
+      'receipts',
+      {
+        'deleted_at': now,
+        'updated_at': now,
+      },
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
+
   Future<List<Receipt>> getAllReceipts() async {
     final db = await _database;
     final List<Map<String, dynamic>> maps = await db.query(
       'receipts',
+      where: 'deleted_at IS NULL',
       orderBy: 'date DESC',
     );
 
