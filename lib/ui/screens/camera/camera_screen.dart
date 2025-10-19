@@ -1,12 +1,14 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:paragonik/data/models/database/store.dart';
 import 'package:paragonik/data/models/ocr_result.dart';
 import 'package:paragonik/data/models/processed_ocr_result.dart';
 import 'package:paragonik/data/services/ocr_service.dart';
 import 'package:paragonik/notifiers/receipt_notifier.dart';
-import 'package:paragonik/ui/screens/camera/image_preview.dart';
+import 'package:paragonik/ui/screens/camera/image_preview_view.dart';
 import 'package:paragonik/ui/screens/camera/initial_view.dart';
+import 'package:paragonik/ui/screens/camera/modals/store_selection_modal.dart';
 import 'package:paragonik/ui/screens/camera/processing_view.dart';
 import 'package:provider/provider.dart';
 
@@ -129,7 +131,11 @@ class _CameraScreenState extends State<CameraScreen> {
     if (manuallyEnteredSum != null && manuallyEnteredSum.isNotEmpty) {
       final sanitizedSum = manuallyEnteredSum.replaceAll(',', '.');
       setState(() {
-        _ocrResult = OcrResult(sum: sanitizedSum, date: _ocrResult!.date, storeName: _ocrResult!.storeName);
+        _ocrResult = OcrResult(
+          sum: sanitizedSum,
+          date: _ocrResult!.date,
+          storeName: _ocrResult!.storeName,
+        );
         _isSumManuallyCorrected = true;
       });
     }
@@ -150,7 +156,7 @@ class _CameraScreenState extends State<CameraScreen> {
       initialDate: initialDate,
       firstDate: firstDate,
       lastDate: lastDate,
-      locale: const Locale('pl', 'PL')
+      locale: const Locale('pl', 'PL'),
     );
 
     if (pickedDate == null) return;
@@ -179,41 +185,33 @@ class _CameraScreenState extends State<CameraScreen> {
     );
 
     setState(() {
-      _ocrResult = OcrResult(sum: _ocrResult!.sum, date: newDateTime, storeName: _ocrResult!.storeName);
+      _ocrResult = OcrResult(
+        sum: _ocrResult!.sum,
+        date: newDateTime,
+        storeName: _ocrResult!.storeName,
+      );
       _isDateManuallyCorrected = true;
     });
   }
 
-  Future<void> _showStoreInputDialog() async {
-    final storeController = TextEditingController(text: _ocrResult?.storeName ?? '');
-
-    final String? manuallyEnteredStore = await showDialog<String>(
+  Future<void> _showStoreSelectionModal() async {
+    final selectedStore = await showModalBottomSheet<Store>(
       context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Popraw'),
-        content: TextField(
-          controller: storeController,
-          autofocus: true,
-          decoration: const InputDecoration(labelText: 'Podaj nazwę sklepu'),
-        ),
-        actions: [
-          TextButton(onPressed: () => Navigator.of(context).pop(), child: const Text('Anuluj')),
-          ElevatedButton(
-            onPressed: () => Navigator.of(context).pop(storeController.text),
-            child: const Text('Zapisz'),
-          ),
-        ],
+      isScrollControlled: true,
+      builder: (_) => DraggableScrollableSheet(
+        expand: false,
+        initialChildSize: 0.6,
+        builder: (_, controller) => const StoreSelectionModal(),
       ),
     );
 
-    if (manuallyEnteredStore != null && manuallyEnteredStore.isNotEmpty) {
+    if (selectedStore != null) {
       setState(() {
         _ocrResult = OcrResult(
           sum: _ocrResult?.sum,
           date: _ocrResult?.date,
-          storeName: manuallyEnteredStore,
+          storeName: selectedStore.name,
         );
-        // You can add an _isStoreManuallyCorrected flag here if you want
       });
     }
   }
@@ -229,19 +227,19 @@ class _CameraScreenState extends State<CameraScreen> {
     final storeNameToSave = ocrData.storeName ?? '';
 
     try {
-     receiptNotifier.addReceipt(
-      imageFile: _originalImageFile!,
-      amount: amountToSave,
-      date: dateToSave,
-      storeName: storeNameToSave,
-    );
+      receiptNotifier.addReceipt(
+        imageFile: _originalImageFile!,
+        amount: amountToSave,
+        date: dateToSave,
+        storeName: storeNameToSave,
+      );
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Zapisano paragon!'),
-        backgroundColor: Colors.green,
-      ),
-    );
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Zapisano paragon!'),
+          backgroundColor: Colors.green,
+        ),
+      );
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -256,21 +254,16 @@ class _CameraScreenState extends State<CameraScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: _buildContent(),
-      ),
-    );
+    return Scaffold(body: Center(child: _buildContent()));
   }
 
   Widget _buildContent() {
     if (_originalImageFile == null) {
       return InitialView(onImageRequested: _getImage);
-    } 
+    }
     if (_isProcessing) {
       return const ProcessingView();
     }
-    // Domyślnie pokazujemy widok podglądu, przekazując mu cały stan i wszystkie potrzebne funkcje
     return ImagePreviewView(
       originalImage: _originalImageFile,
       processedImage: _processedImageFile,
@@ -284,7 +277,7 @@ class _CameraScreenState extends State<CameraScreen> {
       onSaveResult: _saveResult,
       onEditSum: _showSumInputDialog,
       onEditDate: _showDateTimePickerDialog,
-      onEditStore: _showStoreInputDialog,
+      onEditStore: _showStoreSelectionModal,
       onToggleImageType: () {
         setState(() {
           _showProcessedImage = !_showProcessedImage;

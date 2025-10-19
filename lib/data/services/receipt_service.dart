@@ -1,5 +1,5 @@
 
-import 'package:paragonik/data/models/receipt.dart';
+import 'package:paragonik/data/models/database/receipt.dart';
 import 'package:paragonik/data/services/database_service.dart';
 import 'package:sqflite/sqflite.dart';
 

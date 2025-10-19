@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:paragonik/data/models/ocr_result.dart';
 import 'package:paragonik/ui/core/widgets/full_screen_image_viewer.dart';
+import 'package:paragonik/ui/widgets/store_display.dart';
 
 class ImagePreviewView extends StatelessWidget {
   final File? originalImage;
@@ -99,88 +100,115 @@ class ImagePreviewView extends StatelessWidget {
     );
   }
 
- Widget _buildResultPanel() {
-  final sumLabelText = isSumCorrected ? 'Kwota (Poprawiona):' : 'Kwota:';
-  final dateLabelText = isDateCorrected ? 'Data (Poprawiona):' : 'Data:';
-  const storeLabelText = 'Sklep:';
+  Widget _buildResultPanel() {
+    final sumLabelText = isSumCorrected ? 'Kwota (Poprawiona):' : 'Kwota:';
+    final dateLabelText = isDateCorrected ? 'Data (Poprawiona):' : 'Data:';
+    const storeLabelText = 'Sklep:';
 
-  final sumString = ocrResult?.sum ?? 'Nie znaleziono';
-  final dateString = ocrResult?.date != null
-      ? DateFormat('yyyy-MM-dd HH:mm').format(ocrResult!.date!)
-      : 'Nie znaleziono';
-  final storeString = ocrResult?.storeName ?? 'Nie znaleziono';
+    final sumString = ocrResult?.sum ?? 'Nie znaleziono';
+    final dateString = ocrResult?.date != null
+        ? DateFormat('yyyy-MM-dd HH:mm').format(ocrResult!.date!)
+        : 'Nie znaleziono';
+    final storeString = ocrResult?.storeName ?? 'Nie znaleziono';
 
-  return Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-    child: Column(
-      children: [
-        // --- Sekcja Kwoty (bez zmian) ---
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(sumLabelText, style: TextStyle(color: Colors.grey.shade600)),
-                Text('$sumString PLN', style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-              ],
-            ),
-            IconButton(icon: const Icon(Icons.edit), onPressed: onEditSum),
-          ],
-        ),
-        const Divider(height: 20),
-        
-        // --- ZMIENIONA SEKCJA: Data i Sklep w jednym rzędzie ---
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start, // Wyrównuje elementy do góry
-          children: [
-            // --- Lewa kolumna (Data) ---
-            Expanded(
-              child: Column(
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(dateLabelText, style: TextStyle(color: Colors.grey.shade600)),
-                  Row(
-                    children: [
-                      // Używamy Flexible, aby tekst mógł się zawijać w razie potrzeby
-                      Flexible(child: Text(dateString, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold))),
-                      const SizedBox(width: 4),
-                      GestureDetector(
-                        onTap: onEditDate,
-                        child: const Icon(Icons.edit_calendar_outlined, size: 20),
-                      ),
-                    ],
+                  Text(
+                    sumLabelText,
+                    style: TextStyle(color: Colors.grey.shade600),
+                  ),
+                  Text(
+                    '$sumString PLN',
+                    style: const TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ],
               ),
-            ),
-            const SizedBox(width: 16), // Odstęp między kolumnami
+              IconButton(icon: const Icon(Icons.edit), onPressed: onEditSum),
+            ],
+          ),
+          const Divider(height: 20),
 
-            // --- Prawa kolumna (Sklep) ---
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(storeLabelText, style: TextStyle(color: Colors.grey.shade600)),
-                  Row(
-                    children: [
-                      Flexible(child: Text(storeString, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold))),
-                      const SizedBox(width: 4),
-                      GestureDetector(
-                        onTap: onEditStore, // Pamiętaj, aby przekazać ten callback
-                        child: const Icon(Icons.store, size: 20),
-                      ),
-                    ],
-                  ),
-                ],
+          Row(
+            crossAxisAlignment:
+                CrossAxisAlignment.start,
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      dateLabelText,
+                      style: TextStyle(color: Colors.grey.shade600),
+                    ),
+                    Row(
+                      children: [
+                        Flexible(
+                          child: Text(
+                            dateString,
+                            style: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 4),
+                        GestureDetector(
+                          onTap: onEditDate,
+                          child: const Icon(
+                            Icons.edit_calendar_outlined,
+                            size: 20,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
-        ),
-      ],
-    ),
-  );
-}
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      storeLabelText,
+                      style: TextStyle(color: Colors.grey.shade600),
+                    ),
+                    Row(
+                      children: [
+                        Flexible(
+                          child: StoreDisplay(
+                            storeName: storeString,
+                            textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                        const SizedBox(width: 4),
+                        GestureDetector(
+                          onTap:
+                              onEditStore,
+                          child: const Icon(Icons.store, size: 20),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
 
   Widget _buildActionPanel() {
     if (ocrResult == null && !isProcessing) {

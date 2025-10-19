@@ -3,7 +3,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:paragonik/data/models/receipt.dart';
+import 'package:paragonik/data/models/database/receipt.dart';
+import 'package:paragonik/ui/widgets/store_display.dart';
 
 class ReceiptListItem extends StatelessWidget {
   final Receipt receipt;
@@ -43,14 +44,11 @@ class ReceiptListItem extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    receipt.storeName.isEmpty
-                        ? 'Nieznany sklep'
-                        : receipt.storeName,
-                    style: theme.textTheme.titleMedium?.copyWith(
+                  StoreDisplay(
+                    storeName: receipt.storeName,
+                    textStyle: theme.textTheme.titleMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                     ),
-                    overflow: TextOverflow.ellipsis,
                   ),
                   const SizedBox(height: 4),
                   Text(

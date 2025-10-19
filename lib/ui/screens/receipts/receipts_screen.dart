@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:paragonik/data/models/receipt.dart';
+import 'package:paragonik/data/models/database/receipt.dart';
 import 'package:paragonik/notifiers/receipt_notifier.dart';
 import 'package:paragonik/ui/screens/receipts/receipt_list_item.dart';
 import 'package:paragonik/ui/screens/receipts/section_header.dart';

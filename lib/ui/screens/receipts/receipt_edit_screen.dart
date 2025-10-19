@@ -1,10 +1,13 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:paragonik/data/models/receipt.dart';
+import 'package:paragonik/data/models/database/receipt.dart';
+import 'package:paragonik/data/models/database/store.dart';
 import 'package:paragonik/data/services/receipt_service.dart';
 import 'package:paragonik/notifiers/receipt_notifier.dart';
 import 'package:paragonik/ui/core/widgets/full_screen_image_viewer.dart';
+import 'package:paragonik/ui/screens/camera/modals/store_selection_modal.dart';
+import 'package:paragonik/ui/widgets/store_display.dart';
 import 'package:provider/provider.dart';
 
 class ReceiptEditScreen extends StatefulWidget {
@@ -20,7 +23,7 @@ class _ReceiptEditScreenState extends State<ReceiptEditScreen> {
   bool _isLoading = true;
 
   late TextEditingController _amountController;
-  late TextEditingController _storeController;
+  late String _selectedStoreName;
   DateTime? _selectedDateTime;
 
   @override
@@ -39,13 +42,30 @@ class _ReceiptEditScreenState extends State<ReceiptEditScreen> {
         _amountController = TextEditingController(
           text: _receipt!.amount.toStringAsFixed(2),
         );
-        _storeController = TextEditingController(text: _receipt!.storeName);
+        _selectedStoreName = _receipt!.storeName;
         _selectedDateTime = _receipt!.date;
         _isLoading = false;
       });
     } else {
       if (!mounted) return;
       Navigator.of(context).pop();
+    }
+  }
+
+  Future<void> _showStoreSelectionModal() async {
+    final selectedStore = await showModalBottomSheet<Store>(
+      context: context,
+      isScrollControlled: true,
+      builder: (_) => DraggableScrollableSheet(
+        expand: false,
+        initialChildSize: 0.6,
+        builder: (_, controller) => const StoreSelectionModal(),
+      ),
+    );
+    if (selectedStore != null) {
+      setState(() {
+        _selectedStoreName = selectedStore.name;
+      });
     }
   }
 
@@ -94,7 +114,7 @@ class _ReceiptEditScreenState extends State<ReceiptEditScreen> {
       imagePath: _receipt!.imagePath,
       amount:
           double.tryParse(_amountController.text.replaceAll(',', '.')) ?? 0.0,
-      storeName: _storeController.text,
+      storeName: _selectedStoreName,
       date: _selectedDateTime!,
       createdAt: _receipt!.createdAt,
       updatedAt: DateTime.now(),
@@ -116,12 +136,7 @@ class _ReceiptEditScreenState extends State<ReceiptEditScreen> {
         child: Stack(
           children: [
             SingleChildScrollView(
-              padding: const EdgeInsets.fromLTRB(
-                16.0,
-                16.0,
-                16.0,
-                100.0,
-              ),
+              padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 100.0),
               child: Column(
                 children: [
                   GestureDetector(
@@ -155,12 +170,21 @@ class _ReceiptEditScreenState extends State<ReceiptEditScreen> {
                     ),
                   ),
                   const SizedBox(height: 16),
-                  TextFormField(
-                    controller: _storeController,
-                    decoration: const InputDecoration(
-                      labelText: 'Sklep',
-                      border: OutlineInputBorder(),
+                  ListTile(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      side: BorderSide(color: Colors.grey.shade400),
                     ),
+                    title: const Text('Sklep'),
+                    subtitle: StoreDisplay(
+                      storeName: _selectedStoreName,
+                      textStyle: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    trailing: const Icon(Icons.store),
+                    onTap: _showStoreSelectionModal,
                   ),
                   const SizedBox(height: 16),
                   ListTile(
@@ -196,7 +220,7 @@ class _ReceiptEditScreenState extends State<ReceiptEditScreen> {
                 onPressed: _saveChanges,
                 label: const Text('Zapisz zmiany'),
                 icon: const Icon(Icons.save),
-                heroTag: 'receipt_edit_save_btn'
+                heroTag: 'receipt_edit_save_btn',
               ),
             ),
           ],

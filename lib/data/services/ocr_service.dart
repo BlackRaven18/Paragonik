@@ -3,18 +3,13 @@ import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart
 import 'package:paragonik/data/models/ocr_result.dart';
 import 'package:paragonik/data/models/processed_ocr_result.dart';
 import 'package:paragonik/data/services/image_processing_service.dart';
+import 'package:paragonik/data/services/store_service.dart';
 
 class OcrService {
+  final StoreService _storeService;
   final ImageProcessingService _imageProcessingService;
 
-  OcrService(this._imageProcessingService);
-
-  final Map<String, List<String>> _storeKeywords = {
-    'Biedronka': ['biedronka'],
-    'Żabka': ['żabka', 'zabka', 'abka'],
-    'Lidl': ['lidl'],
-    'Społem': ['społem', 'spo em', 'spolem'],
-  };
+  OcrService(this._storeService, this._imageProcessingService);
 
   Future<ProcessedOcrResult?> extractDataFromFile(File imageFile) async {
     File? processedImageFile;
@@ -37,7 +32,7 @@ class OcrService {
       final String fullText = recognizedText.text;
       final String? foundSum = _findSumInText(fullText);
       final DateTime? foundDate = _findDateInText(fullText);
-      final String? foundStore = _findStoreNameInText(fullText);
+      final String? foundStore = await _findStoreNameInText(fullText);
 
       return ProcessedOcrResult(
         result: OcrResult(sum: foundSum, date: foundDate, storeName: foundStore),
@@ -102,20 +97,17 @@ class OcrService {
     return null;
   }
 
-  String? _findStoreNameInText(String text) {
+  Future<String?> _findStoreNameInText(String text) async {
     final lowerCaseText = text.toLowerCase();
+    final allStores = await _storeService.getAllStores();
 
-    for (final entry in _storeKeywords.entries) {
-      final storeName = entry.key;
-      final keywords = entry.value;
-
-      for (final keyword in keywords) {
+    for (final store in allStores) {
+      for (final keyword in store.keywords) {
         if (lowerCaseText.contains(keyword)) {
-          return storeName;
+          return store.name;
         }
       }
     }
-
     return null;
   }
 }

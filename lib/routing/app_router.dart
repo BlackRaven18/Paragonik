@@ -4,7 +4,9 @@ import 'package:go_router/go_router.dart';
 import 'package:paragonik/data/services/image_processing_service.dart';
 import 'package:paragonik/data/services/ocr_service.dart';
 import 'package:paragonik/data/services/receipt_service.dart';
+import 'package:paragonik/data/services/store_service.dart';
 import 'package:paragonik/notifiers/receipt_notifier.dart';
+import 'package:paragonik/notifiers/store_notifier.dart';
 import 'package:paragonik/ui/core/base_scaffold.dart';
 import 'package:paragonik/ui/screens/camera/camera_screen.dart';
 import 'package:paragonik/ui/screens/receipts/receipt_edit_screen.dart';
@@ -24,14 +26,20 @@ final GoRouter router = GoRouter(
               create: (_) => ImageProcessingService(),
             ),
             Provider<ReceiptService>(create: (_) => ReceiptService()),
+            Provider<StoreService>(create: (_) => StoreService()),
 
             Provider<OcrService>(
-              create: (context) =>
-                  OcrService(context.read<ImageProcessingService>()),
+              create: (context) => OcrService(
+                context.read<StoreService>(),
+                context.read<ImageProcessingService>(),
+              ),
             ),
             ChangeNotifierProvider<ReceiptNotifier>(
               create: (context) =>
                   ReceiptNotifier(context.read<ReceiptService>()),
+            ),
+            ChangeNotifierProvider<StoreNotifier>(
+              create: (context) => StoreNotifier(context.read<StoreService>()),
             ),
           ],
           child: BaseScaffold(child: navigationShell),

@@ -1,7 +1,7 @@
 
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:paragonik/data/models/receipt.dart';
+import 'package:paragonik/data/models/database/receipt.dart';
 import 'package:paragonik/data/services/receipt_service.dart';
 import 'package:uuid/uuid.dart';
 
