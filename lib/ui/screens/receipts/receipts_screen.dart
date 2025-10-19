@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:paragonik/data/models/receipt.dart';
 import 'package:paragonik/notifiers/receipt_notifier.dart';
 import 'package:paragonik/ui/screens/receipts/receipt_list_item.dart';
@@ -92,15 +93,19 @@ class _ReceiptsScreenState extends State<ReceiptsScreen> {
                   ? const Center(
                       child: Text('Nie znaleziono pasujących paragonów.'),
                     )
-                  : ListView.builder(
-                      itemCount: _filteredReceipts.length,
-                      itemBuilder: (context, index) {
-                        return ReceiptListItem(
-                          receipt: _filteredReceipts[index],
-                          onDelete: _handleDeleteReceipt,
-                        );
-                      },
-                    ),
+                  : RefreshIndicator(
+                    onRefresh: () => context.read<ReceiptNotifier>().fetchReceipts(),
+                    child: ListView.builder(
+                        itemCount: _filteredReceipts.length,
+                        itemBuilder: (context, index) {
+                          return ReceiptListItem(
+                            receipt: _filteredReceipts[index],
+                            onDelete: _handleDeleteReceipt,
+                            onEdit: (id) => context.push('/receipts/edit/$id'),
+                          );
+                        },
+                      ),
+                  ),
             ),
           ],
         );

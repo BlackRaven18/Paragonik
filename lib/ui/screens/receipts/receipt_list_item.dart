@@ -8,11 +8,13 @@ import 'package:paragonik/data/models/receipt.dart';
 class ReceiptListItem extends StatelessWidget {
   final Receipt receipt;
   final Function(String id) onDelete;
+  final Function(String id) onEdit;
 
   const ReceiptListItem({
     super.key,
     required this.receipt,
     required this.onDelete,
+    required this.onEdit,
   });
 
   @override
@@ -74,10 +76,7 @@ class ReceiptListItem extends StatelessWidget {
               children: [
                 IconButton(
                   icon: Icon(Icons.edit, color: Colors.blue.shade700),
-                  onPressed: () {
-                    // TODO: Dodać logikę edycji/przejścia do szczegółów
-                    print('Edit receipt: ${receipt.id}');
-                  },
+                  onPressed: () => onEdit(receipt.id),
                 ),
                 IconButton(
                   icon: Icon(Icons.delete, color: Colors.red.shade700),

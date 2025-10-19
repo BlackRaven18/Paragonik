@@ -225,39 +225,35 @@ class _CameraScreenState extends State<CameraScreen> {
     if (_originalImageFile == null) return;
 
     final ocrData = _ocrResult ?? OcrResult(sum: null, date: null);
-
     final receiptNotifier = context.read<ReceiptNotifier>();
-    final receiptService = context.read<ReceiptService>();
 
     final amountToSave = double.tryParse(ocrData.sum ?? '0.0') ?? 0.0;
     final dateToSave = ocrData.date ?? DateTime.now();
-    final storeName = ocrData.storeName ?? '';
+    final storeNameToSave = ocrData.storeName ?? '';
 
     final newReceipt = Receipt(
       id: const Uuid().v4(),
       imagePath: _originalImageFile!.path,
       amount: amountToSave,
       date: dateToSave,
-      storeName: storeName,
+      storeName: storeNameToSave,
       updatedAt: DateTime.now(),
     );
 
     try {
-      receiptService.addReceipt(
-        imageFile: _originalImageFile!,
-        amount: amountToSave,
-        date: dateToSave,
-        storeName: storeName,
-      );
+     receiptNotifier.addReceipt(
+      imageFile: _originalImageFile!,
+      amount: amountToSave,
+      date: dateToSave,
+      storeName: storeNameToSave,
+    );
 
-      receiptNotifier.addReceipt(newReceipt);
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Zapisano paragon!'),
-          backgroundColor: Colors.green,
-        ),
-      );
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Zapisano paragon!'),
+        backgroundColor: Colors.green,
+      ),
+    );
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

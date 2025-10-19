@@ -7,6 +7,7 @@ import 'package:paragonik/data/services/receipt_service.dart';
 import 'package:paragonik/notifiers/receipt_notifier.dart';
 import 'package:paragonik/ui/core/base_scaffold.dart';
 import 'package:paragonik/ui/screens/camera/camera_screen.dart';
+import 'package:paragonik/ui/screens/receipts/receipt_edit_screen.dart';
 import 'package:paragonik/ui/screens/receipts/receipts_screen.dart';
 import 'package:paragonik/ui/screens/settings_screen.dart';
 import 'package:paragonik/ui/screens/stats_screen.dart';
@@ -19,14 +20,18 @@ final GoRouter router = GoRouter(
       builder: (context, state, navigationShell) {
         return MultiProvider(
           providers: [
-            Provider<ImageProcessingService>(create: (_) => ImageProcessingService()),
+            Provider<ImageProcessingService>(
+              create: (_) => ImageProcessingService(),
+            ),
             Provider<ReceiptService>(create: (_) => ReceiptService()),
 
             Provider<OcrService>(
-              create: (context) => OcrService(context.read<ImageProcessingService>()),
+              create: (context) =>
+                  OcrService(context.read<ImageProcessingService>()),
             ),
             ChangeNotifierProvider<ReceiptNotifier>(
-              create: (context) => ReceiptNotifier(context.read<ReceiptService>()),
+              create: (context) =>
+                  ReceiptNotifier(context.read<ReceiptService>()),
             ),
           ],
           child: BaseScaffold(child: navigationShell),
@@ -46,6 +51,15 @@ final GoRouter router = GoRouter(
             GoRoute(
               path: '/receipts',
               builder: (context, state) => const ReceiptsScreen(),
+              routes: [
+                GoRoute(
+                  path: 'edit/:id',
+                  builder: (context, state) {
+                    final id = state.pathParameters['id']!;
+                    return ReceiptEditScreen(receiptId: id);
+                  },
+                ),
+              ],
             ),
           ],
         ),
