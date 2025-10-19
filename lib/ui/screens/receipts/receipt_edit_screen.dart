@@ -1,12 +1,10 @@
-// lib/ui/screens/receipts/receipt_edit_screen.dart
-
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:paragonik/data/models/receipt.dart';
 import 'package:paragonik/data/services/receipt_service.dart';
 import 'package:paragonik/notifiers/receipt_notifier.dart';
-import 'package:paragonik/ui/core/widgets/full_screen_image_viewer.dart'; // Import
+import 'package:paragonik/ui/core/widgets/full_screen_image_viewer.dart';
 import 'package:provider/provider.dart';
 
 class ReceiptEditScreen extends StatefulWidget {
@@ -47,12 +45,10 @@ class _ReceiptEditScreenState extends State<ReceiptEditScreen> {
       });
     } else {
       if (!mounted) return;
-      // Handle case where receipt is not found
       Navigator.of(context).pop();
     }
   }
 
-  // ZMIANA: Nowa, pełna funkcja wyboru daty i godziny
   Future<void> _selectDateTime() async {
     final initialDate = _selectedDateTime ?? DateTime.now();
 
@@ -112,83 +108,96 @@ class _ReceiptEditScreenState extends State<ReceiptEditScreen> {
   @override
   Widget build(BuildContext context) {
     if (_isLoading) {
-      return Scaffold(
-        appBar: AppBar(title: const Text('Edytuj paragon')),
-        body: const Center(child: CircularProgressIndicator()),
-      );
+      return Scaffold(body: const Center(child: CircularProgressIndicator()));
     }
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Edytuj paragon'),
-        // USUNIĘTE: Przycisk zapisu z AppBar
-      ),
-      // NOWOŚĆ: Przycisk zapisu w bardziej widocznym miejscu
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: _saveChanges,
-        label: const Text('Zapisz zmiany'),
-        icon: const Icon(Icons.save),
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.fromLTRB(
-          16.0,
-          16.0,
-          16.0,
-          80.0,
-        ), // Dodatkowy padding na dole
-        child: Column(
+      body: SafeArea(
+        child: Stack(
           children: [
-            // NOWOŚĆ: Podgląd zdjęcia z opcją zoomu
-            GestureDetector(
-              onTap: () => Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => FullScreenImageViewer(
-                    imageFile: File(_receipt!.imagePath),
+            SingleChildScrollView(
+              padding: const EdgeInsets.fromLTRB(
+                16.0,
+                16.0,
+                16.0,
+                100.0,
+              ),
+              child: Column(
+                children: [
+                  GestureDetector(
+                    onTap: () => Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => FullScreenImageViewer(
+                          imageFile: File(_receipt!.imagePath),
+                        ),
+                      ),
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(12),
+                      child: Image.file(
+                        File(_receipt!.imagePath),
+                        height: 300,
+                        fit: BoxFit.contain,
+                      ),
+                    ),
                   ),
-                ),
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(12),
-                child: Image.file(
-                  File(_receipt!.imagePath),
-                  height: 300,
-                  fit: BoxFit.contain,
-                ),
+                  const SizedBox(height: 24),
+
+                  TextFormField(
+                    controller: _amountController,
+                    decoration: const InputDecoration(
+                      labelText: 'Kwota',
+                      border: OutlineInputBorder(),
+                      suffixText: 'PLN',
+                    ),
+                    keyboardType: const TextInputType.numberWithOptions(
+                      decimal: true,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  TextFormField(
+                    controller: _storeController,
+                    decoration: const InputDecoration(
+                      labelText: 'Sklep',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  ListTile(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                      side: BorderSide(color: Colors.grey.shade400),
+                    ),
+                    title: const Text('Data i godzina'),
+                    subtitle: Text(
+                      DateFormat('dd.MM.yyyy HH:mm').format(_selectedDateTime!),
+                    ),
+                    trailing: const Icon(Icons.edit_calendar_outlined),
+                    onTap: _selectDateTime,
+                  ),
+                ],
               ),
             ),
-            const SizedBox(height: 24),
-            TextFormField(
-              controller: _amountController,
-              decoration: const InputDecoration(
-                labelText: 'Kwota',
-                border: OutlineInputBorder(),
-                suffixText: 'PLN',
-              ),
-              keyboardType: const TextInputType.numberWithOptions(
-                decimal: true,
+
+            Positioned(
+              top: 16.0,
+              left: 16.0,
+              child: FloatingActionButton.small(
+                onPressed: () => Navigator.of(context).pop(),
+                heroTag: 'receipt_edit_back_btn',
+                child: const Icon(Icons.arrow_back),
               ),
             ),
-            const SizedBox(height: 16),
-            TextFormField(
-              controller: _storeController,
-              decoration: const InputDecoration(
-                labelText: 'Sklep',
-                border: OutlineInputBorder(),
+
+            Positioned(
+              bottom: 16.0,
+              right: 16.0,
+              child: FloatingActionButton.extended(
+                onPressed: _saveChanges,
+                label: const Text('Zapisz zmiany'),
+                icon: const Icon(Icons.save),
+                heroTag: 'receipt_edit_save_btn'
               ),
-            ),
-            const SizedBox(height: 16),
-            // ZMIANA: Ulepszony widget wyboru daty i godziny
-            ListTile(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-                side: BorderSide(color: Colors.grey.shade400),
-              ),
-              title: const Text('Data i godzina'),
-              subtitle: Text(
-                DateFormat('dd.MM.yyyy HH:mm').format(_selectedDateTime!),
-              ),
-              trailing: const Icon(Icons.edit_calendar_outlined),
-              onTap: _selectDateTime,
             ),
           ],
         ),

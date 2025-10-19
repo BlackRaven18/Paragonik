@@ -90,7 +90,6 @@ class _ReceiptsScreenState extends State<ReceiptsScreen> {
       ),
     );
 
-    // Jeśli użytkownik potwierdził, wywołaj logikę usuwania
     if (shouldDelete == true) {
       if (!mounted) return;
 
@@ -102,9 +101,6 @@ class _ReceiptsScreenState extends State<ReceiptsScreen> {
   Widget build(BuildContext context) {
     return Consumer<ReceiptNotifier>(
       builder: (context, notifier, child) {
-        // if (_searchController.text.isEmpty) {
-        //   _filteredReceipts = notifier.receipts;
-        // }
 
         if (notifier.isLoading) {
           return const Center(child: CircularProgressIndicator());
@@ -172,7 +168,6 @@ class _ReceiptsScreenState extends State<ReceiptsScreen> {
                   icon: const Icon(Icons.clear),
                   onPressed: () {
                     _searchController.clear();
-                    // _filterReceipts();
                   },
                 )
               : null,
