@@ -247,7 +247,7 @@ class _CameraScreenState extends State<CameraScreen> {
         imageFile: _originalImageFile!,
         amount: amountToSave,
         date: dateToSave,
-        storeName: '',
+        storeName: storeName,
       );
 
       receiptNotifier.addReceipt(newReceipt);
