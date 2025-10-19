@@ -103,11 +103,11 @@ class OcrService {
 
     for (final store in allStores) {
       for (final keyword in store.keywords) {
-        if (lowerCaseText.contains(keyword)) {
+        if (keyword.isNotEmpty && lowerCaseText.contains(keyword.trim())) {
           return store.name;
         }
       }
     }
-    return null;
+    return _storeService.getUnknownStore().then((value) => value.name);
   }
 }

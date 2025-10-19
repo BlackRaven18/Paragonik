@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:paragonik/ui/core/app_bottom_navigation_bar.dart';
+import 'package:paragonik/ui/core/assets/asset_manager.dart';
 import 'package:paragonik/ui/core/themes/theme_notifier.dart';
 import 'package:provider/provider.dart';
 
@@ -37,11 +38,7 @@ class _BaseScaffoldState extends State<BaseScaffold> {
               actions: [themeToggleButton],
               leading: IconButton(
                 padding: EdgeInsets.zero,
-                icon: Image.asset(
-                  'assets/images/logo.png',
-                  width: 48,
-                  height: 48,
-                ),
+                icon: Image.asset(AssetManager.appLogo, width: 48, height: 48),
                 onPressed: () {
                   setState(() {
                     _isDrawerVisible = !_isDrawerVisible;
@@ -59,11 +56,7 @@ class _BaseScaffoldState extends State<BaseScaffold> {
               actions: [themeToggleButton],
               leading: IconButton(
                 padding: EdgeInsets.zero,
-                icon: Image.asset(
-                  'assets/images/logo.png',
-                  width: 48,
-                  height: 48,
-                ),
+                icon: Image.asset(AssetManager.appLogo, width: 48, height: 48),
                 onPressed: () {
                   setState(() {
                     _isDrawerVisible = !_isDrawerVisible;

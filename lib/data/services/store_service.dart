@@ -10,4 +10,10 @@ class StoreService {
     final List<Map<String, dynamic>> maps = await db.query('stores', orderBy: 'name ASC');
     return List.generate(maps.length, (i) => Store.fromMap(maps[i]));
   }
+
+  Future<Store> getUnknownStore() async {
+    final db = await _database;
+    final List<Map<String, dynamic>> maps = await db.query('stores', where: 'id = ?', whereArgs: ['unknown'], limit: 1);
+    return Store.fromMap(maps.first);
+  }
 }

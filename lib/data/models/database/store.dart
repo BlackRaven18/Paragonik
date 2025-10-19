@@ -1,3 +1,5 @@
+import 'package:paragonik/data/models/enums/store_enum.dart';
+
 class Store {
   final String id;
   final String name;
@@ -18,5 +20,22 @@ class Store {
       keywords: (map['keywords'] as String).split(','),
       iconPath: map['iconPath'],
     );
+  }
+
+  StoreEnum get storeEnum {
+    switch (name) {
+      case 'biedronka':
+        return StoreEnum.biedronka;
+      case 'Żabka':
+        return StoreEnum.zabka;
+      case 'Lidl':
+        return StoreEnum.lidl;
+      case 'Społem':
+        return StoreEnum.spolem;
+      case 'Rossman':
+        return StoreEnum.rossman;
+      default:
+        return StoreEnum.unknown;
+    }
   }
 }

@@ -18,10 +18,16 @@ class StoreNotifier extends ChangeNotifier {
   }
 
   Store? getStoreByName(String name) {
-    try {
-      return _stores.firstWhere((store) => store.name == name);
-    } catch (e) {
-      return null;
+    final matchingStores = _stores.where((store) => store.name == name);
+
+    if (matchingStores.isNotEmpty) {
+      return matchingStores.first;
+    } else {
+      return _stores.firstWhere(
+        (store) => store.id == 'unknown',
+        orElse: () =>
+            Store(id: 'unknown', name: 'Nieznany sklep', keywords: []),
+      );
     }
   }
 

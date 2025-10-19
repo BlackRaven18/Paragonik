@@ -45,8 +45,9 @@ class ImagePreviewView extends StatelessWidget {
     final imageToShow = showProcessed && processedImage != null
         ? processedImage
         : originalImage;
-    if (imageToShow == null)
+    if (imageToShow == null) {
       return const Center(child: Text('Brak obrazu do wyświetlenia.'));
+    }
 
     return Column(
       children: [
@@ -140,8 +141,7 @@ class ImagePreviewView extends StatelessWidget {
           const Divider(height: 20),
 
           Row(
-            crossAxisAlignment:
-                CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
                 child: Column(
@@ -189,13 +189,15 @@ class ImagePreviewView extends StatelessWidget {
                         Flexible(
                           child: StoreDisplay(
                             storeName: storeString,
-                            textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                            textStyle: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                         const SizedBox(width: 4),
                         GestureDetector(
-                          onTap:
-                              onEditStore,
+                          onTap: onEditStore,
                           child: const Icon(Icons.store, size: 20),
                         ),
                       ],
