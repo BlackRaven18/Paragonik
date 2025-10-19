@@ -5,12 +5,12 @@ import 'package:paragonik/ui/core/themes/theme.dart';
 import 'package:paragonik/ui/core/themes/theme_notifier.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   runApp(
-     MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => ThemeNotifier()),
-      ],
+    MultiProvider(
+      providers: [ChangeNotifierProvider(create: (_) => ThemeNotifier())],
       child: const MainApp(),
     ),
   );
@@ -34,10 +34,7 @@ class MainApp extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales: const [
-        Locale('pl', 'PL'),
-        Locale('en', 'US'), 
-      ],
+      supportedLocales: const [Locale('pl', 'PL'), Locale('en', 'US')],
     );
   }
 }
