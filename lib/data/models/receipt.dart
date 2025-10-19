@@ -6,6 +6,7 @@ class Receipt {
   final double amount;
   final DateTime date;
   final String storeName;
+  final DateTime createdAt;
   final DateTime updatedAt;
   final DateTime? deletedAt;
 
@@ -15,6 +16,7 @@ class Receipt {
     required this.amount,
     required this.date,
     required this.storeName,
+    required this.createdAt,
     required this.updatedAt,
     this.deletedAt,
   });
@@ -27,6 +29,7 @@ class Receipt {
       'amount': amount,
       'date': date.toIso8601String(),
       'storeName': storeName,
+      'created_at': createdAt.toIso8601String(),
       'updated_at': updatedAt.toIso8601String(),
       'deleted_at': deletedAt?.toIso8601String(),
     };
@@ -40,6 +43,7 @@ class Receipt {
       amount: map['amount'],
       date: DateTime.parse(map['date']),
       storeName: map['storeName'],
+      createdAt: DateTime.parse(map['created_at']),
       updatedAt: DateTime.parse(map['updated_at']),
       deletedAt: map['deleted_at'] != null ? DateTime.parse(map['deleted_at']) : null,
     );

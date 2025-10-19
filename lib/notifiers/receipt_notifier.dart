@@ -37,6 +37,7 @@ class ReceiptNotifier extends ChangeNotifier {
       amount: amount,
       date: date,
       storeName: storeName,
+      createdAt: DateTime.now(),
       updatedAt: DateTime.now(),
     );
 

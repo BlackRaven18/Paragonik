@@ -3,15 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:paragonik/data/models/ocr_result.dart';
 import 'package:paragonik/data/models/processed_ocr_result.dart';
-import 'package:paragonik/data/models/receipt.dart';
 import 'package:paragonik/data/services/ocr_service.dart';
-import 'package:paragonik/data/services/receipt_service.dart';
 import 'package:paragonik/notifiers/receipt_notifier.dart';
 import 'package:paragonik/ui/screens/camera/image_preview.dart';
 import 'package:paragonik/ui/screens/camera/initial_view.dart';
 import 'package:paragonik/ui/screens/camera/processing_view.dart';
 import 'package:provider/provider.dart';
-import 'package:uuid/uuid.dart';
 
 class CameraScreen extends StatefulWidget {
   const CameraScreen({super.key});
@@ -230,15 +227,6 @@ class _CameraScreenState extends State<CameraScreen> {
     final amountToSave = double.tryParse(ocrData.sum ?? '0.0') ?? 0.0;
     final dateToSave = ocrData.date ?? DateTime.now();
     final storeNameToSave = ocrData.storeName ?? '';
-
-    final newReceipt = Receipt(
-      id: const Uuid().v4(),
-      imagePath: _originalImageFile!.path,
-      amount: amountToSave,
-      date: dateToSave,
-      storeName: storeNameToSave,
-      updatedAt: DateTime.now(),
-    );
 
     try {
      receiptNotifier.addReceipt(

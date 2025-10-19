@@ -32,6 +32,7 @@ class DatabaseService {
         amount REAL NOT NULL,
         date TEXT NOT NULL,
         storeName TEXT,
+        created_at TEXT NOT NULL,
         updated_at TEXT NOT NULL,
         deleted_at TEXT
       )
