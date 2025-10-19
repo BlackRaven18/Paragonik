@@ -10,6 +10,7 @@ import 'package:paragonik/ui/screens/camera/image_preview_view.dart';
 import 'package:paragonik/ui/screens/camera/initial_view.dart';
 import 'package:paragonik/ui/screens/camera/modals/store_selection_modal.dart';
 import 'package:paragonik/ui/screens/camera/processing_view.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
 class CameraScreen extends StatefulWidget {
@@ -36,6 +37,46 @@ class _CameraScreenState extends State<CameraScreen> {
   void dispose() {
     _processedImageFile?.delete();
     super.dispose();
+  }
+
+  Future<void> _requestAndGetImage(ImageSource source) async {
+    final permission = source == ImageSource.camera ? Permission.camera : Permission.photos;
+
+    final status = await permission.request();
+
+    if (status.isGranted) {
+      _getImage(source);
+    } else if (status.isPermanentlyDenied) {
+      if(mounted) {
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: const Text('Brak uprawnień'),
+            content: Text('Aplikacja potrzebuje dostępu do ${source == ImageSource.camera ? "aparatu" : "galerii"}. Proszę włączyć uprawnienie w ustawieniach aplikacji.'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: const Text('Anuluj'),
+              ),
+              TextButton(
+                onPressed: () {
+                  openAppSettings();
+                  Navigator.of(context).pop();
+                },
+                child: const Text('Otwórz ustawienia'),
+              ),
+            ],
+          ),
+        );
+      }
+    } else {
+      // Jeśli użytkownik po prostu odmówił (ale nie trwale)
+      if(mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Odmówiono dostępu do ${source == ImageSource.camera ? "aparatu" : "galerii"}.')),
+        );
+      }
+    }
   }
 
   Future<void> _getImage(ImageSource source) async {
@@ -259,7 +300,7 @@ class _CameraScreenState extends State<CameraScreen> {
 
   Widget _buildContent() {
     if (_originalImageFile == null) {
-      return InitialView(onImageRequested: _getImage);
+      return InitialView(onImageRequested: _requestAndGetImage);
     }
     if (_isProcessing) {
       return const ProcessingView();
