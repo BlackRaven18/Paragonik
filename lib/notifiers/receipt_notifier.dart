@@ -10,6 +10,7 @@ class ReceiptNotifier extends ChangeNotifier {
   
   List<Receipt> _receipts = [];
   List<Receipt> get receipts => _receipts;
+  int get totalReceipts => _receipts.length;
 
   bool isLoading = false;
 

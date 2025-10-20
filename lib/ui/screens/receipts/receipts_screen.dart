@@ -58,18 +58,24 @@ class _ReceiptsScreenState extends State<ReceiptsScreen> {
     return grouped;
   }
 
-  // void _filterReceipts() {
-  //   final receiptNotifier = context.read<ReceiptNotifier>();
-  //   final query = _searchController.text.toLowerCase();
-
-  //   setState(() {
-  //     _filteredReceipts = receiptNotifier.receipts.where((receipt) {
-  //       return query.isEmpty ||
-  //           receipt.storeName.toLowerCase().contains(query) ||
-  //           receipt.amount.toString().contains(query);
-  //     }).toList();
-  //   });
-  // }
+  Widget _buildReceiptCounter(int count) {
+    return Card(
+      margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+      child: ListTile(
+        leading: Icon(
+          Icons.receipt_long_outlined,
+          color: Theme.of(context).colorScheme.primary,
+        ),
+        title: const Text('Całkowita liczba paragonów'),
+        trailing: Text(
+          count.toString(),
+          style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
+        ),
+      ),
+    );
+  }
 
   Future<void> _handleDeleteReceipt(String id) async {
     final shouldDelete = await showDialog<bool>(
@@ -122,6 +128,7 @@ class _ReceiptsScreenState extends State<ReceiptsScreen> {
           children: [
             _buildSearchBar(),
             _buildGroupingToggle(),
+            _buildReceiptCounter(notifier.totalReceipts),
             Expanded(
               child: RefreshIndicator(
                 onRefresh: () =>
