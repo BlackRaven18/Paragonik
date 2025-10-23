@@ -9,14 +9,16 @@ import 'package:paragonik/notifiers/receipt_notifier.dart';
 import 'package:paragonik/notifiers/store_notifier.dart';
 import 'package:paragonik/ui/core/base_scaffold.dart';
 import 'package:paragonik/ui/screens/camera/camera_screen.dart';
+import 'package:paragonik/ui/screens/camera2/camera_screen_2.dart';
 import 'package:paragonik/ui/screens/receipts/receipt_edit_screen.dart';
 import 'package:paragonik/ui/screens/receipts/receipts_screen.dart';
 import 'package:paragonik/ui/screens/settings_screen.dart';
 import 'package:paragonik/ui/screens/stats_screen.dart';
+import 'package:paragonik/view_models/screens/camera/camera_view_model.dart';
 import 'package:provider/provider.dart';
 
 final GoRouter router = GoRouter(
-  initialLocation: '/camera',
+  initialLocation: '/camera2',
   routes: [
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) {
@@ -51,6 +53,17 @@ final GoRouter router = GoRouter(
             GoRoute(
               path: '/camera',
               builder: (context, state) => const CameraScreen(),
+            ),
+          ],
+        ),
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: '/camera2',
+              builder: (context, state) => ChangeNotifierProvider(
+                create: (context) => CameraViewModel(),
+                child: CameraScreen2(),
+              ),
             ),
           ],
         ),
