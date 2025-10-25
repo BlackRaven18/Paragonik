@@ -14,7 +14,7 @@ class AssetManager {
   static const String storeSpolem = '$_iconsPath/spolem.png';
   static const String storeDefault = '$_iconsPath/default_icon.png';
 
-  static String? getIconForStore(StoreEnum store) {
+  static String getIconForStore(StoreEnum store) {
     switch (store) {
       case StoreEnum.biedronka:
         return storeBiedronka;
@@ -26,7 +26,7 @@ class AssetManager {
         return storeSpolem;
       case StoreEnum.unknown:
       default:
-        return null;
+        return storeDefault;
     }
   }
 }

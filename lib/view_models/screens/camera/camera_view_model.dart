@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:paragonik/data/models/database/store.dart';
 import 'package:paragonik/data/models/ocr_result.dart';
+import 'package:paragonik/data/services/notifications/notification_service.dart';
 import 'package:paragonik/data/services/ocr_service.dart';
 import 'package:paragonik/notifiers/receipt_notifier.dart';
 
@@ -103,6 +104,8 @@ class CameraViewModel extends ChangeNotifier {
       storeName: ocrData.storeName ?? '',
     );
     clearImage();
+
+    NotificationService.showSuccess('Dodano nowy paragonik!');
   }
 
   void toggleImageType() {
