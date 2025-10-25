@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:paragonik/data/models/database/store.dart';
 import 'package:paragonik/data/services/store_service.dart';
+import 'package:paragonik/ui/core/assets/asset_manager.dart';
 import 'package:provider/provider.dart';
 
 class StoreSelectionModal extends StatefulWidget {
@@ -50,7 +51,7 @@ class _StoreSelectionModalState extends State<StoreSelectionModal> {
                   itemBuilder: (context, index) {
                     final store = _filteredStores[index];
                     return ListTile(
-                      leading: Image.asset(store.iconPath ?? 'assets/icons/default_icon.png'),
+                      leading: Image.asset(store.iconPath ?? AssetManager.storeDefault),
                       title: Text(store.name),
                       onTap: () {
                         Navigator.of(context).pop(store);

@@ -6,7 +6,7 @@ import 'package:paragonik/data/models/database/store.dart';
 import 'package:paragonik/data/services/receipt_service.dart';
 import 'package:paragonik/helpers/date_picker.dart';
 import 'package:paragonik/notifiers/receipt_notifier.dart';
-import 'package:paragonik/ui/screens/camera/modals/store_selection_modal.dart';
+import 'package:paragonik/ui/widgets/modals/store_selection_modal.dart';
 import 'package:paragonik/ui/widgets/image_viewer.dart';
 import 'package:paragonik/ui/widgets/store_display.dart';
 import 'package:provider/provider.dart';

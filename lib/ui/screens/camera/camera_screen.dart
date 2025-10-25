@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:paragonik/ui/screens/camera/image_preview_view.dart';
+import 'package:paragonik/ui/screens/camera/image_preview_view/image_preview_view.dart';
 import 'package:paragonik/ui/screens/camera/initial_view.dart';
 import 'package:paragonik/ui/screens/camera/processing_view.dart';
 import 'package:paragonik/view_models/screens/camera/camera_view_model.dart';
@@ -12,11 +12,7 @@ class CameraScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final viewModel = context.watch<CameraViewModel>();
 
-    return Scaffold(
-      body: Center(
-        child: _buildContent(viewModel),
-      ),
-    );
+    return Scaffold(body: Center(child: _buildContent(viewModel)));
   }
 
   Widget _buildContent(CameraViewModel viewModel) {

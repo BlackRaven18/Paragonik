@@ -12,6 +12,7 @@ class AssetManager {
   static const String storeZabka = '$_iconsPath/zabka.png';
   static const String storeLidl = '$_iconsPath/lidl.png';
   static const String storeSpolem = '$_iconsPath/spolem.png';
+  static const String storeDefault = '$_iconsPath/default_icon.png';
 
   static String? getIconForStore(StoreEnum store) {
     switch (store) {

@@ -2,42 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:paragonik/data/models/database/store.dart';
 import 'package:paragonik/helpers/date_picker.dart';
-import 'package:paragonik/ui/screens/camera/modals/store_selection_modal.dart';
-import 'package:paragonik/ui/widgets/image_viewer.dart';
+import 'package:paragonik/ui/widgets/modals/store_selection_modal.dart';
 import 'package:paragonik/ui/widgets/store_display.dart';
 import 'package:paragonik/view_models/screens/camera/camera_view_model.dart';
 import 'package:provider/provider.dart';
 
-class ImagePreviewView extends StatelessWidget {
-  const ImagePreviewView({super.key});
+class ResultPanel extends StatelessWidget {
+  const ResultPanel({super.key});
 
   @override
   Widget build(BuildContext context) {
     final viewModel = context.watch<CameraViewModel>();
 
-    final imageToShow =
-        viewModel.showProcessedImage && viewModel.processedImageFile != null
-        ? viewModel.processedImageFile
-        : viewModel.originalImageFile;
-    if (imageToShow == null) {
-      return const Center(child: Text('Błąd: Brak obrazu'));
-    }
-
-    return Column(
-      children: [
-        Expanded(
-          child: ImageViewer(
-            imageFile: viewModel.originalImageFile!,
-            secondaryImageFile: viewModel.processedImageFile,
-          ),
-        ),
-        if (viewModel.ocrResult != null) _buildResultPanel(context, viewModel),
-        _buildActionPanel(context, viewModel),
-      ],
-    );
-  }
-
-  Widget _buildResultPanel(BuildContext context, CameraViewModel viewModel) {
     final sumLabelText = viewModel.isSumManuallyCorrected
         ? 'Kwota (Poprawiona):'
         : 'Kwota:';
@@ -210,48 +186,6 @@ class ImagePreviewView extends StatelessWidget {
                 ),
               ),
             ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildActionPanel(BuildContext context, CameraViewModel viewModel) {
-    if (viewModel.ocrResult == null) {
-      return Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            TextButton.icon(
-              onPressed: viewModel.clearImage,
-              icon: const Icon(Icons.refresh),
-              label: const Text('Zmień zdjęcie'),
-            ),
-            ElevatedButton.icon(
-              onPressed: viewModel.processImage,
-              icon: const Icon(Icons.checklist_rtl),
-              label: const Text('Przetwórz'),
-            ),
-          ],
-        ),
-      );
-    }
-
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          TextButton.icon(
-            onPressed: viewModel.clearImage,
-            icon: const Icon(Icons.cancel_outlined),
-            label: const Text('Anuluj'),
-          ),
-          ElevatedButton.icon(
-            onPressed: viewModel.saveResult,
-            icon: const Icon(Icons.check_circle),
-            label: const Text('Zapisz'),
           ),
         ],
       ),
