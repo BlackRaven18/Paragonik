@@ -6,8 +6,8 @@ import 'package:paragonik/data/models/database/store.dart';
 import 'package:paragonik/data/services/receipt_service.dart';
 import 'package:paragonik/helpers/date_picker.dart';
 import 'package:paragonik/notifiers/receipt_notifier.dart';
-import 'package:paragonik/ui/core/widgets/full_screen_image_viewer.dart';
 import 'package:paragonik/ui/screens/camera/modals/store_selection_modal.dart';
+import 'package:paragonik/ui/widgets/image_viewer.dart';
 import 'package:paragonik/ui/widgets/store_display.dart';
 import 'package:provider/provider.dart';
 
@@ -124,22 +124,9 @@ class _ReceiptEditScreenState extends State<ReceiptEditScreen> {
               padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 100.0),
               child: Column(
                 children: [
-                  GestureDetector(
-                    onTap: () => Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => FullScreenImageViewer(
-                          imageFile: File(_receipt!.imagePath),
-                        ),
-                      ),
-                    ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(12),
-                      child: Image.file(
-                        File(_receipt!.imagePath),
-                        height: 300,
-                        fit: BoxFit.contain,
-                      ),
-                    ),
+                  SizedBox(
+                    height: 300,
+                    child: ImageViewer(imageFile: File(_receipt!.imagePath)),
                   ),
                   const SizedBox(height: 24),
 

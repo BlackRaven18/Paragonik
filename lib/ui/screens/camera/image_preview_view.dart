@@ -1,116 +1,118 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:paragonik/data/models/ocr_result.dart';
-import 'package:paragonik/ui/core/widgets/full_screen_image_viewer.dart';
+import 'package:paragonik/data/models/database/store.dart';
+import 'package:paragonik/helpers/date_picker.dart';
+import 'package:paragonik/ui/screens/camera/modals/store_selection_modal.dart';
+import 'package:paragonik/ui/widgets/image_viewer.dart';
 import 'package:paragonik/ui/widgets/store_display.dart';
+import 'package:paragonik/view_models/screens/camera/camera_view_model.dart';
+import 'package:provider/provider.dart';
 
 class ImagePreviewView extends StatelessWidget {
-  final File? originalImage;
-  final File? processedImage;
-  final OcrResult? ocrResult;
-  final bool isProcessing;
-  final bool showProcessed;
-  final bool isSumCorrected;
-  final bool isDateCorrected;
-
-  final VoidCallback onProcessImage;
-  final VoidCallback onClearImage;
-  final VoidCallback onSaveResult;
-  final VoidCallback onEditSum;
-  final VoidCallback onEditDate;
-  final VoidCallback onEditStore;
-  final VoidCallback onToggleImageType;
-
-  const ImagePreviewView({
-    required this.originalImage,
-    this.processedImage,
-    this.ocrResult,
-    required this.isProcessing,
-    required this.showProcessed,
-    required this.isSumCorrected,
-    required this.isDateCorrected,
-    required this.onProcessImage,
-    required this.onClearImage,
-    required this.onSaveResult,
-    required this.onEditSum,
-    required this.onEditDate,
-    required this.onEditStore,
-    required this.onToggleImageType,
-    super.key,
-  });
+  const ImagePreviewView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final imageToShow = showProcessed && processedImage != null
-        ? processedImage
-        : originalImage;
+    final viewModel = context.watch<CameraViewModel>();
+
+    final imageToShow =
+        viewModel.showProcessedImage && viewModel.processedImageFile != null
+        ? viewModel.processedImageFile
+        : viewModel.originalImageFile;
     if (imageToShow == null) {
-      return const Center(child: Text('Brak obrazu do wyświetlenia.'));
+      return const Center(child: Text('Błąd: Brak obrazu'));
     }
 
     return Column(
       children: [
-        _buildImageDisplay(context, imageToShow),
-        if (ocrResult != null) _buildResultPanel(),
-        _buildActionPanel(),
+        Expanded(
+          child: ImageViewer(
+            imageFile: viewModel.originalImageFile!,
+            secondaryImageFile: viewModel.processedImageFile,
+          ),
+        ),
+        if (viewModel.ocrResult != null) _buildResultPanel(context, viewModel),
+        _buildActionPanel(context, viewModel),
       ],
     );
   }
 
-  Widget _buildImageDisplay(BuildContext context, File imageToShow) {
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Stack(
-          fit: StackFit.expand,
-          children: [
-            GestureDetector(
-              onTap: () => Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => FullScreenImageViewer(
-                    imageFile: imageToShow,
-                    title: showProcessed
-                        ? 'Podgląd skanu'
-                        : 'Podgląd oryginału',
-                  ),
-                ),
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(12),
-                child: Image.file(imageToShow, fit: BoxFit.contain),
-              ),
-            ),
-            if (processedImage != null)
-              Positioned(
-                top: 8,
-                right: 8,
-                child: FloatingActionButton.small(
-                  onPressed: onToggleImageType,
-                  tooltip: 'Pokaż ${showProcessed ? "oryginał" : "skan"}',
-                  child: Icon(
-                    showProcessed
-                        ? Icons.image_outlined
-                        : Icons.document_scanner_outlined,
-                  ),
-                ),
-              ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildResultPanel() {
-    final sumLabelText = isSumCorrected ? 'Kwota (Poprawiona):' : 'Kwota:';
-    final dateLabelText = isDateCorrected ? 'Data (Poprawiona):' : 'Data:';
+  Widget _buildResultPanel(BuildContext context, CameraViewModel viewModel) {
+    final sumLabelText = viewModel.isSumManuallyCorrected
+        ? 'Kwota (Poprawiona):'
+        : 'Kwota:';
+    final dateLabelText = viewModel.isDateManuallyCorrected
+        ? 'Data (Poprawiona):'
+        : 'Data:';
     const storeLabelText = 'Sklep:';
 
-    final sumString = ocrResult?.sum ?? 'Nie znaleziono';
-    final dateString = ocrResult?.date != null
-        ? DateFormat('yyyy-MM-dd HH:mm').format(ocrResult!.date!)
+    final sumString = viewModel.ocrResult?.sum ?? 'Nie znaleziono';
+    final dateString = viewModel.ocrResult?.date != null
+        ? DateFormat('yyyy-MM-dd HH:mm').format(viewModel.ocrResult!.date!)
         : 'Nie znaleziono';
-    final storeString = ocrResult?.storeName ?? 'Nie znaleziono';
+    final storeString = viewModel.ocrResult?.storeName ?? 'Nie znaleziono';
+
+    Future<void> showSumInputDialog(BuildContext context) async {
+      final amountController = TextEditingController(
+        text: viewModel.ocrResult?.sum ?? '',
+      );
+      final newSum = await showDialog<String>(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Ręczna poprawa kwoty'),
+          content: TextField(
+            controller: amountController,
+            autofocus: true,
+            keyboardType: const TextInputType.numberWithOptions(decimal: true),
+            decoration: const InputDecoration(
+              labelText: 'Wpisz poprawną kwotę',
+              suffixText: 'PLN',
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('Anuluj'),
+            ),
+            ElevatedButton(
+              onPressed: () => Navigator.of(context).pop(amountController.text),
+              child: const Text('Zapisz'),
+            ),
+          ],
+        ),
+      );
+
+      if (newSum != null && newSum.isNotEmpty) {
+        viewModel.updateSum(newSum);
+      }
+    }
+
+    Future<void> showDateTimePickerDialog(BuildContext context) async {
+      final newDateTime = await pickDateTime(
+        context,
+        initialDate: viewModel.ocrResult?.date,
+      );
+
+      if (newDateTime != null) {
+        viewModel.updateDate(newDateTime);
+      }
+    }
+
+    Future<void> showStoreSelectionModal(BuildContext context) async {
+      final selectedStore = await showModalBottomSheet<Store>(
+        context: context,
+        isScrollControlled: true,
+        builder: (_) => DraggableScrollableSheet(
+          expand: false,
+          initialChildSize: 0.6,
+          builder: (_, controller) => const StoreSelectionModal(),
+        ),
+      );
+
+      if (selectedStore != null) {
+        viewModel.updateStore(selectedStore);
+      }
+    }
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
@@ -135,11 +137,13 @@ class ImagePreviewView extends StatelessWidget {
                   ),
                 ],
               ),
-              IconButton(icon: const Icon(Icons.edit), onPressed: onEditSum),
+              IconButton(
+                icon: const Icon(Icons.edit),
+                onPressed: () => showSumInputDialog(context),
+              ),
             ],
           ),
           const Divider(height: 20),
-
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -164,7 +168,7 @@ class ImagePreviewView extends StatelessWidget {
                         ),
                         const SizedBox(width: 4),
                         GestureDetector(
-                          onTap: onEditDate,
+                          onTap: () => showDateTimePickerDialog(context),
                           child: const Icon(
                             Icons.edit_calendar_outlined,
                             size: 20,
@@ -197,7 +201,7 @@ class ImagePreviewView extends StatelessWidget {
                         ),
                         const SizedBox(width: 4),
                         GestureDetector(
-                          onTap: onEditStore,
+                          onTap: () => showStoreSelectionModal(context),
                           child: const Icon(Icons.store, size: 20),
                         ),
                       ],
@@ -212,20 +216,20 @@ class ImagePreviewView extends StatelessWidget {
     );
   }
 
-  Widget _buildActionPanel() {
-    if (ocrResult == null && !isProcessing) {
+  Widget _buildActionPanel(BuildContext context, CameraViewModel viewModel) {
+    if (viewModel.ocrResult == null) {
       return Padding(
         padding: const EdgeInsets.all(16.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             TextButton.icon(
-              onPressed: onClearImage,
+              onPressed: viewModel.clearImage,
               icon: const Icon(Icons.refresh),
               label: const Text('Zmień zdjęcie'),
             ),
             ElevatedButton.icon(
-              onPressed: onProcessImage,
+              onPressed: viewModel.processImage,
               icon: const Icon(Icons.checklist_rtl),
               label: const Text('Przetwórz'),
             ),
@@ -240,12 +244,12 @@ class ImagePreviewView extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           TextButton.icon(
-            onPressed: onClearImage,
+            onPressed: viewModel.clearImage,
             icon: const Icon(Icons.cancel_outlined),
             label: const Text('Anuluj'),
           ),
           ElevatedButton.icon(
-            onPressed: onSaveResult,
+            onPressed: viewModel.saveResult,
             icon: const Icon(Icons.check_circle),
             label: const Text('Zapisz'),
           ),
