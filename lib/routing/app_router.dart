@@ -11,8 +11,8 @@ import 'package:paragonik/ui/core/base_scaffold.dart';
 import 'package:paragonik/ui/screens/camera/camera_screen.dart';
 import 'package:paragonik/ui/screens/receipts/receipt_edit_screen.dart';
 import 'package:paragonik/ui/screens/receipts/receipts_screen.dart';
-import 'package:paragonik/ui/screens/settings_screen.dart';
-import 'package:paragonik/ui/screens/stats_screen.dart';
+import 'package:paragonik/ui/screens/settings/settings_screen.dart';
+import 'package:paragonik/ui/screens/stats/stats_screen.dart';
 import 'package:paragonik/view_models/screens/camera/camera_view_model.dart';
 import 'package:provider/provider.dart';
 
