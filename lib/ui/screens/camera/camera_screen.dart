@@ -5,6 +5,7 @@ import 'package:paragonik/data/models/database/store.dart';
 import 'package:paragonik/data/models/ocr_result.dart';
 import 'package:paragonik/data/models/processed_ocr_result.dart';
 import 'package:paragonik/data/services/ocr_service.dart';
+import 'package:paragonik/helpers/date_picker.dart';
 import 'package:paragonik/notifiers/receipt_notifier.dart';
 import 'package:paragonik/ui/screens/camera/image_preview_view.dart';
 import 'package:paragonik/ui/screens/camera/initial_view.dart';
@@ -183,54 +184,26 @@ class _CameraScreenState extends State<CameraScreen> {
   }
 
   Future<void> _showDateTimePickerDialog() async {
-    final firstDate = DateTime(2000);
-    final lastDate = DateTime.now().add(const Duration(days: 365));
 
-    var initialDate = _ocrResult?.date ?? DateTime.now();
-
-    if (initialDate.isAfter(lastDate) || initialDate.isBefore(firstDate)) {
-      initialDate = DateTime.now();
-    }
-
-    final DateTime? pickedDate = await showDatePicker(
-      context: context,
-      initialDate: initialDate,
-      firstDate: firstDate,
-      lastDate: lastDate,
-      locale: const Locale('pl', 'PL'),
+    final pickedDateTime = await pickDateTime(
+      context,
+      initialDate: _ocrResult?.date,
+      firstDate: DateTime(2000),
+      lastDate: DateTime.now().add(const Duration(days: 365)),
     );
 
-    if (pickedDate == null) return;
-
-    if (!mounted) return;
-
-    final TimeOfDay? pickedTime = await showTimePicker(
-      context: context,
-      initialTime: TimeOfDay.fromDateTime(initialDate),
-      builder: (BuildContext context, Widget? child) {
-        return MediaQuery(
-          data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
-          child: child!,
-        );
-      },
-    );
-
-    if (pickedTime == null) return;
+    if (pickedDateTime == null) return;
 
     final newDateTime = DateTime(
-      pickedDate.year,
-      pickedDate.month,
-      pickedDate.day,
-      pickedTime.hour,
-      pickedTime.minute,
+      pickedDateTime.year,
+      pickedDateTime.month,
+      pickedDateTime.day,
+      pickedDateTime.hour,
+      pickedDateTime.minute,
     );
 
     setState(() {
-      _ocrResult = OcrResult(
-        sum: _ocrResult!.sum,
-        date: newDateTime,
-        storeName: _ocrResult!.storeName,
-      );
+      _ocrResult = _ocrResult?.copyWith(date: newDateTime);
       _isDateManuallyCorrected = true;
     });
   }

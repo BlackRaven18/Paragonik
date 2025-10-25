@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:paragonik/data/models/database/receipt.dart';
 import 'package:paragonik/data/models/database/store.dart';
 import 'package:paragonik/data/services/receipt_service.dart';
+import 'package:paragonik/helpers/date_picker.dart';
 import 'package:paragonik/notifiers/receipt_notifier.dart';
 import 'package:paragonik/ui/core/widgets/full_screen_image_viewer.dart';
 import 'package:paragonik/ui/screens/camera/modals/store_selection_modal.dart';
@@ -70,38 +71,22 @@ class _ReceiptEditScreenState extends State<ReceiptEditScreen> {
   }
 
   Future<void> _selectDateTime() async {
-    final initialDate = _selectedDateTime ?? DateTime.now();
-
-    final DateTime? pickedDate = await showDatePicker(
-      context: context,
-      initialDate: initialDate,
+    final pickedDateTime = await pickDateTime(
+      context,
+      initialDate: _selectedDateTime ?? DateTime.now(),
       firstDate: DateTime(2000),
       lastDate: DateTime.now().add(const Duration(days: 365)),
-      locale: const Locale('pl', 'PL'),
     );
 
-    if (pickedDate == null || !mounted) return;
-
-    final TimeOfDay? pickedTime = await showTimePicker(
-      context: context,
-      initialTime: TimeOfDay.fromDateTime(initialDate),
-      builder: (context, child) {
-        return MediaQuery(
-          data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
-          child: child!,
-        );
-      },
-    );
-
-    if (pickedTime == null) return;
+    if (pickedDateTime == null) return;
 
     setState(() {
       _selectedDateTime = DateTime(
-        pickedDate.year,
-        pickedDate.month,
-        pickedDate.day,
-        pickedTime.hour,
-        pickedTime.minute,
+        pickedDateTime.year,
+        pickedDateTime.month,
+        pickedDateTime.day,
+        pickedDateTime.hour,
+        pickedDateTime.minute,
       );
     });
   }
