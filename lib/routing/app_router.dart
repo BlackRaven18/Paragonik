@@ -14,6 +14,7 @@ import 'package:paragonik/ui/screens/receipts/receipts_screen.dart';
 import 'package:paragonik/ui/screens/settings/settings_screen.dart';
 import 'package:paragonik/ui/screens/stats/stats_screen.dart';
 import 'package:paragonik/view_models/screens/camera/camera_view_model.dart';
+import 'package:paragonik/view_models/screens/receipts/receipts_view_model.dart';
 import 'package:provider/provider.dart';
 
 final GoRouter router = GoRouter(
@@ -67,7 +68,13 @@ final GoRouter router = GoRouter(
           routes: [
             GoRoute(
               path: '/receipts',
-              builder: (context, state) => const ReceiptsScreen(),
+              builder: (context, state) {
+                return ChangeNotifierProvider(
+                  create: (context) =>
+                      ReceiptsViewModel(context.read<ReceiptNotifier>()),
+                  child: const ReceiptsScreen(),
+                );
+              },
               routes: [
                 GoRoute(
                   path: 'edit/:id',

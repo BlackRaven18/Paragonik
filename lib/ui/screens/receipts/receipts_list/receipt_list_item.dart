@@ -1,27 +1,47 @@
-// lib/ui/screens/widgets/receipt_list_item.dart
-
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:paragonik/data/models/database/receipt.dart';
 import 'package:paragonik/ui/widgets/store_display.dart';
+import 'package:paragonik/view_models/screens/receipts/receipts_view_model.dart';
+import 'package:provider/provider.dart';
 
 class ReceiptListItem extends StatelessWidget {
   final Receipt receipt;
-  final Function(String id) onDelete;
-  final Function(String id) onEdit;
 
-  const ReceiptListItem({
-    super.key,
-    required this.receipt,
-    required this.onDelete,
-    required this.onEdit,
-  });
+  const ReceiptListItem({super.key, required this.receipt});
 
   @override
   Widget build(BuildContext context) {
+    final viewModel = context.watch<ReceiptsViewModel>();
     final theme = Theme.of(context);
     final formattedDate = DateFormat('dd.MM.yyyy HH:mm').format(receipt.date);
+
+    Future<void> handleDeleteReceipt(String id) async {
+      final shouldDelete = await showDialog<bool>(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Potwierdź usunięcie'),
+          content: const Text('Czy na pewno chcesz usunąć ten paragon?'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(false),
+              child: const Text('Anuluj'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(true),
+              child: const Text('Usuń', style: TextStyle(color: Colors.red)),
+            ),
+          ],
+        ),
+      );
+      if (shouldDelete == true && context.mounted) {
+        viewModel.deleteReceipt(id);
+      }
+    }
+
+    void handleEditReceipt(String id) => context.push('/receipts/edit/$id');
 
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
@@ -29,7 +49,6 @@ class ReceiptListItem extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: Row(
           children: [
-            // Miniaturka zdjęcia
             ClipRRect(
               borderRadius: BorderRadius.circular(8.0),
               child: Image.file(
@@ -68,17 +87,16 @@ class ReceiptListItem extends StatelessWidget {
                 ],
               ),
             ),
-            // Przyciski akcji
             Row(
               mainAxisSize: MainAxisSize.min,
               children: [
                 IconButton(
                   icon: Icon(Icons.edit, color: Colors.blue.shade700),
-                  onPressed: () => onEdit(receipt.id),
+                  onPressed: () => handleEditReceipt(receipt.id),
                 ),
                 IconButton(
                   icon: Icon(Icons.delete, color: Colors.red.shade700),
-                  onPressed: () => onDelete(receipt.id),
+                  onPressed: () => handleDeleteReceipt(receipt.id),
                 ),
               ],
             ),
