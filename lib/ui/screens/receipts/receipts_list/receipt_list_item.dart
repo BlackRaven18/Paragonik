@@ -52,7 +52,7 @@ class ReceiptListItem extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(8.0),
               child: Image.file(
-                File(receipt.imagePath),
+                File(receipt.thumbnailPath),
                 width: 70,
                 height: 70,
                 fit: BoxFit.cover,

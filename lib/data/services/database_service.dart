@@ -19,7 +19,7 @@ class DatabaseService {
 
     return await openDatabase(
       path,
-      version: 2,
+      version: 3,
       onCreate: _onCreate,
       onUpgrade: _onUpgrade,
     );
@@ -34,16 +34,20 @@ class DatabaseService {
     if (oldVersion < 2) {
       await _seedStores(db);
     }
+    if(oldVersion < 3){
+      await db.execute('ALTER TABLE receipts ADD COLUMN thumbnail_path TEXT');
+    }
   }
 
   Future<void> _createTables(Database db) async {
     await db.execute('''
       CREATE TABLE IF NOT EXISTS receipts (
         id TEXT PRIMARY KEY,
-        imagePath TEXT NOT NULL,
+        image_path TEXT NOT NULL,
+        thumbnail_path TEXT,
         amount REAL NOT NULL,
         date TEXT NOT NULL,
-        storeName TEXT,
+        store_name TEXT,
         created_at TEXT NOT NULL,
         updated_at TEXT NOT NULL,
         deleted_at TEXT
@@ -54,7 +58,7 @@ class DatabaseService {
         id TEXT PRIMARY KEY,
         name TEXT NOT NULL,
         keywords TEXT NOT NULL,
-        iconPath TEXT
+        icon_path TEXT
       )
     ''');
   }
@@ -64,37 +68,37 @@ class DatabaseService {
       'id': 'unknown',
       'name': 'Nieznany sklep',
       'keywords': '',
-      'iconPath': 'assets/icons/unknown.png'
+      'icon_path': 'assets/icons/unknown.png'
     });
     await db.insert('stores', {
       'id': 'biedronka',
       'name': 'Biedronka',
       'keywords': 'biedronka,jeronimo',
-      'iconPath': 'assets/icons/biedronka.png'
+      'icon_path': 'assets/icons/biedronka.png'
     });
     await db.insert('stores', {
       'id': 'zabka',
       'name': 'Żabka',
       'keywords': 'żabka,zabka,abka',
-      'iconPath': 'assets/icons/zabka.png'
+      'icon_path': 'assets/icons/zabka.png'
     });
     await db.insert('stores', {
       'id': 'lidl',
       'name': 'Lidl',
       'keywords': 'lidl',
-      'iconPath': 'assets/icons/lidl.png'
+      'icon_path': 'assets/icons/lidl.png'
     });
     await db.insert('stores', {
       'id': 'spolem',
       'name': 'Społem',
       'keywords': 'społem,spolem,spo em',
-      'iconPath': 'assets/icons/spolem.png'
+      'icon_path': 'assets/icons/spolem.png'
     });
     await db.insert('stores', {
       'id': 'rossman',
       'name': 'Rossman',
       'keywords': 'rossman',
-      'iconPath': 'assets/icons/rossman.png'
+      'icon_path': 'assets/icons/rossman.png'
     });
   }
 }

@@ -3,10 +3,12 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:paragonik/data/models/database/receipt.dart';
 import 'package:paragonik/data/services/receipt_service.dart';
+import 'package:paragonik/data/services/thumbnail_service.dart';
 import 'package:uuid/uuid.dart';
 
 class ReceiptNotifier extends ChangeNotifier {
   final ReceiptService _receiptService;
+  final ThumbnailService _thumbnailService;
   
   List<Receipt> _receipts = [];
   List<Receipt> get receipts => _receipts;
@@ -14,7 +16,7 @@ class ReceiptNotifier extends ChangeNotifier {
 
   bool isLoading = false;
 
-  ReceiptNotifier(this._receiptService) {
+  ReceiptNotifier(this._receiptService, this._thumbnailService) {
     fetchReceipts();
   }
 
@@ -32,9 +34,13 @@ class ReceiptNotifier extends ChangeNotifier {
     required DateTime date,
     required String storeName,
   }) async {
+
+    final thumbnailFile = await _thumbnailService.createThumbnail(imageFile);
+
     final newReceipt = Receipt(
       id: const Uuid().v4(),
       imagePath: imageFile.path,
+      thumbnailPath: thumbnailFile.path,
       amount: amount,
       date: date,
       storeName: storeName,

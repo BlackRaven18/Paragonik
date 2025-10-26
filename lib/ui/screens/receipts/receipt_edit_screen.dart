@@ -94,16 +94,10 @@ class _ReceiptEditScreenState extends State<ReceiptEditScreen> {
   void _saveChanges() {
     if (_receipt == null || _selectedDateTime == null) return;
 
-    final updatedReceipt = Receipt(
-      id: _receipt!.id,
-      imagePath: _receipt!.imagePath,
-      amount:
-          double.tryParse(_amountController.text.replaceAll(',', '.')) ?? 0.0,
+    final updatedReceipt = _receipt!.copyWith(
+      amount: double.tryParse(_amountController.text.replaceAll(',', '.')) ?? 0.0,
       storeName: _selectedStoreName,
-      date: _selectedDateTime!,
-      createdAt: _receipt!.createdAt,
       updatedAt: DateTime.now(),
-      deletedAt: _receipt!.deletedAt,
     );
 
     context.read<ReceiptNotifier>().updateReceipt(updatedReceipt);

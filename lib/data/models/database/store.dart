@@ -18,7 +18,7 @@ class Store {
       id: map['id'],
       name: map['name'],
       keywords: (map['keywords'] as String).split(','),
-      iconPath: map['iconPath'],
+      iconPath: map['icon_path'],
     );
   }
 
