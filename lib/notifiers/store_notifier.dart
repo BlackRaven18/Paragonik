@@ -17,7 +17,7 @@ class StoreNotifier extends ChangeNotifier {
     _setLoading();
   }
 
-  Store? getStoreByName(String name) {
+  Store getStoreByName(String name) {
     final matchingStores = _stores.where((store) => store.name == name);
 
     if (matchingStores.isNotEmpty) {

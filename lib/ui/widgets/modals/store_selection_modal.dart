@@ -1,63 +1,47 @@
 import 'package:flutter/material.dart';
-import 'package:paragonik/data/models/database/store.dart';
-import 'package:paragonik/data/services/store_service.dart';
-import 'package:paragonik/ui/core/assets/asset_manager.dart';
+import 'package:paragonik/ui/widgets/store_display.dart';
+import 'package:paragonik/view_models/widgets/modals/store_selection_view_model.dart';
 import 'package:provider/provider.dart';
 
-class StoreSelectionModal extends StatefulWidget {
+class StoreSelectionModal extends StatelessWidget {
   const StoreSelectionModal({super.key});
 
   @override
-  State<StoreSelectionModal> createState() => _StoreSelectionModalState();
-}
-
-class _StoreSelectionModalState extends State<StoreSelectionModal> {
-  late Future<List<Store>> _storesFuture;
-  List<Store> _filteredStores = [];
-  final _searchController = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-    _storesFuture = context.read<StoreService>().getAllStores();
-    _searchController.addListener(() {
-      setState(() {});
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final viewModel = context.watch<StoreSelectionViewModel>();
+
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
         children: [
           TextField(
-            controller: _searchController,
-            decoration: const InputDecoration(labelText: 'Filtruj sklepy...'),
+            onChanged: viewModel.setSearchQuery,
+            autofocus: true,
+            decoration: InputDecoration(
+              labelText: 'Wyszukaj sklep...',
+              prefixIcon: const Icon(Icons.search),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+            ),
           ),
           const SizedBox(height: 16),
           Expanded(
-            child: FutureBuilder<List<Store>>(
-              future: _storesFuture,
-              builder: (context, snapshot) {
-                if (!snapshot.hasData) return const Center(child: CircularProgressIndicator());
-                
-                final allStores = snapshot.data!;
-                final query = _searchController.text.toLowerCase();
-                _filteredStores = allStores.where((s) => s.name.toLowerCase().contains(query)).toList();
-
-                return ListView.builder(
-                  itemCount: _filteredStores.length,
-                  itemBuilder: (context, index) {
-                    final store = _filteredStores[index];
-                    return ListTile(
-                      leading: Image.asset(store.iconPath ?? AssetManager.storeDefault),
-                      title: Text(store.name),
-                      onTap: () {
-                        Navigator.of(context).pop(store);
-                      },
-                    );
-                  },
+            child: ListView.builder(
+              itemCount: viewModel.filteredStores.length,
+              itemBuilder: (context, index) {
+                final store = viewModel.filteredStores[index];
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 4.0),
+                  child: ListTile(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    title: StoreDisplay(storeName: store.name),
+                    onTap: () {
+                      Navigator.of(context).pop(store);
+                    },
+                  ),
                 );
               },
             ),

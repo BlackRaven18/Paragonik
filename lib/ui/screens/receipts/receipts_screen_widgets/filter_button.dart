@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:paragonik/notifiers/store_notifier.dart';
 import 'package:paragonik/ui/screens/receipts/receipts_screen_widgets/modals/filter_modal_content.dart';
 import 'package:paragonik/view_models/screens/receipts/receipts_view_model.dart';
+import 'package:paragonik/view_models/widgets/modals/store_selection_view_model.dart';
 import 'package:provider/provider.dart';
 
 class FilterButton extends StatelessWidget {
@@ -8,8 +10,6 @@ class FilterButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final receiptsViewModel = context.read<ReceiptsViewModel>();
-
     return IconButton(
       icon: Icon(
         Icons.filter_list,
@@ -18,8 +18,16 @@ class FilterButton extends StatelessWidget {
       onPressed: () {
         showModalBottomSheet(
           context: context,
-          builder: (_) => ChangeNotifierProvider.value(
-            value: receiptsViewModel,
+          builder: (_) => MultiProvider(
+            providers: [
+              ChangeNotifierProvider.value(
+                value: context.read<ReceiptsViewModel>(),
+              ),
+              ChangeNotifierProvider(
+                create: (context) =>
+                    StoreSelectionViewModel(context.read<StoreNotifier>()),
+              ),
+            ],
             child: const FilterModalContent(),
           ),
         );

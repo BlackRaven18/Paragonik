@@ -2,11 +2,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:paragonik/data/models/database/receipt.dart';
-import 'package:paragonik/data/models/database/store.dart';
 import 'package:paragonik/data/services/receipt_service.dart';
 import 'package:paragonik/helpers/date_picker.dart';
+import 'package:paragonik/helpers/store_selection_modal_helper.dart';
 import 'package:paragonik/notifiers/receipt_notifier.dart';
-import 'package:paragonik/ui/widgets/modals/store_selection_modal.dart';
 import 'package:paragonik/ui/widgets/image_viewer.dart';
 import 'package:paragonik/ui/widgets/store_display.dart';
 import 'package:provider/provider.dart';
@@ -53,16 +52,9 @@ class _ReceiptEditScreenState extends State<ReceiptEditScreen> {
     }
   }
 
-  Future<void> _showStoreSelectionModal() async {
-    final selectedStore = await showModalBottomSheet<Store>(
-      context: context,
-      isScrollControlled: true,
-      builder: (_) => DraggableScrollableSheet(
-        expand: false,
-        initialChildSize: 0.6,
-        builder: (_, controller) => const StoreSelectionModal(),
-      ),
-    );
+  Future<void> _handleStoreChange(BuildContext context) async {
+    final selectedStore = await showStoreSelectionModal(context);
+
     if (selectedStore != null) {
       setState(() {
         _selectedStoreName = selectedStore.name;
@@ -95,7 +87,8 @@ class _ReceiptEditScreenState extends State<ReceiptEditScreen> {
     if (_receipt == null || _selectedDateTime == null) return;
 
     final updatedReceipt = _receipt!.copyWith(
-      amount: double.tryParse(_amountController.text.replaceAll(',', '.')) ?? 0.0,
+      amount:
+          double.tryParse(_amountController.text.replaceAll(',', '.')) ?? 0.0,
       storeName: _selectedStoreName,
       updatedAt: DateTime.now(),
     );
@@ -150,7 +143,7 @@ class _ReceiptEditScreenState extends State<ReceiptEditScreen> {
                       ),
                     ),
                     trailing: const Icon(Icons.store),
-                    onTap: _showStoreSelectionModal,
+                    onTap: () => _handleStoreChange(context),
                   ),
                   const SizedBox(height: 16),
                   ListTile(

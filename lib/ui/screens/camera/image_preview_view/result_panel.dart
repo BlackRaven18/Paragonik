@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:paragonik/helpers/store_selection_modal_helper.dart';
 import 'package:paragonik/ui/screens/camera/image_preview_view/helpers/date_time_picker_dialog_helper.dart';
-import 'package:paragonik/ui/screens/camera/image_preview_view/helpers/store_selection_modal_helper.dart';
 import 'package:paragonik/ui/screens/camera/image_preview_view/helpers/sum_input_dialog_helper.dart';
 import 'package:paragonik/ui/widgets/store_display.dart';
 import 'package:paragonik/view_models/screens/camera/camera_view_model.dart';
@@ -9,6 +9,17 @@ import 'package:provider/provider.dart';
 
 class ResultPanel extends StatelessWidget {
   const ResultPanel({super.key});
+
+  Future<void> _handleStoreChange(
+    BuildContext context,
+    CameraViewModel viewModel,
+  ) async {
+    final selectedStore = await showStoreSelectionModal(context);
+
+    if (selectedStore != null) {
+      viewModel.updateStore(selectedStore);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -116,8 +127,7 @@ class ResultPanel extends StatelessWidget {
                         ),
                         const SizedBox(width: 4),
                         GestureDetector(
-                          onTap: () =>
-                              showStoreSelectionModal(context, viewModel),
+                          onTap: () => _handleStoreChange(context, viewModel),
                           child: const Icon(Icons.store, size: 20),
                         ),
                       ],

@@ -25,9 +25,9 @@ class StoreDisplay extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        if (store?.iconPath != null) ...[
-          Image.asset(store!.iconPath!, width: 36, height: 36),
-          const SizedBox(width: 4),
+        if (store.iconPath != null) ...[
+          Image.asset(store.iconPath!, width: 36, height: 36),
+          const SizedBox(width: 8),
         ],
         Flexible(
           child: Text(
