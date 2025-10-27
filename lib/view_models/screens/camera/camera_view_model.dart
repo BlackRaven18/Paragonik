@@ -35,6 +35,13 @@ class CameraViewModel extends ChangeNotifier {
   bool _isDateManuallyCorrected = false;
   bool get isDateManuallyCorrected => _isDateManuallyCorrected;
 
+  bool _isPickerActive = false;
+  bool get isPickerActive => _isPickerActive;
+
+  bool _isPermissionRequesting = false;
+
+  bool get isBusy => _isPickerActive || _isPermissionRequesting;
+
   CameraViewModel({
     required OcrService ocrService,
     required ReceiptNotifier receiptNotifier,
@@ -48,14 +55,24 @@ class CameraViewModel extends ChangeNotifier {
   }
 
   Future<void> getImage(ImageSource source) async {
-    final pickedFile = await _picker.pickImage(
-      source: source,
-      imageQuality: 100,
-    );
-    if (pickedFile != null) {
-      await clearImage();
-      _originalImageFile = File(pickedFile.path);
-      _uiState = CameraUIState.preview;
+    if (_isPickerActive) return;
+
+    try {
+      _isPickerActive = true;
+      notifyListeners();
+
+      final pickedFile = await _picker.pickImage(
+        source: source,
+        imageQuality: 100,
+      );
+      if (pickedFile != null) {
+        await clearImage();
+        _originalImageFile = File(pickedFile.path);
+        _uiState = CameraUIState.preview;
+        notifyListeners();
+      }
+    } finally {
+      _isPickerActive = false;
       notifyListeners();
     }
   }
@@ -125,9 +142,13 @@ class CameraViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void updateStore(Store store){
+  void updateStore(Store store) {
     _ocrResult = _ocrResult?.copyWith(storeName: store.name);
     notifyListeners();
   }
 
+  void updateIsPermissionRequesting(bool value) {
+    _isPermissionRequesting = value;
+    notifyListeners();
+  }
 }
