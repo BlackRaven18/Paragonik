@@ -90,6 +90,7 @@ class _ReceiptEditScreenState extends State<ReceiptEditScreen> {
       amount:
           double.tryParse(_amountController.text.replaceAll(',', '.')) ?? 0.0,
       storeName: _selectedStoreName,
+      date: _selectedDateTime!,
       updatedAt: DateTime.now(),
     );
 
