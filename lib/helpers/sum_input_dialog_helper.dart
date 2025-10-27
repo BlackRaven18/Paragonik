@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:paragonik/view_models/screens/camera/camera_view_model.dart';
 
 Future<void> showSumInputDialog(
-  BuildContext context,
-  CameraViewModel viewModel,
-) async {
-  final amountController = TextEditingController(
-    text: viewModel.ocrResult?.sum ?? '',
-  );
-  final newSum = await showDialog<String>(
+  BuildContext context, {
+  required String initialValue,
+  required void Function(String) onValueSaved,
+}) async {
+  final amountController = TextEditingController(text: initialValue);
+
+  final newValue = await showDialog<String>(
     context: context,
     builder: (context) => AlertDialog(
       title: const Text('Ręczna poprawa kwoty'),
@@ -34,7 +33,7 @@ Future<void> showSumInputDialog(
     ),
   );
 
-  if (newSum != null && newSum.isNotEmpty) {
-    viewModel.updateSum(newSum);
+  if (newValue != null && newValue.isNotEmpty) {
+    onValueSaved(newValue);
   }
 }
