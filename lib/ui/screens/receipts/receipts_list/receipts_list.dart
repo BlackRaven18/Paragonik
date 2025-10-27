@@ -20,12 +20,13 @@ class ReceiptsList extends StatelessWidget {
           : ListView(
               physics: const AlwaysScrollableScrollPhysics(),
               children: [
-                for (final entry in viewModel.groupedReceipts.entries) ...[
-                  SectionHeader(title: entry.key),
-                  ...entry.value.map(
-                    (receipt) => ReceiptListItem(receipt: receipt),
-                  ),
-                ],
+                for (final entry in viewModel.groupedReceipts.entries)
+                  if (entry.value.isNotEmpty) ...[
+                    SectionHeader(title: entry.key),
+                    ...entry.value.map(
+                      (receipt) => ReceiptListItem(receipt: receipt),
+                    ),
+                  ],
               ],
             ),
     );

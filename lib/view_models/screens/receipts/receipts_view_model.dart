@@ -70,28 +70,37 @@ class ReceiptsViewModel extends ChangeNotifier {
   }
 
   Map<String, List<Receipt>> _groupReceipts(List<Receipt> receipts) {
-    final Map<String, List<Receipt>> grouped = {};
+    final Map<String, List<Receipt>> grouped = {
+      'Dzisiaj': [],
+      'Wczoraj': [],
+      'W tym tygodniu': [],
+      'Wcześniej': [],
+    };
+
     final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+    final yesterday = today.subtract(const Duration(days: 1));
+    final startOfWeek = today.subtract(Duration(days: today.weekday - 1));
+
     for (final receipt in receipts) {
       final dateToCompare = _groupingOption == GroupingOption.byAddedDate
           ? receipt.createdAt
           : receipt.date;
-      final difference = now.difference(dateToCompare).inDays;
-      String groupKey;
-      if (difference == 0) {
-        groupKey = 'Dzisiaj';
-      } else if (difference == 1) {
-        groupKey = 'Wczoraj';
-      } else if (difference < 7) {
-        groupKey = 'W tym tygodniu';
-      } else {
-        groupKey = 'Wcześniej';
-      }
+      final receiptDate = DateTime(
+        dateToCompare.year,
+        dateToCompare.month,
+        dateToCompare.day,
+      );
 
-      if (grouped[groupKey] == null) {
-        grouped[groupKey] = [];
+      if (receiptDate.isAtSameMomentAs(today)) {
+        grouped['Dzisiaj']!.add(receipt);
+      } else if (receiptDate.isAtSameMomentAs(yesterday)) {
+        grouped['Wczoraj']!.add(receipt);
+      } else if (receiptDate.isAfter(startOfWeek)) {
+        grouped['W tym tygodniu']!.add(receipt);
+      } else {
+        grouped['Wcześniej']!.add(receipt);
       }
-      grouped[groupKey]!.add(receipt);
     }
     return grouped;
   }
