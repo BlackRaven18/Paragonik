@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:paragonik/data/models/database/store.dart';
-import 'package:paragonik/helpers/date_picker.dart';
-import 'package:paragonik/ui/widgets/modals/store_selection_modal.dart';
+import 'package:paragonik/ui/screens/camera/image_preview_view/helpers/date_time_picker_dialog_helper.dart';
+import 'package:paragonik/ui/screens/camera/image_preview_view/helpers/store_selection_modal_helper.dart';
+import 'package:paragonik/ui/screens/camera/image_preview_view/helpers/sum_input_dialog_helper.dart';
 import 'package:paragonik/ui/widgets/store_display.dart';
 import 'package:paragonik/view_models/screens/camera/camera_view_model.dart';
 import 'package:provider/provider.dart';
@@ -27,68 +27,6 @@ class ResultPanel extends StatelessWidget {
         ? DateFormat('yyyy-MM-dd HH:mm').format(viewModel.ocrResult!.date!)
         : 'Nie znaleziono';
     final storeString = viewModel.ocrResult?.storeName ?? 'Nie znaleziono';
-
-    Future<void> showSumInputDialog(BuildContext context) async {
-      final amountController = TextEditingController(
-        text: viewModel.ocrResult?.sum ?? '',
-      );
-      final newSum = await showDialog<String>(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: const Text('Ręczna poprawa kwoty'),
-          content: TextField(
-            controller: amountController,
-            autofocus: true,
-            keyboardType: const TextInputType.numberWithOptions(decimal: true),
-            decoration: const InputDecoration(
-              labelText: 'Wpisz poprawną kwotę',
-              suffixText: 'PLN',
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text('Anuluj'),
-            ),
-            ElevatedButton(
-              onPressed: () => Navigator.of(context).pop(amountController.text),
-              child: const Text('Zapisz'),
-            ),
-          ],
-        ),
-      );
-
-      if (newSum != null && newSum.isNotEmpty) {
-        viewModel.updateSum(newSum);
-      }
-    }
-
-    Future<void> showDateTimePickerDialog(BuildContext context) async {
-      final newDateTime = await pickDateTime(
-        context,
-        initialDate: viewModel.ocrResult?.date,
-      );
-
-      if (newDateTime != null) {
-        viewModel.updateDate(newDateTime);
-      }
-    }
-
-    Future<void> showStoreSelectionModal(BuildContext context) async {
-      final selectedStore = await showModalBottomSheet<Store>(
-        context: context,
-        isScrollControlled: true,
-        builder: (_) => DraggableScrollableSheet(
-          expand: false,
-          initialChildSize: 0.6,
-          builder: (_, controller) => const StoreSelectionModal(),
-        ),
-      );
-
-      if (selectedStore != null) {
-        viewModel.updateStore(selectedStore);
-      }
-    }
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
@@ -115,7 +53,7 @@ class ResultPanel extends StatelessWidget {
               ),
               IconButton(
                 icon: const Icon(Icons.edit),
-                onPressed: () => showSumInputDialog(context),
+                onPressed: () => showSumInputDialog(context, viewModel),
               ),
             ],
           ),
@@ -144,7 +82,8 @@ class ResultPanel extends StatelessWidget {
                         ),
                         const SizedBox(width: 4),
                         GestureDetector(
-                          onTap: () => showDateTimePickerDialog(context),
+                          onTap: () =>
+                              showDateTimePickerDialog(context, viewModel),
                           child: const Icon(
                             Icons.edit_calendar_outlined,
                             size: 20,
@@ -177,7 +116,8 @@ class ResultPanel extends StatelessWidget {
                         ),
                         const SizedBox(width: 4),
                         GestureDetector(
-                          onTap: () => showStoreSelectionModal(context),
+                          onTap: () =>
+                              showStoreSelectionModal(context, viewModel),
                           child: const Icon(Icons.store, size: 20),
                         ),
                       ],

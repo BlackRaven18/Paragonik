@@ -22,7 +22,8 @@ class InitialView extends StatelessWidget {
         ElevatedButton.icon(
           onPressed: viewModel.isBusy
               ? null
-              : () => requestAndGetImage(context, ImageSource.camera),
+              : () =>
+                    requestAndGetImage(context, ImageSource.camera, viewModel),
           icon: const Icon(Icons.camera_alt),
           label: const Text('Zrób zdjęcie'),
           style: buttonStyle,
@@ -31,7 +32,7 @@ class InitialView extends StatelessWidget {
         ElevatedButton.icon(
           onPressed: () => viewModel.isBusy
               ? null
-              : requestAndGetImage(context, ImageSource.gallery),
+              : requestAndGetImage(context, ImageSource.gallery, viewModel),
           icon: const Icon(Icons.photo_library),
           label: const Text('Wybierz z galerii'),
           style: buttonStyle,

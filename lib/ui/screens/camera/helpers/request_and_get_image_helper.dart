@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:paragonik/view_models/screens/camera/camera_view_model.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:provider/provider.dart';
 
 Future<void> requestAndGetImage(
   BuildContext context,
   ImageSource source,
+  CameraViewModel viewModel,
 ) async {
-  final viewModel = context.read<CameraViewModel>();
   if (viewModel.isBusy) return;
 
   try {
