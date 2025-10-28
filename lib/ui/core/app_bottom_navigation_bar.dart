@@ -13,7 +13,7 @@ class AppBottomNavigationBar extends StatelessWidget {
         context.go('/receipts');
         break;
       case 2:
-        context.go('/stats');
+        context.go('/statistics');
         break;
       case 3:
         context.go('/settings');
@@ -25,7 +25,7 @@ class AppBottomNavigationBar extends StatelessWidget {
     final String location = GoRouterState.of(context).uri.toString();
     if (location.startsWith('/camera')) return 0;
     if (location.startsWith('/receipts')) return 1;
-    if (location.startsWith('/stats')) return 2;
+    if (location.startsWith('/statistics')) return 2;
     if (location.startsWith('/settings')) return 3;
     return 0;
   }
@@ -36,10 +36,7 @@ class AppBottomNavigationBar extends StatelessWidget {
       currentIndex: _calculateSelectedIndex(context),
       onTap: (index) => _onItemTapped(index, context),
       items: const [
-        BottomNavigationBarItem(
-          icon: Icon(Icons.camera_alt),
-          label: 'Skaner',
-        ),
+        BottomNavigationBarItem(icon: Icon(Icons.camera_alt), label: 'Skaner'),
         BottomNavigationBarItem(
           icon: Icon(Icons.receipt_long),
           label: 'Paragony',

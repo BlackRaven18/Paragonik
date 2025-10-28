@@ -79,4 +79,22 @@ class ReceiptService {
     );
     return count ?? 0;
   }
+
+  Future<List<Receipt>> getReceiptsInDateRange({
+    required DateTime startDate,
+    required DateTime endDate,
+  }) async {
+    final db = await _database;
+
+    final List<Map<String, dynamic>> maps = await db.query(
+      'receipts',
+      where: 'deleted_at IS NULL AND date >= ? AND date <= ?',
+      whereArgs: [startDate.toIso8601String(), endDate.toIso8601String()],
+      orderBy: 'date DESC',
+    );
+
+    return List.generate(maps.length, (i) {
+      return Receipt.fromMap(maps[i]);
+    });
+  }
 }

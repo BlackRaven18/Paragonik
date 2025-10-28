@@ -13,10 +13,11 @@ import 'package:paragonik/ui/screens/camera/camera_screen.dart';
 import 'package:paragonik/ui/screens/receipts/receipt_edit_screen.dart';
 import 'package:paragonik/ui/screens/receipts/receipts_screen.dart';
 import 'package:paragonik/ui/screens/settings/settings_screen.dart';
-import 'package:paragonik/ui/screens/stats/stats_screen.dart';
+import 'package:paragonik/ui/screens/statistics/statistics_screen.dart';
 import 'package:paragonik/view_models/screens/camera/camera_view_model.dart';
 import 'package:paragonik/view_models/screens/receipts/receipt_edit_view_model.dart';
 import 'package:paragonik/view_models/screens/receipts/receipts_view_model.dart';
+import 'package:paragonik/view_models/screens/statistics/statistics_view_model.dart';
 import 'package:provider/provider.dart';
 
 final GoRouter router = GoRouter(
@@ -102,8 +103,12 @@ final GoRouter router = GoRouter(
         StatefulShellBranch(
           routes: [
             GoRoute(
-              path: '/stats',
-              builder: (context, state) => const StatsScreen(),
+              path: '/statistics',
+              builder: (context, state) => ChangeNotifierProvider(
+                create: (context) =>
+                    StatisticsViewModel(context.read<ReceiptService>()),
+                child: const StatisticsScreen(),
+              ),
             ),
           ],
         ),
