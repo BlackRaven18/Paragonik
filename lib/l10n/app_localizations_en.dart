@@ -173,4 +173,47 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get screensReceiptsReceiptsScreenWidgetsModalsFilterAllStoresOption =>
       'Wszystkie sklepy';
+
+  @override
+  String get screensStatisticsScreenTitle => 'Statystyki';
+
+  @override
+  String screensStatisticsSummaryTitleWithRange(String range) {
+    return 'Podsumowanie ($range)';
+  }
+
+  @override
+  String get screensStatisticsCardSpendingTitle => 'Wydatki';
+
+  @override
+  String get screensStatisticsCardVsPreviousMonthTitle =>
+      'vs Poprzedni miesiąc';
+
+  @override
+  String get screensStatisticsCardDailyAverageTitle => 'Średnio dziennie';
+
+  @override
+  String get screensStatisticsCardReceiptsCountTitle => 'Liczba paragonów';
+
+  @override
+  String get screensStatisticsStoreSpendingTitle => 'Wydatki w sklepach';
+
+  @override
+  String get screensStatisticsTimeRangeWeek => 'Tydzień';
+
+  @override
+  String get screensStatisticsTimeRangeMonth => 'Miesiąc';
+
+  @override
+  String get screensStatisticsNoSpendingInRange =>
+      'Brak wydatków w tym okresie.';
+
+  @override
+  String get screensStatisticsRangeLabelCurrentWeek => 'Bieżący tydzień';
+
+  @override
+  String get screensStatisticsRangeLabelCurrentMonth => 'Bieżący miesiąc';
+
+  @override
+  String get screensStatisticsRangeLabelCustom => 'Niestandardowy';
 }

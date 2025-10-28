@@ -177,5 +177,65 @@
     "screensReceiptsReceiptsScreenWidgetsModalsFilterAllStoresOption": "Wszystkie sklepy",
     "@screensReceiptsReceiptsScreenWidgetsModalsFilterAllStoresOption": {
         "description": "Etykieta opcji w dropdownie, która usuwa filtr sklepu."
-    }
+    },
+
+
+    "screensStatisticsScreenTitle": "Statystyki",
+    "@screensStatisticsScreenTitle": {
+        "description": "Główny tytuł na ekranie statystyk."
+    },
+
+    "screensStatisticsSummaryTitleWithRange": "Podsumowanie ({range})",
+    "@screensStatisticsSummaryTitleWithRange": {
+        "description": "Tytuł sekcji podsumowania, zawierający wybrany zakres czasu.",
+        "placeholders": {
+        "range": {
+            "type": "String",
+            "example": "Bieżący miesiąc"
+        }
+        }
+    },
+
+    "screensStatisticsCardSpendingTitle": "Wydatki",
+    "@screensStatisticsCardSpendingTitle": {
+        "description": "Tytuł karty pokazującej sumę wydatków."
+    },
+    "screensStatisticsCardVsPreviousMonthTitle": "vs Poprzedni miesiąc",
+    "@screensStatisticsCardVsPreviousMonthTitle": {
+        "description": "Tytuł karty porównującej wydatki z poprzednim miesiącem."
+    },
+    "screensStatisticsCardDailyAverageTitle": "Średnio dziennie",
+    "@screensStatisticsCardDailyAverageTitle": {
+        "description": "Tytuł karty pokazującej średnie dzienne wydatki."
+    },
+    "screensStatisticsCardReceiptsCountTitle": "Liczba paragonów",
+    "@screensStatisticsCardReceiptsCountTitle": {
+        "description": "Tytuł karty pokazującej liczbę paragonów w danym okresie."
+    },
+    
+    "screensStatisticsStoreSpendingTitle": "Wydatki w sklepach",
+    "@screensStatisticsStoreSpendingTitle": {
+        "description": "Tytuł sekcji pokazującej wydatki w poszczególnych sklepach."
+    },
+    
+    "screensStatisticsTimeRangeWeek": "Tydzień",
+    "@screensStatisticsTimeRangeWeek": {
+        "description": "Etykieta przycisku wyboru zakresu 'Tydzień'."
+    },
+    "screensStatisticsTimeRangeMonth": "Miesiąc",
+    "@screensStatisticsTimeRangeMonth": {
+        "description": "Etykieta przycisku wyboru zakresu 'Miesiąc'."
+    },
+    
+    "screensStatisticsNoSpendingInRange": "Brak wydatków w tym okresie.",
+    "@screensStatisticsNoSpendingInRange": {
+        "description": "Komunikat wyświetlany, gdy w wybranym okresie nie ma żadnych wydatków."
+    },
+
+    "screensStatisticsRangeLabelCurrentWeek": "Bieżący tydzień",
+    "@screensStatisticsRangeLabelCurrentWeek": { "description": "" },
+    "screensStatisticsRangeLabelCurrentMonth": "Bieżący miesiąc",
+    "@screensStatisticsRangeLabelCurrentMonth": { "description": "" },
+    "screensStatisticsRangeLabelCustom": "Niestandardowy",
+    "@screensStatisticsRangeLabelCustom": { "description": "" }
 }

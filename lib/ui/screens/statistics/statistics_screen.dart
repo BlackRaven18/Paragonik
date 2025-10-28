@@ -17,11 +17,11 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
   String _getRangeLabel(TimeRange range) {
     switch (range) {
       case TimeRange.week:
-        return 'Bieżący tydzień';
+        return context.l10n.screensStatisticsRangeLabelCurrentWeek;
       case TimeRange.month:
-        return 'Bieżący miesiąc';
+        return context.l10n.screensStatisticsRangeLabelCurrentMonth;
       case TimeRange.custom:
-        return 'Niestandardowy';
+        return context.l10n.screensStatisticsRangeLabelCustom;
     }
   }
 
@@ -47,7 +47,9 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
                   ),
 
                   Text(
-                    'Podsumowanie (${_getRangeLabel(viewModel.selectedTimeRange)})',
+                    context.l10n.screensStatisticsSummaryTitleWithRange(
+                      _getRangeLabel(viewModel.selectedTimeRange),
+                    ),
                     style: theme.textTheme.titleLarge,
                   ),
                   const SizedBox(height: 16),
@@ -61,7 +63,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
                     childAspectRatio: 1.6,
                     children: [
                       StatCard(
-                        title: 'Wydatki',
+                        title: context.l10n.screensStatisticsCardSpendingTitle,
                         value: Formatters.formatCurrency(
                           viewModel.totalSpending,
                         ),
@@ -69,7 +71,9 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
 
                       if (viewModel.selectedTimeRange == TimeRange.month)
                         StatCard(
-                          title: 'Poprzedni miesiąc',
+                          title: context
+                              .l10n
+                              .screensStatisticsCardVsPreviousMonthTitle,
                           value:
                               '${viewModel.comparisonPercentage.toStringAsFixed(1)}%',
                           subtitle: Formatters.formatCurrency(
@@ -80,13 +84,16 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
                         const SizedBox.shrink(),
 
                       StatCard(
-                        title: 'Średnio dziennie',
+                        title:
+                            context.l10n.screensStatisticsCardDailyAverageTitle,
                         value: Formatters.formatCurrency(
                           viewModel.averageDailySpending,
                         ),
                       ),
                       StatCard(
-                        title: 'Liczba paragonów',
+                        title: context
+                            .l10n
+                            .screensStatisticsCardReceiptsCountTitle,
                         value: viewModel.receiptCount.toString(),
                       ),
                     ],
@@ -99,18 +106,22 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
                     runSpacing: 16,
                     children: [
                       Text(
-                        'Wydatki w sklepach',
+                        context.l10n.screensStatisticsStoreSpendingTitle,
                         style: theme.textTheme.titleLarge,
                       ),
                       SegmentedButton<TimeRange>(
-                        segments: const [
+                        segments: [
                           ButtonSegment(
                             value: TimeRange.week,
-                            label: Text('Tydzień'),
+                            label: Text(
+                              context.l10n.screensStatisticsTimeRangeWeek,
+                            ),
                           ),
                           ButtonSegment(
                             value: TimeRange.month,
-                            label: Text('Miesiąc'),
+                            label: Text(
+                              context.l10n.screensStatisticsTimeRangeMonth,
+                            ),
                           ),
                         ],
                         selected: {viewModel.selectedTimeRange},
@@ -123,10 +134,12 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
                   const SizedBox(height: 16),
 
                   if (viewModel.spendingByStore.isEmpty)
-                    const Padding(
+                    Padding(
                       padding: EdgeInsets.symmetric(vertical: 32.0),
                       child: Center(
-                        child: Text('Brak wydatków w tym okresie.'),
+                        child: Text(
+                          context.l10n.screensStatisticsNoSpendingInRange,
+                        ),
                       ),
                     )
                   else

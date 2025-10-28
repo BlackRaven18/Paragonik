@@ -373,6 +373,84 @@ abstract class AppLocalizations {
   /// In pl, this message translates to:
   /// **'Wszystkie sklepy'**
   String get screensReceiptsReceiptsScreenWidgetsModalsFilterAllStoresOption;
+
+  /// Główny tytuł na ekranie statystyk.
+  ///
+  /// In pl, this message translates to:
+  /// **'Statystyki'**
+  String get screensStatisticsScreenTitle;
+
+  /// Tytuł sekcji podsumowania, zawierający wybrany zakres czasu.
+  ///
+  /// In pl, this message translates to:
+  /// **'Podsumowanie ({range})'**
+  String screensStatisticsSummaryTitleWithRange(String range);
+
+  /// Tytuł karty pokazującej sumę wydatków.
+  ///
+  /// In pl, this message translates to:
+  /// **'Wydatki'**
+  String get screensStatisticsCardSpendingTitle;
+
+  /// Tytuł karty porównującej wydatki z poprzednim miesiącem.
+  ///
+  /// In pl, this message translates to:
+  /// **'vs Poprzedni miesiąc'**
+  String get screensStatisticsCardVsPreviousMonthTitle;
+
+  /// Tytuł karty pokazującej średnie dzienne wydatki.
+  ///
+  /// In pl, this message translates to:
+  /// **'Średnio dziennie'**
+  String get screensStatisticsCardDailyAverageTitle;
+
+  /// Tytuł karty pokazującej liczbę paragonów w danym okresie.
+  ///
+  /// In pl, this message translates to:
+  /// **'Liczba paragonów'**
+  String get screensStatisticsCardReceiptsCountTitle;
+
+  /// Tytuł sekcji pokazującej wydatki w poszczególnych sklepach.
+  ///
+  /// In pl, this message translates to:
+  /// **'Wydatki w sklepach'**
+  String get screensStatisticsStoreSpendingTitle;
+
+  /// Etykieta przycisku wyboru zakresu 'Tydzień'.
+  ///
+  /// In pl, this message translates to:
+  /// **'Tydzień'**
+  String get screensStatisticsTimeRangeWeek;
+
+  /// Etykieta przycisku wyboru zakresu 'Miesiąc'.
+  ///
+  /// In pl, this message translates to:
+  /// **'Miesiąc'**
+  String get screensStatisticsTimeRangeMonth;
+
+  /// Komunikat wyświetlany, gdy w wybranym okresie nie ma żadnych wydatków.
+  ///
+  /// In pl, this message translates to:
+  /// **'Brak wydatków w tym okresie.'**
+  String get screensStatisticsNoSpendingInRange;
+
+  ///
+  ///
+  /// In pl, this message translates to:
+  /// **'Bieżący tydzień'**
+  String get screensStatisticsRangeLabelCurrentWeek;
+
+  ///
+  ///
+  /// In pl, this message translates to:
+  /// **'Bieżący miesiąc'**
+  String get screensStatisticsRangeLabelCurrentMonth;
+
+  ///
+  ///
+  /// In pl, this message translates to:
+  /// **'Niestandardowy'**
+  String get screensStatisticsRangeLabelCustom;
 }
 
 class _AppLocalizationsDelegate
