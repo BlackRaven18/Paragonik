@@ -237,5 +237,27 @@
     "screensStatisticsRangeLabelCurrentMonth": "Bieżący miesiąc",
     "@screensStatisticsRangeLabelCurrentMonth": { "description": "" },
     "screensStatisticsRangeLabelCustom": "Niestandardowy",
-    "@screensStatisticsRangeLabelCustom": { "description": "" }
+    "@screensStatisticsRangeLabelCustom": { "description": "" },
+
+
+    "widgetsStoreDisplayUnknownStore": "Nieznany sklep",
+    "@widgetsStoreDisplayUnknownStore": {
+        "description": "Domyślna nazwa sklepu, gdy nie zostanie rozpoznany lub podany."
+    },
+
+
+    "widgetsImageViewerTooltipShowOriginal": "Pokaż oryginał",
+    "@widgetsImageViewerTooltipShowOriginal": {
+        "description": "Tooltip przycisku do przełączania podglądu na oryginalne zdjęcie."
+    },
+    "widgetsImageViewerTooltipShowScan": "Pokaż skan",
+    "@widgetsImageViewerTooltipShowScan": {
+        "description": "Tooltip przycisku do przełączania podglądu na przetworzony skan."
+    },
+
+
+    "widgetsModalsStoreSelectionSearchLabel": "Wyszukaj sklep...",
+    "@widgetsModalsStoreSelectionSearchLabel": {
+        "description": "Tekst wyświetlany jako podpowiedź w polu wyszukiwania w oknie wyboru sklepu."
+    }
 }

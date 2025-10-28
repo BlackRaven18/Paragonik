@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:paragonik/extensions/localization_extensions.dart';
 import 'package:paragonik/notifiers/store_notifier.dart';
 import 'package:provider/provider.dart';
 
@@ -12,9 +13,13 @@ class StoreDisplay extends StatelessWidget {
   Widget build(BuildContext context) {
     final storeNotifier = context.watch<StoreNotifier>();
 
+    final displayName = storeName.isEmpty
+        ? context.l10n.widgetsStoreDisplayUnknownStore
+        : storeName;
+
     if (storeNotifier.isLoading) {
       return Text(
-        storeName.isEmpty ? 'Nieznany sklep' : storeName,
+        displayName,
         style: textStyle,
         overflow: TextOverflow.ellipsis,
       );
@@ -31,7 +36,7 @@ class StoreDisplay extends StatelessWidget {
         ],
         Flexible(
           child: Text(
-            storeName.isEmpty ? 'Nieznany sklep' : storeName,
+            displayName,
             style: textStyle,
             overflow: TextOverflow.ellipsis,
           ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:paragonik/extensions/localization_extensions.dart';
 import 'package:paragonik/ui/widgets/store_display.dart';
 import 'package:paragonik/view_models/widgets/modals/store_selection_view_model.dart';
 import 'package:provider/provider.dart';
@@ -18,7 +19,7 @@ class StoreSelectionModal extends StatelessWidget {
             onChanged: viewModel.setSearchQuery,
             autofocus: true,
             decoration: InputDecoration(
-              labelText: 'Wyszukaj sklep...',
+              labelText: context.l10n.widgetsModalsStoreSelectionSearchLabel,
               prefixIcon: const Icon(Icons.search),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),

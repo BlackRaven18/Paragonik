@@ -451,6 +451,30 @@ abstract class AppLocalizations {
   /// In pl, this message translates to:
   /// **'Niestandardowy'**
   String get screensStatisticsRangeLabelCustom;
+
+  /// Domyślna nazwa sklepu, gdy nie zostanie rozpoznany lub podany.
+  ///
+  /// In pl, this message translates to:
+  /// **'Nieznany sklep'**
+  String get widgetsStoreDisplayUnknownStore;
+
+  /// Tooltip przycisku do przełączania podglądu na oryginalne zdjęcie.
+  ///
+  /// In pl, this message translates to:
+  /// **'Pokaż oryginał'**
+  String get widgetsImageViewerTooltipShowOriginal;
+
+  /// Tooltip przycisku do przełączania podglądu na przetworzony skan.
+  ///
+  /// In pl, this message translates to:
+  /// **'Pokaż skan'**
+  String get widgetsImageViewerTooltipShowScan;
+
+  /// Tekst wyświetlany jako podpowiedź w polu wyszukiwania w oknie wyboru sklepu.
+  ///
+  /// In pl, this message translates to:
+  /// **'Wyszukaj sklep...'**
+  String get widgetsModalsStoreSelectionSearchLabel;
 }
 
 class _AppLocalizationsDelegate

@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:paragonik/extensions/localization_extensions.dart';
 import 'package:paragonik/ui/core/widgets/full_screen_image_viewer.dart';
 
 class ImageViewer extends StatelessWidget {
@@ -46,7 +47,9 @@ class ImageViewer extends StatelessWidget {
               right: 8,
               child: FloatingActionButton.small(
                 onPressed: onToggle,
-                tooltip: 'Pokaż ${showSecondary ? "oryginał" : "skan"}',
+                tooltip: showSecondary
+                    ? context.l10n.widgetsImageViewerTooltipShowOriginal
+                    : context.l10n.widgetsImageViewerTooltipShowScan,
                 child: Icon(
                   showSecondary
                       ? Icons.image_outlined

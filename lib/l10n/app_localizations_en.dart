@@ -216,4 +216,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get screensStatisticsRangeLabelCustom => 'Niestandardowy';
+
+  @override
+  String get widgetsStoreDisplayUnknownStore => 'Nieznany sklep';
+
+  @override
+  String get widgetsImageViewerTooltipShowOriginal => 'Pokaż oryginał';
+
+  @override
+  String get widgetsImageViewerTooltipShowScan => 'Pokaż skan';
+
+  @override
+  String get widgetsModalsStoreSelectionSearchLabel => 'Wyszukaj sklep...';
 }
