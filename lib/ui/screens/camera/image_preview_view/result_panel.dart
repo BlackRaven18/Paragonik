@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:paragonik/extensions/formatters.dart';
+import 'package:paragonik/extensions/localization_extensions.dart';
 import 'package:paragonik/ui/helpers/modals/store_selection_modal_helper.dart';
 import 'package:paragonik/ui/screens/camera/image_preview_view/helpers/date_time_picker_dialog_helper.dart';
 import 'package:paragonik/ui/helpers/sum_input_dialog_helper.dart';
@@ -29,8 +30,10 @@ class ResultPanel extends StatelessWidget {
 
     final dateDisplayString = viewModel.ocrResult?.date != null
         ? Formatters.formatDateTime(viewModel.ocrResult!.date!)
-        : 'Nie znaleziono';
-    final storeString = viewModel.ocrResult?.storeName ?? 'Nieznany sklep';
+        : context.l10n.screensCameraImagePreviewViewResultPanelDateNotFound;
+    final storeString =
+        viewModel.ocrResult?.storeName ??
+        context.l10n.screensCameraImagePreviewViewResultPanelUnknownStore;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
@@ -38,8 +41,12 @@ class ResultPanel extends StatelessWidget {
         children: [
           EditableField(
             label: viewModel.isSumManuallyCorrected
-                ? 'Kwota (Poprawiona):'
-                : 'Kwota:',
+                ? context
+                      .l10n
+                      .screensCameraImagePreviewViewResultPanelAmountLabelCorrected
+                : context
+                      .l10n
+                      .screensCameraImagePreviewViewResultPanelAmountLabel,
             content: Text(
               Formatters.formatCurrency(
                 double.tryParse(viewModel.ocrResult?.sum ?? '') ?? 0.0,
@@ -59,8 +66,12 @@ class ResultPanel extends StatelessWidget {
           ),
           EditableField(
             label: viewModel.isDateManuallyCorrected
-                ? 'Data (Poprawiona):'
-                : 'Data:',
+                ? context
+                      .l10n
+                      .screensCameraImagePreviewViewResultPanelDateLabelCorrected
+                : context
+                      .l10n
+                      .screensCameraImagePreviewViewResultPanelDateLabel,
             content: Text(
               dateDisplayString,
               style: theme.textTheme.titleMedium?.copyWith(
@@ -71,7 +82,8 @@ class ResultPanel extends StatelessWidget {
             onEdit: () => showDateTimePickerDialog(context, viewModel),
           ),
           EditableField(
-            label: 'Sklep:',
+            label:
+                context.l10n.screensCameraImagePreviewViewResultPanelStoreLabel,
             content: StoreDisplay(
               storeName: storeString,
               textStyle: theme.textTheme.titleMedium?.copyWith(

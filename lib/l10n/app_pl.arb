@@ -14,5 +14,34 @@
     "screensCameraInitialViewTakePhotoButton": "Zrób zdjęcie",
     "screensCameraInitialViewChooseFromGalleryButton": "Wybierz z galerii",
 
-    "screensCameraProcessingViewStatus": "Analizuję paragon..."
+    "screensCameraProcessingViewStatus": "Analizuję paragon...",
+
+    "screensCameraImagePreviewViewResultPanelDateNotFound": "Nie znaleziono",
+    "@screensCameraImagePreviewViewResultPanelDateNotFound": {
+        "description": "Tekst wyświetlany, gdy data nie została znaleziona na paragonie."
+    },
+    "screensCameraImagePreviewViewResultPanelUnknownStore": "Nieznany sklep",
+    "@screensCameraImagePreviewViewResultPanelUnknownStore": {
+        "description": "Domyślny tekst dla nierozpoznanej nazwy sklepu."
+    },
+    "screensCameraImagePreviewViewResultPanelAmountLabel": "Kwota:",
+    "@screensCameraImagePreviewViewResultPanelAmountLabel": {
+        "description": "Domyślna etykieta dla pola z kwotą paragonu."
+    },
+    "screensCameraImagePreviewViewResultPanelAmountLabelCorrected": "Kwota (Poprawiona):",
+    "@screensCameraImagePreviewViewResultPanelAmountLabelCorrected": {
+        "description": "Etykieta dla pola z kwotą, gdy została ona ręcznie poprawiona."
+    },
+    "screensCameraImagePreviewViewResultPanelDateLabel": "Data:",
+    "@screensCameraImagePreviewViewResultPanelDateLabel": {
+        "description": "Domyślna etykieta dla pola z datą paragonu."
+    },
+    "screensCameraImagePreviewViewResultPanelDateLabelCorrected": "Data (Poprawiona):",
+    "@screensCameraImagePreviewViewResultPanelDateLabelCorrected": {
+        "description": "Etykieta dla pola z datą, gdy została ona ręcznie poprawiona."
+    },
+    "screensCameraImagePreviewViewResultPanelStoreLabel": "Sklep:",
+    "@screensCameraImagePreviewViewResultPanelStoreLabel": {
+        "description": "Etykieta dla pola z nazwą sklepu."
+    }
 }

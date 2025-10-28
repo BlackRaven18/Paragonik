@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:paragonik/data/services/notifications/notification_service.dart';
 import 'package:paragonik/data/services/settings_service.dart';
 import 'package:paragonik/l10n/app_localizations.dart';

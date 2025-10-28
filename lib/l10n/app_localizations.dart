@@ -175,6 +175,48 @@ abstract class AppLocalizations {
   /// In pl, this message translates to:
   /// **'Analizuję paragon...'**
   String get screensCameraProcessingViewStatus;
+
+  /// Tekst wyświetlany, gdy data nie została znaleziona na paragonie.
+  ///
+  /// In pl, this message translates to:
+  /// **'Nie znaleziono'**
+  String get screensCameraImagePreviewViewResultPanelDateNotFound;
+
+  /// Domyślny tekst dla nierozpoznanej nazwy sklepu.
+  ///
+  /// In pl, this message translates to:
+  /// **'Nieznany sklep'**
+  String get screensCameraImagePreviewViewResultPanelUnknownStore;
+
+  /// Domyślna etykieta dla pola z kwotą paragonu.
+  ///
+  /// In pl, this message translates to:
+  /// **'Kwota:'**
+  String get screensCameraImagePreviewViewResultPanelAmountLabel;
+
+  /// Etykieta dla pola z kwotą, gdy została ona ręcznie poprawiona.
+  ///
+  /// In pl, this message translates to:
+  /// **'Kwota (Poprawiona):'**
+  String get screensCameraImagePreviewViewResultPanelAmountLabelCorrected;
+
+  /// Domyślna etykieta dla pola z datą paragonu.
+  ///
+  /// In pl, this message translates to:
+  /// **'Data:'**
+  String get screensCameraImagePreviewViewResultPanelDateLabel;
+
+  /// Etykieta dla pola z datą, gdy została ona ręcznie poprawiona.
+  ///
+  /// In pl, this message translates to:
+  /// **'Data (Poprawiona):'**
+  String get screensCameraImagePreviewViewResultPanelDateLabelCorrected;
+
+  /// Etykieta dla pola z nazwą sklepu.
+  ///
+  /// In pl, this message translates to:
+  /// **'Sklep:'**
+  String get screensCameraImagePreviewViewResultPanelStoreLabel;
 }
 
 class _AppLocalizationsDelegate

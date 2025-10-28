@@ -57,4 +57,29 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get screensCameraProcessingViewStatus => 'Analizuję paragon...';
+
+  @override
+  String get screensCameraImagePreviewViewResultPanelDateNotFound =>
+      'Nie znaleziono';
+
+  @override
+  String get screensCameraImagePreviewViewResultPanelUnknownStore =>
+      'Nieznany sklep';
+
+  @override
+  String get screensCameraImagePreviewViewResultPanelAmountLabel => 'Kwota:';
+
+  @override
+  String get screensCameraImagePreviewViewResultPanelAmountLabelCorrected =>
+      'Kwota (Poprawiona):';
+
+  @override
+  String get screensCameraImagePreviewViewResultPanelDateLabel => 'Data:';
+
+  @override
+  String get screensCameraImagePreviewViewResultPanelDateLabelCorrected =>
+      'Data (Poprawiona):';
+
+  @override
+  String get screensCameraImagePreviewViewResultPanelStoreLabel => 'Sklep:';
 }
