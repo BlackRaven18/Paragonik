@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:paragonik/data/models/database/receipt.dart';
+import 'package:paragonik/data/services/l10n_service.dart';
 import 'package:paragonik/notifiers/receipt_notifier.dart';
 
 enum GroupingOption { byReceiptDate, byAddedDate }
@@ -74,11 +75,13 @@ class ReceiptsViewModel extends ChangeNotifier {
   }
 
   Map<String, List<Receipt>> _groupReceipts(List<Receipt> receipts) {
+    final l10n = L10nService.l10n;
+
     final Map<String, List<Receipt>> grouped = {
-      'Dzisiaj': [],
-      'Wczoraj': [],
-      'W tym tygodniu': [],
-      'Wcześniej': [],
+      l10n.viewModelsScreensReceiptsGroupToday: [],
+      l10n.viewModelsScreensReceiptsGroupYesterday: [],
+      l10n.viewModelsScreensReceiptsGroupThisWeek: [],
+      l10n.viewModelsScreensReceiptsGroupEarlier: [],
     };
 
     final now = DateTime.now();
@@ -97,13 +100,14 @@ class ReceiptsViewModel extends ChangeNotifier {
       );
 
       if (receiptDate.isAtSameMomentAs(today)) {
-        grouped['Dzisiaj']!.add(receipt);
+        grouped[l10n.viewModelsScreensReceiptsGroupToday]!.add(receipt);
       } else if (receiptDate.isAtSameMomentAs(yesterday)) {
-        grouped['Wczoraj']!.add(receipt);
-      } else if (receiptDate.isAfter(startOfWeek)) {
-        grouped['W tym tygodniu']!.add(receipt);
+        grouped[l10n.viewModelsScreensReceiptsGroupYesterday]!.add(receipt);
+      } else if (receiptDate.isAfter(startOfWeek) &&
+          !receiptDate.isAfter(today)) {
+        grouped[l10n.viewModelsScreensReceiptsGroupThisWeek]!.add(receipt);
       } else {
-        grouped['Wcześniej']!.add(receipt);
+        grouped[l10n.viewModelsScreensReceiptsGroupEarlier]!.add(receipt);
       }
     }
     return grouped;

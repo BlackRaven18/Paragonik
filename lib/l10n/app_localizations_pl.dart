@@ -9,36 +9,18 @@ class AppLocalizationsPl extends AppLocalizations {
   AppLocalizationsPl([String locale = 'pl']) : super(locale);
 
   @override
-  String get scanner => 'Skaner';
+  String get coreWidgetsAppBottomNavigationBarScannerTabLabel => 'Skaner';
 
   @override
-  String get settings => 'Ustawienia';
+  String get coreWidgetsAppBottomNavigationBarReceiptsListTabLabel =>
+      'Paragony';
 
   @override
-  String get statistics => 'Statystyki';
+  String get coreWidgetsAppBottomNavigationBarStatisticsTabLabel =>
+      'Statystyki';
 
   @override
-  String get receipts => 'Paragony';
-
-  @override
-  String receiptsCount(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count paragonu',
-      many: '$count paragonów',
-      few: '$count paragony',
-      one: '$count paragon',
-      zero: 'Brak paragonów',
-    );
-    return '$_temp0';
-  }
-
-  @override
-  String get addReceipt => 'Dodaj paragon';
-
-  @override
-  String get saveChanges => 'Zapisz zmiany';
+  String get coreWidgetsAppBottomNavigationBarSettingsTabLabel => 'Ustawienia';
 
   @override
   String get commonCancel => 'Anuluj';
@@ -54,6 +36,22 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get commonContinue => 'Kontynuuj';
+
+  @override
+  String get notificationsErrorLoadingReceipts =>
+      'Ups! Coś poszło nie tak przy ładowaniu paragonów';
+
+  @override
+  String get notificationsSuccessChangesSaved => 'Zapisano zmiany!';
+
+  @override
+  String get notificationsSuccessReceiptDeleted => 'Paragon usunięty!';
+
+  @override
+  String get notificationsSuccessReceiptAdded => 'Paragon usunięty!';
+
+  @override
+  String get unknownStore => 'Nieznany sklep';
 
   @override
   String get screensCameraInitialViewTitle => 'Rozpocznij Skanowanie';
@@ -139,9 +137,6 @@ class AppLocalizationsPl extends AppLocalizations {
   String get screensReceiptsEditStoreLabel => 'Sklep';
 
   @override
-  String get notificationsSuccessChangesSaved => 'Zapisano zmiany!';
-
-  @override
   String get screensReceiptsReceiptsListNoMatchingReceipts =>
       'Nie znaleziono pasujących paragonów.';
 
@@ -152,9 +147,6 @@ class AppLocalizationsPl extends AppLocalizations {
   @override
   String get screensReceiptsReceiptsListConfirmDeleteDialogContent =>
       'Czy na pewno chcesz usunąć ten paragon?';
-
-  @override
-  String get notificationsSuccessReceiptDeleted => 'Paragon usunięty!';
 
   @override
   String get screensReceiptsReceiptsScreenWidgetsSearchLabel => 'Szukaj...';
@@ -191,8 +183,7 @@ class AppLocalizationsPl extends AppLocalizations {
   String get screensStatisticsCardSpendingTitle => 'Wydatki';
 
   @override
-  String get screensStatisticsCardVsPreviousMonthTitle =>
-      'vs Poprzedni miesiąc';
+  String get screensStatisticsCardVsPreviousMonthTitle => 'Poprzedni miesiąc';
 
   @override
   String get screensStatisticsCardDailyAverageTitle => 'Średnio dziennie';
@@ -246,4 +237,16 @@ class AppLocalizationsPl extends AppLocalizations {
   @override
   String get helpersModalsFutureDateWarningDialogContent =>
       'Wybrana data paragonu jest z przyszłości. Czy na pewno chcesz kontynuować?';
+
+  @override
+  String get viewModelsScreensReceiptsGroupToday => 'Dzisiaj';
+
+  @override
+  String get viewModelsScreensReceiptsGroupYesterday => 'Wczoraj';
+
+  @override
+  String get viewModelsScreensReceiptsGroupThisWeek => 'W tym tygodniu';
+
+  @override
+  String get viewModelsScreensReceiptsGroupEarlier => 'Wcześniej';
 }

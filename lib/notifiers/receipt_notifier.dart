@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:paragonik/data/models/database/receipt.dart';
+import 'package:paragonik/data/services/l10n_service.dart';
 import 'package:paragonik/data/services/notifications/notification_service.dart';
 import 'package:paragonik/data/services/receipt_service.dart';
 import 'package:paragonik/data/services/thumbnail_service.dart';
@@ -46,7 +47,7 @@ class ReceiptNotifier extends ChangeNotifier {
       _totalReceiptsCount = results[1] as int;
     } catch (e) {
       NotificationService.showError(
-        "Ups! Coś poszlo nie tak przy ładowaniu paragonów",
+        L10nService.l10n.notificationsErrorLoadingReceipts,
       );
     } finally {
       isLoadingInitial = false;
@@ -76,7 +77,7 @@ class ReceiptNotifier extends ChangeNotifier {
       _receipts.addAll(newReceipts);
     } catch (e) {
       NotificationService.showError(
-        "Ups! Coś poszlo nie tak przy ładowaniu paragonów",
+        L10nService.l10n.notificationsErrorLoadingReceipts,
       );
     } finally {
       isLoadingMore = false;

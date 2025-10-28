@@ -1,11 +1,321 @@
 {
-    "@@locale": "en",
-    "scanner": "Scanner",
-    "settings": "Settings",
-    "statistics": "Statistics",
-    "receipts": "Receipts",
-    "totalReceipts": "Total number of receipts",
-    "receiptsCount": "{count, plural, =0{No receipts} =1{{count} receipt} other{{count} receipts}}",
-    "addReceipt": "Add receipt",
-    "saveChanges": "Save changes"
+  "@@locale": "en",
+
+  "coreWidgetsAppBottomNavigationBarScannerTabLabel": "Scanner",
+  "@coreWidgetsAppBottomNavigationBarScannerTabLabel": {
+    "description": "Label for the 'Scanner' tab on the bottom navigation bar."
+  },
+  "coreWidgetsAppBottomNavigationBarReceiptsListTabLabel": "Receipts",
+  "@coreWidgetsAppBottomNavigationBarReceiptsListTabLabel": {
+    "description": "Label for the 'Receipts' tab on the bottom navigation bar."
+  },
+  "coreWidgetsAppBottomNavigationBarStatisticsTabLabel": "Statistics",
+  "@coreWidgetsAppBottomNavigationBarStatisticsTabLabel": {
+    "description": "Label for the 'Statistics' tab on the bottom navigation bar."
+  },
+  "coreWidgetsAppBottomNavigationBarSettingsTabLabel": "Settings",
+  "@coreWidgetsAppBottomNavigationBarSettingsTabLabel": {
+    "description": "Label for the 'Settings' tab on the bottom navigation bar."
+  },
+
+  "commonCancel": "Cancel",
+  "@commonCancel": {
+    "description": "Label for a button to cancel an action."
+  },
+  "commonSave": "Save",
+  "@commonSave": {
+    "description": "Label for a button to save data."
+  },
+  "commonSaveChanges": "Save Changes",
+  "@commonSaveChanges": {
+    "description": "Label for a button to save modified data."
+  },
+  "commonDelete": "Delete",
+  "@commonDelete": {
+    "description": "Label for a button to delete an item."
+  },
+  "commonContinue": "Continue",
+  "@commonContinue": {
+    "description": "Label for a button to continue an action."
+  },
+
+  "notificationsErrorLoadingReceipts": "Oops! Something went wrong while loading receipts",
+  "@notificationsErrorLoadingReceipts": {
+    "description": "Message displayed after a failure to load receipts."
+  },
+  "notificationsSuccessChangesSaved": "Changes saved!",
+  "@notificationsSuccessChangesSaved": {
+    "description": "Message displayed after successfully saving changes."
+  },
+  "notificationsSuccessReceiptDeleted": "Receipt deleted!",
+  "@notificationsSuccessReceiptDeleted": {
+    "description": "Message displayed after successfully deleting a receipt."
+  },
+  "notificationsSuccessReceiptAdded": "Receipt added!",
+  "@notificationsSuccessReceiptAdded": {
+    "description": "Message displayed after successfully adding a receipt."
+  },
+
+  "unknownStore": "Unknown store",
+  "@unknownStore": {
+    "description": "Default text for an unrecognized store name."
+  },
+
+  "screensCameraInitialViewTitle": "Start Scanning",
+  "@screensCameraInitialViewTitle": {
+    "description": "Main title on the initial scanner screen."
+  },
+  "screensCameraInitialViewDescription": "Take a photo of a receipt or choose an existing one from the gallery to add a new expense.",
+  "@screensCameraInitialViewDescription": {
+    "description": "Instructional text below the main title on the scanner screen."
+  },
+  "screensCameraInitialViewTakePhotoButton": "Take Photo",
+  "@screensCameraInitialViewTakePhotoButton": {
+    "description": "Label for the button to launch the camera to take a photo."
+  },
+  "screensCameraInitialViewChooseFromGalleryButton": "Choose from Gallery",
+  "@screensCameraInitialViewChooseFromGalleryButton": {
+    "description": "Label for the button to open the gallery to select a photo."
+  },
+
+  "screensCameraProcessingViewStatus": "Analyzing receipt...",
+  "@screensCameraProcessingViewStatus": {
+    "description": "Message displayed while the OCR is analyzing the receipt image."
+  },
+
+  "screensCameraImagePreviewViewResultPanelDateNotFound": "Not found",
+  "@screensCameraImagePreviewViewResultPanelDateNotFound": {
+    "description": "Text displayed when a date was not found on the receipt."
+  },
+  "screensCameraImagePreviewViewResultPanelUnknownStore": "Unknown store",
+  "@screensCameraImagePreviewViewResultPanelUnknownStore": {
+    "description": "Default text for an unrecognized store name."
+  },
+  "screensCameraImagePreviewViewResultPanelAmountLabel": "Amount:",
+  "@screensCameraImagePreviewViewResultPanelAmountLabel": {
+    "description": "Default label for the receipt amount field."
+  },
+  "screensCameraImagePreviewViewResultPanelAmountLabelCorrected": "Amount (Corrected):",
+  "@screensCameraImagePreviewViewResultPanelAmountLabelCorrected": {
+    "description": "Label for the amount field when it has been manually corrected."
+  },
+  "screensCameraImagePreviewViewResultPanelDateLabel": "Date:",
+  "@screensCameraImagePreviewViewResultPanelDateLabel": {
+    "description": "Default label for the receipt date field."
+  },
+  "screensCameraImagePreviewViewResultPanelDateLabelCorrected": "Date (Corrected):",
+  "@screensCameraImagePreviewViewResultPanelDateLabelCorrected": {
+    "description": "Label for the date field when it has been manually corrected."
+  },
+  "screensCameraImagePreviewViewResultPanelStoreLabel": "Store:",
+  "@screensCameraImagePreviewViewResultPanelStoreLabel": {
+    "description": "Label for the store name field."
+  },
+
+  "screensCameraImagePreviewViewImageDisplayShowOriginalTooltip": "Show original",
+  "@screensCameraImagePreviewViewImageDisplayShowOriginalTooltip": {
+    "description": "Tooltip for the button to switch the preview to the original photo."
+  },
+  "screensCameraImagePreviewViewImageDisplayShowScanTooltip": "Show scan",
+  "@screensCameraImagePreviewViewImageDisplayShowScanTooltip": {
+    "description": "Tooltip for the button to switch the preview to the processed scan."
+  },
+
+  "screensCameraActionPanelChangePhotoButton": "Change Photo",
+  "@screensCameraActionPanelChangePhotoButton": {
+    "description": "Label for the button to change the selected receipt photo."
+  },
+  "screensCameraActionPanelProcessButton": "Process",
+  "@screensCameraActionPanelProcessButton": {
+    "description": "Label for the button to start the OCR analysis of the photo."
+  },
+
+  "screensCameraHelpersPermissionDialogTitle": "Permission Denied",
+  "@screensCameraHelpersPermissionDialogTitle": {
+    "description": "Title of the dialog box informing about missing permissions."
+  },
+  "screensCameraHelpersPermissionDialogContentCamera": "The app needs access to the camera. Please enable the permission in the app settings.",
+  "@screensCameraHelpersPermissionDialogContentCamera": {
+    "description": "Content of the dialog box requesting to enable camera permissions."
+  },
+  "screensCameraHelpersPermissionDialogContentGallery": "The app needs access to the gallery. Please enable the permission in the app settings.",
+  "@screensCameraHelpersPermissionDialogContentGallery": {
+    "description": "Content of the dialog box requesting to enable gallery permissions."
+  },
+  "screensCameraHelpersPermissionDialogOpenSettingsButton": "Open Settings",
+  "@screensCameraHelpersPermissionDialogOpenSettingsButton": {
+    "description": "Label for the button that takes the user to the app settings."
+  },
+
+  "screensReceiptsNoReceiptsSaved": "No saved receipts.",
+  "@screensReceiptsNoReceiptsSaved": {
+    "description": "Text displayed on the receipts list screen when there are no saved receipts yet."
+  },
+  "screensReceiptsEditAmountLabel": "Amount:",
+  "@screensReceiptsEditAmountLabel": {
+    "description": "Label for the amount field on the receipt edit screen."
+  },
+  "screensReceiptsEditDateTimeLabel": "Date and time",
+  "@screensReceiptsEditDateTimeLabel": {
+    "description": "Label for the date field on the receipt edit screen."
+  },
+  "screensReceiptsEditStoreLabel": "Store",
+  "@screensReceiptsEditStoreLabel": {
+    "description": "Label for the store field on the receipt edit screen."
+  },
+
+  "screensReceiptsReceiptsListNoMatchingReceipts": "No matching receipts found.",
+  "@screensReceiptsReceiptsListNoMatchingReceipts": {
+    "description": "Text displayed on the receipts list when filters find no matching results."
+  },
+
+  "screensReceiptsReceiptsListConfirmDeleteDialogTitle": "Confirm Deletion",
+  "@screensReceiptsReceiptsListConfirmDeleteDialogTitle": {
+    "description": "Title of the dialog box asking for confirmation to delete a receipt."
+  },
+  "screensReceiptsReceiptsListConfirmDeleteDialogContent": "Are you sure you want to delete this receipt?",
+  "@screensReceiptsReceiptsListConfirmDeleteDialogContent": {
+    "description": "Content of the dialog box asking for confirmation to delete a receipt."
+  },
+
+  "screensReceiptsReceiptsScreenWidgetsSearchLabel": "Search...",
+  "@screensReceiptsReceiptsScreenWidgetsSearchLabel": {
+    "description": "Hint text displayed in the search field on the receipts list."
+  },
+
+  "screensReceiptsReceiptsScreenWidgetsCounterTitle": "Total number of receipts",
+  "@screensReceiptsReceiptsScreenWidgetsCounterTitle": {
+    "description": "Label for the card showing the total count of all receipts."
+  },
+
+  "screensReceiptsReceiptsScreenWidgetsGroupingToggleReceiptDate": "Receipt Date",
+  "@screensReceiptsReceiptsScreenWidgetsGroupingToggleReceiptDate": {
+    "description": "Label for the button to group receipts by their purchase date."
+  },
+  "screensReceiptsReceiptsScreenWidgetsGroupingToggleAddedDate": "Date Added",
+  "@screensReceiptsReceiptsScreenWidgetsGroupingToggleAddedDate": {
+    "description": "Label for the button to group receipts by the date they were added to the app."
+  },
+
+  "screensReceiptsReceiptsScreenWidgetsModalsFilterTitle": "Filter by store",
+  "@screensReceiptsReceiptsScreenWidgetsModalsFilterTitle": {
+    "description": "Title of the modal window for filtering receipts by store."
+  },
+  "screensReceiptsReceiptsScreenWidgetsModalsFilterAllStoresOption": "All stores",
+  "@screensReceiptsReceiptsScreenWidgetsModalsFilterAllStoresOption": {
+    "description": "Label for the dropdown option that clears the store filter."
+  },
+
+  "screensStatisticsScreenTitle": "Statistics",
+  "@screensStatisticsScreenTitle": {
+    "description": "Main title on the statistics screen."
+  },
+  "screensStatisticsSummaryTitleWithRange": "Summary ({range})",
+  "@screensStatisticsSummaryTitleWithRange": {
+    "description": "Title of the summary section, containing the selected time range.",
+    "placeholders": {
+      "range": {
+        "type": "String",
+        "example": "Current Month"
+      }
+    }
+  },
+  "screensStatisticsCardSpendingTitle": "Spending",
+  "@screensStatisticsCardSpendingTitle": {
+    "description": "Title of the card showing the sum of expenses."
+  },
+  "screensStatisticsCardVsPreviousMonthTitle": "vs Previous Month",
+  "@screensStatisticsCardVsPreviousMonthTitle": {
+    "description": "Title of the card comparing spending with the previous month."
+  },
+  "screensStatisticsCardDailyAverageTitle": "Daily Average",
+  "@screensStatisticsCardDailyAverageTitle": {
+    "description": "Title of the card showing the average daily spending."
+  },
+  "screensStatisticsCardReceiptsCountTitle": "Number of Receipts",
+  "@screensStatisticsCardReceiptsCountTitle": {
+    "description": "Title of the card showing the number of receipts in a given period."
+  },
+  "screensStatisticsStoreSpendingTitle": "Spending by Store",
+  "@screensStatisticsStoreSpendingTitle": {
+    "description": "Title of the section showing spending in individual stores."
+  },
+  "screensStatisticsTimeRangeWeek": "Week",
+  "@screensStatisticsTimeRangeWeek": {
+    "description": "Label for the 'Week' time range selection button."
+  },
+  "screensStatisticsTimeRangeMonth": "Month",
+  "@screensStatisticsTimeRangeMonth": {
+    "description": "Label for the 'Month' time range selection button."
+  },
+  "screensStatisticsNoSpendingInRange": "No spending in this period.",
+  "@screensStatisticsNoSpendingInRange": {
+    "description": "Message displayed when there is no spending in the selected period."
+  },
+  "screensStatisticsRangeLabelCurrentWeek": "Current Week",
+  "@screensStatisticsRangeLabelCurrentWeek": {
+    "description": ""
+  },
+  "screensStatisticsRangeLabelCurrentMonth": "Current Month",
+  "@screensStatisticsRangeLabelCurrentMonth": {
+    "description": ""
+  },
+  "screensStatisticsRangeLabelCustom": "Custom",
+  "@screensStatisticsRangeLabelCustom": {
+    "description": ""
+  },
+
+  "widgetsStoreDisplayUnknownStore": "Unknown store",
+  "@widgetsStoreDisplayUnknownStore": {
+    "description": "Default store name when it is not recognized or provided."
+  },
+
+  "widgetsImageViewerTooltipShowOriginal": "Show original",
+  "@widgetsImageViewerTooltipShowOriginal": {
+    "description": "Tooltip for the button to switch the preview to the original photo."
+  },
+  "widgetsImageViewerTooltipShowScan": "Show scan",
+  "@widgetsImageViewerTooltipShowScan": {
+    "description": "Tooltip for the button to switch the preview to the processed scan."
+  },
+
+  "widgetsModalsStoreSelectionSearchLabel": "Search store...",
+  "@widgetsModalsStoreSelectionSearchLabel": {
+    "description": "Hint text displayed in the search field in the store selection window."
+  },
+
+  "helpersSumInputDialogTitle": "Manual Amount Correction",
+  "@helpersSumInputDialogTitle": {
+    "description": "Title of the dialog box for manual editing of the receipt amount."
+  },
+  "helpersSumInputDialogLabel": "Enter the correct amount",
+  "@helpersSumInputDialogLabel": {
+    "description": "Label for the text field for entering the amount."
+  },
+
+  "helpersModalsFutureDateWarningDialogTitle": "Future Date",
+  "@helpersModalsFutureDateWarningDialogTitle": {
+    "description": "Title of the dialog box warning about a future date."
+  },
+  "helpersModalsFutureDateWarningDialogContent": "The selected receipt date is in the future. Are you sure you want to continue?",
+  "@helpersModalsFutureDateWarningDialogContent": {
+    "description": "Content of the dialog box asking for confirmation to save a receipt with a future date."
+  },
+
+  "viewModelsScreensReceiptsGroupToday": "Today",
+  "@viewModelsScreensReceiptsGroupToday": {
+    "description": "Group header for receipts from today."
+  },
+  "viewModelsScreensReceiptsGroupYesterday": "Yesterday",
+  "@viewModelsScreensReceiptsGroupYesterday": {
+    "description": "Group header for receipts from yesterday."
+  },
+  "viewModelsScreensReceiptsGroupThisWeek": "This Week",
+  "@viewModelsScreensReceiptsGroupThisWeek": {
+    "description": "Group header for receipts from the current week."
+  },
+  "viewModelsScreensReceiptsGroupEarlier": "Earlier",
+  "@viewModelsScreensReceiptsGroupEarlier": {
+    "description": "Group header for receipts older than the current week."
+  }
 }

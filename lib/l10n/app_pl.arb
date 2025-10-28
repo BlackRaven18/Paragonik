@@ -1,14 +1,22 @@
 {
     "@@locale": "pl",
 
-
-    "scanner": "Skaner",
-    "settings": "Ustawienia",
-    "statistics": "Statystyki",
-    "receipts": "Paragony",
-    "receiptsCount": "{count, plural, =0{Brak paragonów} =1{{count} paragon} few{{count} paragony} many{{count} paragonów} other{{count} paragonu}}",
-    "addReceipt": "Dodaj paragon",
-    "saveChanges": "Zapisz zmiany",
+    "coreWidgetsAppBottomNavigationBarScannerTabLabel": "Skaner",
+    "@coreWidgetsAppBottomNavigationBarScannerTabLabel": {
+        "description": "Etykieta dla zakładki 'Skaner' na dolnym pasku nawigacji."
+    },
+    "coreWidgetsAppBottomNavigationBarReceiptsListTabLabel": "Paragony",
+    "@coreWidgetsAppBottomNavigationBarReceiptsListTabLabel": {
+        "description": "Etykieta dla zakładki 'Paragony' na dolnym pasku nawigacji."
+    },
+    "coreWidgetsAppBottomNavigationBarStatisticsTabLabel": "Statystyki",
+    "@coreWidgetsAppBottomNavigationBarStatisticsTabLabel": {
+        "description": "Etykieta dla zakładki 'Statystyki' na dolnym pasku nawigacji."
+    },
+    "coreWidgetsAppBottomNavigationBarSettingsTabLabel": "Ustawienia",
+    "@coreWidgetsAppBottomNavigationBarSettingsTabLabel": {
+        "description": "Etykieta dla zakładki 'Ustawienia' na dolnym pasku nawigacji."
+    },
 
 
     "commonCancel": "Anuluj",
@@ -33,13 +41,54 @@
     },
 
 
+    "notificationsErrorLoadingReceipts": "Ups! Coś poszło nie tak przy ładowaniu paragonów",
+    "@notificationsErrorLoadingReceipts": {
+        "description": "Komunikat wyświetlany po błędzie ładowania paragonów."
+    },
+    "notificationsSuccessChangesSaved": "Zapisano zmiany!",
+    "@notificationsSuccessChangesSaved": {
+        "description": "Komunikat wyświetlany po pomyślnym zapisaniu zmian."
+    },
+    "notificationsSuccessReceiptDeleted": "Paragon usunięty!",
+    "@notificationsSuccessReceiptDeleted": {
+        "description": "Komunikat wyświetlany po pomyślnym usunięciu paragonu."
+    },
+    "notificationsSuccessReceiptAdded": "Paragon usunięty!",
+    "@notificationsSuccessReceiptAdded": {
+        "description": "Komunikat wyświetlany po pomyślnym dodaniu paragonu."
+    },
+
+    "unknownStore": "Nieznany sklep",
+    "@unknownStore": {
+        "description": "Domyślny tekst dla nierozpoznanej nazwy sklepu."
+    },
+
+
     "screensCameraInitialViewTitle": "Rozpocznij Skanowanie",
+    "@screensCameraInitialViewTitle": {
+        "description": "Główny tytuł na ekranie początkowym skanera."
+    },
+
     "screensCameraInitialViewDescription": "Zrób zdjęcie paragonu lub wybierz istniejące z galerii, aby dodać nowy wydatek.",
+    "@screensCameraInitialViewDescription": {
+        "description": "Tekst instruktażowy pod głównym tytułem na ekranie skanera."
+    },
+
     "screensCameraInitialViewTakePhotoButton": "Zrób zdjęcie",
+    "@screensCameraInitialViewTakePhotoButton": {
+        "description": "Etykieta przycisku do uruchomienia aparatu w celu zrobienia zdjęcia."
+    },
+
     "screensCameraInitialViewChooseFromGalleryButton": "Wybierz z galerii",
+    "@screensCameraInitialViewChooseFromGalleryButton": {
+        "description": "Etykieta przycisku do otwarcia galerii w celu wybrania zdjęcia."
+    },
 
 
     "screensCameraProcessingViewStatus": "Analizuję paragon...",
+    "@screensCameraProcessingViewStatus": {
+        "description": "Komunikat wyświetlany podczas analizy obrazu paragonu przez OCR."
+    },
 
 
     "screensCameraImagePreviewViewResultPanelDateNotFound": "Nie znaleziono",
@@ -126,10 +175,6 @@
     "@screensReceiptsEditStoreLabel": {
         "description": "Etykieta dla pola ze sklepem na ekranie edycji paragonu."
     },
-    "notificationsSuccessChangesSaved": "Zapisano zmiany!",
-    "@notificationsSuccessChangesSaved": {
-        "description": "Komunikat wyświetlany po pomyślnym zapisaniu zmian."
-    },
 
 
     "screensReceiptsReceiptsListNoMatchingReceipts": "Nie znaleziono pasujących paragonów.",
@@ -145,10 +190,6 @@
     "screensReceiptsReceiptsListConfirmDeleteDialogContent": "Czy na pewno chcesz usunąć ten paragon?",
     "@screensReceiptsReceiptsListConfirmDeleteDialogContent": {
         "description": "Treść okna dialogowego z prośbą o potwierdzenie usunięcia paragonu."
-    },
-    "notificationsSuccessReceiptDeleted": "Paragon usunięty!",
-    "@notificationsSuccessReceiptDeleted": {
-        "description": "Komunikat wyświetlany po pomyślnym usunięciu paragonu."
     },
 
 
@@ -204,7 +245,7 @@
     "@screensStatisticsCardSpendingTitle": {
         "description": "Tytuł karty pokazującej sumę wydatków."
     },
-    "screensStatisticsCardVsPreviousMonthTitle": "vs Poprzedni miesiąc",
+    "screensStatisticsCardVsPreviousMonthTitle": "Poprzedni miesiąc",
     "@screensStatisticsCardVsPreviousMonthTitle": {
         "description": "Tytuł karty porównującej wydatki z poprzednim miesiącem."
     },
@@ -284,5 +325,26 @@
     "helpersModalsFutureDateWarningDialogContent": "Wybrana data paragonu jest z przyszłości. Czy na pewno chcesz kontynuować?",
     "@helpersModalsFutureDateWarningDialogContent": {
         "description": "Treść okna dialogowego z prośbą o potwierdzenie zapisu paragonu z datą z przyszłości."
+    },
+
+
+    "viewModelsScreensReceiptsGroupToday": "Dzisiaj",
+    "@viewModelsScreensReceiptsGroupToday": {
+        "description": "Nagłówek grupy dla paragonów z dzisiejszego dnia."
+    },
+
+    "viewModelsScreensReceiptsGroupYesterday": "Wczoraj",
+    "@viewModelsScreensReceiptsGroupYesterday": {
+        "description": "Nagłówek grupy dla paragonów z wczorajszego dnia."
+    },
+    
+    "viewModelsScreensReceiptsGroupThisWeek": "W tym tygodniu",
+    "@viewModelsScreensReceiptsGroupThisWeek": {
+        "description": "Nagłówek grupy dla paragonów z bieżącego tygodnia."
+    },
+    
+    "viewModelsScreensReceiptsGroupEarlier": "Wcześniej",
+    "@viewModelsScreensReceiptsGroupEarlier": {
+        "description": "Nagłówek grupy dla paragonów starszych niż bieżący tydzień."
     }
 }

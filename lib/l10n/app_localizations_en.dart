@@ -9,239 +9,244 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
-  String get scanner => 'Scanner';
+  String get coreWidgetsAppBottomNavigationBarScannerTabLabel => 'Scanner';
 
   @override
-  String get settings => 'Settings';
+  String get coreWidgetsAppBottomNavigationBarReceiptsListTabLabel =>
+      'Receipts';
 
   @override
-  String get statistics => 'Statistics';
+  String get coreWidgetsAppBottomNavigationBarStatisticsTabLabel =>
+      'Statistics';
 
   @override
-  String get receipts => 'Receipts';
+  String get coreWidgetsAppBottomNavigationBarSettingsTabLabel => 'Settings';
 
   @override
-  String receiptsCount(num count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count receipts',
-      one: '$count receipt',
-      zero: 'No receipts',
-    );
-    return '$_temp0';
-  }
+  String get commonCancel => 'Cancel';
 
   @override
-  String get addReceipt => 'Add receipt';
+  String get commonSave => 'Save';
 
   @override
-  String get saveChanges => 'Save changes';
+  String get commonSaveChanges => 'Save Changes';
 
   @override
-  String get commonCancel => 'Anuluj';
+  String get commonDelete => 'Delete';
 
   @override
-  String get commonSave => 'Zapisz';
+  String get commonContinue => 'Continue';
 
   @override
-  String get commonSaveChanges => 'Zapisz zmiany';
+  String get notificationsErrorLoadingReceipts =>
+      'Oops! Something went wrong while loading receipts';
 
   @override
-  String get commonDelete => 'Usuń';
+  String get notificationsSuccessChangesSaved => 'Changes saved!';
 
   @override
-  String get commonContinue => 'Kontynuuj';
+  String get notificationsSuccessReceiptDeleted => 'Receipt deleted!';
 
   @override
-  String get screensCameraInitialViewTitle => 'Rozpocznij Skanowanie';
+  String get notificationsSuccessReceiptAdded => 'Receipt added!';
+
+  @override
+  String get unknownStore => 'Unknown store';
+
+  @override
+  String get screensCameraInitialViewTitle => 'Start Scanning';
 
   @override
   String get screensCameraInitialViewDescription =>
-      'Zrób zdjęcie paragonu lub wybierz istniejące z galerii, aby dodać nowy wydatek.';
+      'Take a photo of a receipt or choose an existing one from the gallery to add a new expense.';
 
   @override
-  String get screensCameraInitialViewTakePhotoButton => 'Zrób zdjęcie';
+  String get screensCameraInitialViewTakePhotoButton => 'Take Photo';
 
   @override
   String get screensCameraInitialViewChooseFromGalleryButton =>
-      'Wybierz z galerii';
+      'Choose from Gallery';
 
   @override
-  String get screensCameraProcessingViewStatus => 'Analizuję paragon...';
+  String get screensCameraProcessingViewStatus => 'Analyzing receipt...';
 
   @override
   String get screensCameraImagePreviewViewResultPanelDateNotFound =>
-      'Nie znaleziono';
+      'Not found';
 
   @override
   String get screensCameraImagePreviewViewResultPanelUnknownStore =>
-      'Nieznany sklep';
+      'Unknown store';
 
   @override
-  String get screensCameraImagePreviewViewResultPanelAmountLabel => 'Kwota:';
+  String get screensCameraImagePreviewViewResultPanelAmountLabel => 'Amount:';
 
   @override
   String get screensCameraImagePreviewViewResultPanelAmountLabelCorrected =>
-      'Kwota (Poprawiona):';
+      'Amount (Corrected):';
 
   @override
-  String get screensCameraImagePreviewViewResultPanelDateLabel => 'Data:';
+  String get screensCameraImagePreviewViewResultPanelDateLabel => 'Date:';
 
   @override
   String get screensCameraImagePreviewViewResultPanelDateLabelCorrected =>
-      'Data (Poprawiona):';
+      'Date (Corrected):';
 
   @override
-  String get screensCameraImagePreviewViewResultPanelStoreLabel => 'Sklep:';
+  String get screensCameraImagePreviewViewResultPanelStoreLabel => 'Store:';
 
   @override
   String get screensCameraImagePreviewViewImageDisplayShowOriginalTooltip =>
-      'Pokaż oryginał';
+      'Show original';
 
   @override
   String get screensCameraImagePreviewViewImageDisplayShowScanTooltip =>
-      'Pokaż skan';
+      'Show scan';
 
   @override
-  String get screensCameraActionPanelChangePhotoButton => 'Zmień zdjęcie';
+  String get screensCameraActionPanelChangePhotoButton => 'Change Photo';
 
   @override
-  String get screensCameraActionPanelProcessButton => 'Przetwórz';
+  String get screensCameraActionPanelProcessButton => 'Process';
 
   @override
-  String get screensCameraHelpersPermissionDialogTitle => 'Brak uprawnień';
+  String get screensCameraHelpersPermissionDialogTitle => 'Permission Denied';
 
   @override
   String get screensCameraHelpersPermissionDialogContentCamera =>
-      'Aplikacja potrzebuje dostępu do aparatu. Proszę włączyć uprawnienie w ustawieniach aplikacji.';
+      'The app needs access to the camera. Please enable the permission in the app settings.';
 
   @override
   String get screensCameraHelpersPermissionDialogContentGallery =>
-      'Aplikacja potrzebuje dostępu do galerii. Proszę włączyć uprawnienie w ustawieniach aplikacji.';
+      'The app needs access to the gallery. Please enable the permission in the app settings.';
 
   @override
   String get screensCameraHelpersPermissionDialogOpenSettingsButton =>
-      'Otwórz ustawienia';
+      'Open Settings';
 
   @override
-  String get screensReceiptsNoReceiptsSaved => 'Brak zapisanych paragonów.';
+  String get screensReceiptsNoReceiptsSaved => 'No saved receipts.';
 
   @override
-  String get screensReceiptsEditAmountLabel => 'Kwota:';
+  String get screensReceiptsEditAmountLabel => 'Amount:';
 
   @override
-  String get screensReceiptsEditDateTimeLabel => 'Data i godzina';
+  String get screensReceiptsEditDateTimeLabel => 'Date and time';
 
   @override
-  String get screensReceiptsEditStoreLabel => 'Sklep';
-
-  @override
-  String get notificationsSuccessChangesSaved => 'Zapisano zmiany!';
+  String get screensReceiptsEditStoreLabel => 'Store';
 
   @override
   String get screensReceiptsReceiptsListNoMatchingReceipts =>
-      'Nie znaleziono pasujących paragonów.';
+      'No matching receipts found.';
 
   @override
   String get screensReceiptsReceiptsListConfirmDeleteDialogTitle =>
-      'Potwierdź usunięcie';
+      'Confirm Deletion';
 
   @override
   String get screensReceiptsReceiptsListConfirmDeleteDialogContent =>
-      'Czy na pewno chcesz usunąć ten paragon?';
+      'Are you sure you want to delete this receipt?';
 
   @override
-  String get notificationsSuccessReceiptDeleted => 'Paragon usunięty!';
-
-  @override
-  String get screensReceiptsReceiptsScreenWidgetsSearchLabel => 'Szukaj...';
+  String get screensReceiptsReceiptsScreenWidgetsSearchLabel => 'Search...';
 
   @override
   String get screensReceiptsReceiptsScreenWidgetsCounterTitle =>
-      'Całkowita liczba paragonów';
+      'Total number of receipts';
 
   @override
   String get screensReceiptsReceiptsScreenWidgetsGroupingToggleReceiptDate =>
-      'Data paragonu';
+      'Receipt Date';
 
   @override
   String get screensReceiptsReceiptsScreenWidgetsGroupingToggleAddedDate =>
-      'Data dodania';
+      'Date Added';
 
   @override
   String get screensReceiptsReceiptsScreenWidgetsModalsFilterTitle =>
-      'Filtruj po sklepie';
+      'Filter by store';
 
   @override
   String get screensReceiptsReceiptsScreenWidgetsModalsFilterAllStoresOption =>
-      'Wszystkie sklepy';
+      'All stores';
 
   @override
-  String get screensStatisticsScreenTitle => 'Statystyki';
+  String get screensStatisticsScreenTitle => 'Statistics';
 
   @override
   String screensStatisticsSummaryTitleWithRange(String range) {
-    return 'Podsumowanie ($range)';
+    return 'Summary ($range)';
   }
 
   @override
-  String get screensStatisticsCardSpendingTitle => 'Wydatki';
+  String get screensStatisticsCardSpendingTitle => 'Spending';
 
   @override
-  String get screensStatisticsCardVsPreviousMonthTitle =>
-      'vs Poprzedni miesiąc';
+  String get screensStatisticsCardVsPreviousMonthTitle => 'vs Previous Month';
 
   @override
-  String get screensStatisticsCardDailyAverageTitle => 'Średnio dziennie';
+  String get screensStatisticsCardDailyAverageTitle => 'Daily Average';
 
   @override
-  String get screensStatisticsCardReceiptsCountTitle => 'Liczba paragonów';
+  String get screensStatisticsCardReceiptsCountTitle => 'Number of Receipts';
 
   @override
-  String get screensStatisticsStoreSpendingTitle => 'Wydatki w sklepach';
+  String get screensStatisticsStoreSpendingTitle => 'Spending by Store';
 
   @override
-  String get screensStatisticsTimeRangeWeek => 'Tydzień';
+  String get screensStatisticsTimeRangeWeek => 'Week';
 
   @override
-  String get screensStatisticsTimeRangeMonth => 'Miesiąc';
+  String get screensStatisticsTimeRangeMonth => 'Month';
 
   @override
   String get screensStatisticsNoSpendingInRange =>
-      'Brak wydatków w tym okresie.';
+      'No spending in this period.';
 
   @override
-  String get screensStatisticsRangeLabelCurrentWeek => 'Bieżący tydzień';
+  String get screensStatisticsRangeLabelCurrentWeek => 'Current Week';
 
   @override
-  String get screensStatisticsRangeLabelCurrentMonth => 'Bieżący miesiąc';
+  String get screensStatisticsRangeLabelCurrentMonth => 'Current Month';
 
   @override
-  String get screensStatisticsRangeLabelCustom => 'Niestandardowy';
+  String get screensStatisticsRangeLabelCustom => 'Custom';
 
   @override
-  String get widgetsStoreDisplayUnknownStore => 'Nieznany sklep';
+  String get widgetsStoreDisplayUnknownStore => 'Unknown store';
 
   @override
-  String get widgetsImageViewerTooltipShowOriginal => 'Pokaż oryginał';
+  String get widgetsImageViewerTooltipShowOriginal => 'Show original';
 
   @override
-  String get widgetsImageViewerTooltipShowScan => 'Pokaż skan';
+  String get widgetsImageViewerTooltipShowScan => 'Show scan';
 
   @override
-  String get widgetsModalsStoreSelectionSearchLabel => 'Wyszukaj sklep...';
+  String get widgetsModalsStoreSelectionSearchLabel => 'Search store...';
 
   @override
-  String get helpersSumInputDialogTitle => 'Ręczna poprawa kwoty';
+  String get helpersSumInputDialogTitle => 'Manual Amount Correction';
 
   @override
-  String get helpersSumInputDialogLabel => 'Wpisz poprawną kwotę';
+  String get helpersSumInputDialogLabel => 'Enter the correct amount';
 
   @override
-  String get helpersModalsFutureDateWarningDialogTitle => 'Data z przyszłości';
+  String get helpersModalsFutureDateWarningDialogTitle => 'Future Date';
 
   @override
   String get helpersModalsFutureDateWarningDialogContent =>
-      'Wybrana data paragonu jest z przyszłości. Czy na pewno chcesz kontynuować?';
+      'The selected receipt date is in the future. Are you sure you want to continue?';
+
+  @override
+  String get viewModelsScreensReceiptsGroupToday => 'Today';
+
+  @override
+  String get viewModelsScreensReceiptsGroupYesterday => 'Yesterday';
+
+  @override
+  String get viewModelsScreensReceiptsGroupThisWeek => 'This Week';
+
+  @override
+  String get viewModelsScreensReceiptsGroupEarlier => 'Earlier';
 }

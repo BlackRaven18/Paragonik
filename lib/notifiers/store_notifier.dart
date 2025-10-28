@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:paragonik/data/models/database/store.dart';
+import 'package:paragonik/data/services/l10n_service.dart';
 import 'package:paragonik/data/services/store_service.dart';
 
 class StoreNotifier extends ChangeNotifier {
@@ -26,7 +27,7 @@ class StoreNotifier extends ChangeNotifier {
       return _stores.firstWhere(
         (store) => store.id == 'unknown',
         orElse: () =>
-            Store(id: 'unknown', name: 'Nieznany sklep', keywords: []),
+            Store(id: 'unknown', name: L10nService.l10n.unknownStore, keywords: []),
       );
     }
   }

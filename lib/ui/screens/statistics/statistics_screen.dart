@@ -41,7 +41,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
                   Padding(
                     padding: const EdgeInsets.only(top: 16.0, bottom: 24.0),
                     child: Text(
-                      context.l10n.statistics,
+                      context.l10n.screensStatisticsScreenTitle,
                       style: theme.textTheme.headlineMedium,
                     ),
                   ),

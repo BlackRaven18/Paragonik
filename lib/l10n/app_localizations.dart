@@ -98,47 +98,29 @@ abstract class AppLocalizations {
     Locale('pl'),
   ];
 
-  /// No description provided for @scanner.
+  /// Etykieta dla zakładki 'Skaner' na dolnym pasku nawigacji.
   ///
   /// In pl, this message translates to:
   /// **'Skaner'**
-  String get scanner;
+  String get coreWidgetsAppBottomNavigationBarScannerTabLabel;
 
-  /// No description provided for @settings.
-  ///
-  /// In pl, this message translates to:
-  /// **'Ustawienia'**
-  String get settings;
-
-  /// No description provided for @statistics.
-  ///
-  /// In pl, this message translates to:
-  /// **'Statystyki'**
-  String get statistics;
-
-  /// No description provided for @receipts.
+  /// Etykieta dla zakładki 'Paragony' na dolnym pasku nawigacji.
   ///
   /// In pl, this message translates to:
   /// **'Paragony'**
-  String get receipts;
+  String get coreWidgetsAppBottomNavigationBarReceiptsListTabLabel;
 
-  /// No description provided for @receiptsCount.
+  /// Etykieta dla zakładki 'Statystyki' na dolnym pasku nawigacji.
   ///
   /// In pl, this message translates to:
-  /// **'{count, plural, =0{Brak paragonów} =1{{count} paragon} few{{count} paragony} many{{count} paragonów} other{{count} paragonu}}'**
-  String receiptsCount(num count);
+  /// **'Statystyki'**
+  String get coreWidgetsAppBottomNavigationBarStatisticsTabLabel;
 
-  /// No description provided for @addReceipt.
+  /// Etykieta dla zakładki 'Ustawienia' na dolnym pasku nawigacji.
   ///
   /// In pl, this message translates to:
-  /// **'Dodaj paragon'**
-  String get addReceipt;
-
-  /// No description provided for @saveChanges.
-  ///
-  /// In pl, this message translates to:
-  /// **'Zapisz zmiany'**
-  String get saveChanges;
+  /// **'Ustawienia'**
+  String get coreWidgetsAppBottomNavigationBarSettingsTabLabel;
 
   /// Etykieta przycisku do anulowania akcji.
   ///
@@ -170,31 +152,61 @@ abstract class AppLocalizations {
   /// **'Kontynuuj'**
   String get commonContinue;
 
-  /// No description provided for @screensCameraInitialViewTitle.
+  /// Komunikat wyświetlany po błędzie ładowania paragonów.
+  ///
+  /// In pl, this message translates to:
+  /// **'Ups! Coś poszło nie tak przy ładowaniu paragonów'**
+  String get notificationsErrorLoadingReceipts;
+
+  /// Komunikat wyświetlany po pomyślnym zapisaniu zmian.
+  ///
+  /// In pl, this message translates to:
+  /// **'Zapisano zmiany!'**
+  String get notificationsSuccessChangesSaved;
+
+  /// Komunikat wyświetlany po pomyślnym usunięciu paragonu.
+  ///
+  /// In pl, this message translates to:
+  /// **'Paragon usunięty!'**
+  String get notificationsSuccessReceiptDeleted;
+
+  /// Komunikat wyświetlany po pomyślnym dodaniu paragonu.
+  ///
+  /// In pl, this message translates to:
+  /// **'Paragon usunięty!'**
+  String get notificationsSuccessReceiptAdded;
+
+  /// Domyślny tekst dla nierozpoznanej nazwy sklepu.
+  ///
+  /// In pl, this message translates to:
+  /// **'Nieznany sklep'**
+  String get unknownStore;
+
+  /// Główny tytuł na ekranie początkowym skanera.
   ///
   /// In pl, this message translates to:
   /// **'Rozpocznij Skanowanie'**
   String get screensCameraInitialViewTitle;
 
-  /// No description provided for @screensCameraInitialViewDescription.
+  /// Tekst instruktażowy pod głównym tytułem na ekranie skanera.
   ///
   /// In pl, this message translates to:
   /// **'Zrób zdjęcie paragonu lub wybierz istniejące z galerii, aby dodać nowy wydatek.'**
   String get screensCameraInitialViewDescription;
 
-  /// No description provided for @screensCameraInitialViewTakePhotoButton.
+  /// Etykieta przycisku do uruchomienia aparatu w celu zrobienia zdjęcia.
   ///
   /// In pl, this message translates to:
   /// **'Zrób zdjęcie'**
   String get screensCameraInitialViewTakePhotoButton;
 
-  /// No description provided for @screensCameraInitialViewChooseFromGalleryButton.
+  /// Etykieta przycisku do otwarcia galerii w celu wybrania zdjęcia.
   ///
   /// In pl, this message translates to:
   /// **'Wybierz z galerii'**
   String get screensCameraInitialViewChooseFromGalleryButton;
 
-  /// No description provided for @screensCameraProcessingViewStatus.
+  /// Komunikat wyświetlany podczas analizy obrazu paragonu przez OCR.
   ///
   /// In pl, this message translates to:
   /// **'Analizuję paragon...'**
@@ -314,12 +326,6 @@ abstract class AppLocalizations {
   /// **'Sklep'**
   String get screensReceiptsEditStoreLabel;
 
-  /// Komunikat wyświetlany po pomyślnym zapisaniu zmian.
-  ///
-  /// In pl, this message translates to:
-  /// **'Zapisano zmiany!'**
-  String get notificationsSuccessChangesSaved;
-
   /// Tekst wyświetlany na liście paragonów, gdy filtry nie znajdują żadnych pasujących wyników.
   ///
   /// In pl, this message translates to:
@@ -337,12 +343,6 @@ abstract class AppLocalizations {
   /// In pl, this message translates to:
   /// **'Czy na pewno chcesz usunąć ten paragon?'**
   String get screensReceiptsReceiptsListConfirmDeleteDialogContent;
-
-  /// Komunikat wyświetlany po pomyślnym usunięciu paragonu.
-  ///
-  /// In pl, this message translates to:
-  /// **'Paragon usunięty!'**
-  String get notificationsSuccessReceiptDeleted;
 
   /// Tekst wyświetlany jako podpowiedź w polu wyszukiwania na liście paragonów.
   ///
@@ -401,7 +401,7 @@ abstract class AppLocalizations {
   /// Tytuł karty porównującej wydatki z poprzednim miesiącem.
   ///
   /// In pl, this message translates to:
-  /// **'vs Poprzedni miesiąc'**
+  /// **'Poprzedni miesiąc'**
   String get screensStatisticsCardVsPreviousMonthTitle;
 
   /// Tytuł karty pokazującej średnie dzienne wydatki.
@@ -505,6 +505,30 @@ abstract class AppLocalizations {
   /// In pl, this message translates to:
   /// **'Wybrana data paragonu jest z przyszłości. Czy na pewno chcesz kontynuować?'**
   String get helpersModalsFutureDateWarningDialogContent;
+
+  /// Nagłówek grupy dla paragonów z dzisiejszego dnia.
+  ///
+  /// In pl, this message translates to:
+  /// **'Dzisiaj'**
+  String get viewModelsScreensReceiptsGroupToday;
+
+  /// Nagłówek grupy dla paragonów z wczorajszego dnia.
+  ///
+  /// In pl, this message translates to:
+  /// **'Wczoraj'**
+  String get viewModelsScreensReceiptsGroupYesterday;
+
+  /// Nagłówek grupy dla paragonów z bieżącego tygodnia.
+  ///
+  /// In pl, this message translates to:
+  /// **'W tym tygodniu'**
+  String get viewModelsScreensReceiptsGroupThisWeek;
+
+  /// Nagłówek grupy dla paragonów starszych niż bieżący tydzień.
+  ///
+  /// In pl, this message translates to:
+  /// **'Wcześniej'**
+  String get viewModelsScreensReceiptsGroupEarlier;
 }
 
 class _AppLocalizationsDelegate

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:paragonik/data/services/l10n_service.dart';
 import 'package:paragonik/data/services/notifications/notification_service.dart';
 import 'package:paragonik/data/services/settings_service.dart';
 import 'package:paragonik/l10n/app_localizations.dart';
@@ -36,6 +37,10 @@ class MainApp extends StatelessWidget {
       themeMode: themeNotifier.themeMode,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
+      builder: (context, child) {
+        L10nService.initialize(AppLocalizations.of(context)!);
+        return child!;
+      },
     );
   }
 }

@@ -37,18 +37,18 @@ class AppBottomNavigationBar extends StatelessWidget {
       currentIndex: _calculateSelectedIndex(context),
       onTap: (index) => _onItemTapped(index, context),
       items: [
-        BottomNavigationBarItem(icon: Icon(Icons.camera_alt), label: 'Skaner'),
+        BottomNavigationBarItem(icon: Icon(Icons.camera_alt), label: context.l10n.coreWidgetsAppBottomNavigationBarScannerTabLabel),
         BottomNavigationBarItem(
           icon: Icon(Icons.receipt_long),
-          label: 'Paragony',
+          label: context.l10n.coreWidgetsAppBottomNavigationBarReceiptsListTabLabel,
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.bar_chart),
-          label: context.l10n.statistics,
+          label: context.l10n.coreWidgetsAppBottomNavigationBarStatisticsTabLabel,
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.settings),
-          label: 'Ustawienia',
+          label: context.l10n.coreWidgetsAppBottomNavigationBarSettingsTabLabel,
         ),
       ],
     );
