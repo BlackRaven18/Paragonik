@@ -107,6 +107,8 @@ class ReceiptNotifier extends ChangeNotifier {
 
     _receipts.insert(0, newReceipt);
 
+    await updateReceiptCount();
+
     notifyListeners();
   }
 
@@ -114,6 +116,8 @@ class ReceiptNotifier extends ChangeNotifier {
     await _receiptService.softDeleteReceipt(id);
 
     _receipts.removeWhere((receipt) => receipt.id == id);
+
+    await updateReceiptCount();
 
     notifyListeners();
   }
@@ -126,6 +130,10 @@ class ReceiptNotifier extends ChangeNotifier {
       _receipts[index] = updatedReceipt;
       notifyListeners();
     }
+  }
+
+  Future<void> updateReceiptCount() async {
+    _totalReceiptsCount = await _receiptService.getReceiptsCount();
   }
 
   void _setLoading(bool value) {

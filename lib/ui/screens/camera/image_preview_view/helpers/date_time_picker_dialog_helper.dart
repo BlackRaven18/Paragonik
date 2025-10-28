@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:paragonik/helpers/date_picker.dart';
+import 'package:paragonik/ui/helpers/date_picker.dart';
 import 'package:paragonik/view_models/screens/camera/camera_view_model.dart';
 
 Future<void> showDateTimePickerDialog(

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:paragonik/data/models/database/receipt.dart';
+import 'package:paragonik/data/services/notifications/notification_service.dart';
 import 'package:paragonik/ui/widgets/store_display.dart';
 import 'package:paragonik/view_models/screens/receipts/receipts_view_model.dart';
 import 'package:provider/provider.dart';
@@ -14,7 +15,7 @@ class ReceiptListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = context.watch<ReceiptsViewModel>();
+    final receiptsViewModel = context.watch<ReceiptsViewModel>();
     final theme = Theme.of(context);
     final formattedDate = DateFormat('dd.MM.yyyy HH:mm').format(receipt.date);
 
@@ -30,14 +31,17 @@ class ReceiptListItem extends StatelessWidget {
               child: const Text('Anuluj'),
             ),
             TextButton(
-              onPressed: () => Navigator.of(context).pop(true),
+              onPressed: () => {
+                Navigator.of(context).pop(true),
+                NotificationService.showSuccess('Paragon usunięty!'),
+              },
               child: const Text('Usuń', style: TextStyle(color: Colors.red)),
             ),
           ],
         ),
       );
       if (shouldDelete == true && context.mounted) {
-        viewModel.deleteReceipt(id);
+        receiptsViewModel.deleteReceipt(id);
       }
     }
 

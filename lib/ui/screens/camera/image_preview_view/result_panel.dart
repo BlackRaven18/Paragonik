@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:paragonik/helpers/store_selection_modal_helper.dart';
+import 'package:paragonik/ui/helpers/modals/store_selection_modal_helper.dart';
 import 'package:paragonik/ui/screens/camera/image_preview_view/helpers/date_time_picker_dialog_helper.dart';
-import 'package:paragonik/helpers/sum_input_dialog_helper.dart';
+import 'package:paragonik/ui/helpers/sum_input_dialog_helper.dart';
 import 'package:paragonik/ui/widgets/editable_field.dart';
 import 'package:paragonik/ui/widgets/store_display.dart';
 import 'package:paragonik/view_models/screens/camera/camera_view_model.dart';

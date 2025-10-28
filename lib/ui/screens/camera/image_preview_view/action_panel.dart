@@ -10,7 +10,8 @@ class ActionPanel extends StatelessWidget {
     BuildContext context,
     CameraViewModel viewModel,
   ) async {
-    if (viewModel.ocrResult!.date!.isAfter(DateTime.now())) {
+    if (viewModel.ocrResult!.date != null &&
+        viewModel.ocrResult!.date!.isAfter(DateTime.now())) {
       final bool confirmed = await showFutureDateWarningDialog(context);
 
       if (!confirmed) {
