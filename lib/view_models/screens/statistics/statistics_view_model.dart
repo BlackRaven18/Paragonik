@@ -43,19 +43,29 @@ class StatisticsViewModel extends ChangeNotifier {
     notifyListeners();
 
     final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+
     DateTime currentStartDate;
-    DateTime currentEndDate = now;
+    DateTime currentEndDate = DateTime(
+      now.year,
+      now.month,
+      now.day,
+      23,
+      59,
+      59,
+    );
+
     DateTime previousStartDate;
     DateTime previousEndDate;
 
     if (_selectedTimeRange == TimeRange.week) {
-      currentStartDate = now.subtract(Duration(days: now.weekday - 1));
+      currentStartDate = today.subtract(Duration(days: today.weekday - 1));
       previousStartDate = currentStartDate.subtract(const Duration(days: 7));
       previousEndDate = currentStartDate.subtract(const Duration(days: 1));
     } else {
-      currentStartDate = DateTime(now.year, now.month, 1);
-      previousStartDate = DateTime(now.year, now.month - 1, 1);
-      previousEndDate = DateTime(now.year, now.month, 0);
+      currentStartDate = DateTime(today.year, today.month, 1);
+      previousStartDate = DateTime(today.year, today.month - 1, 1);
+      previousEndDate = DateTime(today.year, today.month, 0);
     }
 
     try {
