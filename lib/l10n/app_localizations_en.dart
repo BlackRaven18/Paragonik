@@ -21,9 +21,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get receipts => 'Receipts';
 
   @override
-  String get totalReceipts => 'Total number of receipts';
-
-  @override
   String receiptsCount(num count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
@@ -46,6 +43,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get commonSave => 'Zapisz';
+
+  @override
+  String get commonSaveChanges => 'Zapisz zmiany';
+
+  @override
+  String get commonDelete => 'Usuń';
 
   @override
   String get screensCameraInitialViewTitle => 'Rozpocznij Skanowanie';
@@ -117,4 +120,57 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get screensCameraHelpersPermissionDialogOpenSettingsButton =>
       'Otwórz ustawienia';
+
+  @override
+  String get screensReceiptsNoReceiptsSaved => 'Brak zapisanych paragonów.';
+
+  @override
+  String get screensReceiptsEditAmountLabel => 'Kwota:';
+
+  @override
+  String get screensReceiptsEditDateTimeLabel => 'Data i godzina';
+
+  @override
+  String get screensReceiptsEditStoreLabel => 'Sklep';
+
+  @override
+  String get notificationsSuccessChangesSaved => 'Zapisano zmiany!';
+
+  @override
+  String get screensReceiptsReceiptsListNoMatchingReceipts =>
+      'Nie znaleziono pasujących paragonów.';
+
+  @override
+  String get screensReceiptsReceiptsListConfirmDeleteDialogTitle =>
+      'Potwierdź usunięcie';
+
+  @override
+  String get screensReceiptsReceiptsListConfirmDeleteDialogContent =>
+      'Czy na pewno chcesz usunąć ten paragon?';
+
+  @override
+  String get notificationsSuccessReceiptDeleted => 'Paragon usunięty!';
+
+  @override
+  String get screensReceiptsReceiptsScreenWidgetsSearchLabel => 'Szukaj...';
+
+  @override
+  String get screensReceiptsReceiptsScreenWidgetsCounterTitle =>
+      'Całkowita liczba paragonów';
+
+  @override
+  String get screensReceiptsReceiptsScreenWidgetsGroupingToggleReceiptDate =>
+      'Data paragonu';
+
+  @override
+  String get screensReceiptsReceiptsScreenWidgetsGroupingToggleAddedDate =>
+      'Data dodania';
+
+  @override
+  String get screensReceiptsReceiptsScreenWidgetsModalsFilterTitle =>
+      'Filtruj po sklepie';
+
+  @override
+  String get screensReceiptsReceiptsScreenWidgetsModalsFilterAllStoresOption =>
+      'Wszystkie sklepy';
 }

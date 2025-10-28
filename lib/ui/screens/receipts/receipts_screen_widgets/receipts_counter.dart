@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:paragonik/extensions/localization_extensions.dart';
 import 'package:paragonik/view_models/screens/receipts/receipts_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -15,7 +16,9 @@ class ReceiptsCounter extends StatelessWidget {
           Icons.receipt_long_outlined,
           color: Theme.of(context).colorScheme.primary,
         ),
-        title: const Text('Całkowita liczba paragonów'),
+        title: Text(
+          context.l10n.screensReceiptsReceiptsScreenWidgetsCounterTitle,
+        ),
         trailing: Text(
           viewModel.totalReceipts.toString(),
           style: Theme.of(

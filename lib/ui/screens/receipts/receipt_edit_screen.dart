@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:paragonik/data/services/notifications/notification_service.dart';
 import 'package:paragonik/extensions/formatters.dart';
+import 'package:paragonik/extensions/localization_extensions.dart';
 import 'package:paragonik/ui/helpers/date_picker.dart';
 import 'package:paragonik/ui/helpers/modals/future_date_warning_dialog_helper.dart';
 import 'package:paragonik/ui/helpers/modals/store_selection_modal_helper.dart';
@@ -54,10 +55,12 @@ class ReceiptEditScreen extends StatelessWidget {
     }
 
     viewModel.saveChanges();
-    NotificationService.showSuccess('Zapisano zmiany!');
 
     if (context.mounted) {
       Navigator.of(context).pop();
+      NotificationService.showSuccess(
+        context.l10n.notificationsSuccessChangesSaved,
+      );
     }
   }
 
@@ -85,7 +88,7 @@ class ReceiptEditScreen extends StatelessWidget {
                   const SizedBox(height: 24),
 
                   EditableField(
-                    label: 'Kwota:',
+                    label: context.l10n.screensReceiptsEditAmountLabel,
                     content: Text(
                       Formatters.formatCurrency(
                         double.tryParse(viewModel.updatedSum) ?? 0.0,
@@ -103,7 +106,7 @@ class ReceiptEditScreen extends StatelessWidget {
                   ),
 
                   EditableField(
-                    label: 'Data i godzina',
+                    label: context.l10n.screensReceiptsEditDateTimeLabel,
                     content: Text(
                       Formatters.formatDateTime(viewModel.selectedDateTime),
                       style: theme.textTheme.titleMedium?.copyWith(
@@ -115,7 +118,7 @@ class ReceiptEditScreen extends StatelessWidget {
                   ),
 
                   EditableField(
-                    label: 'Sklep',
+                    label: context.l10n.screensReceiptsEditStoreLabel,
                     content: StoreDisplay(
                       storeName: viewModel.selectedStoreName,
                       textStyle: theme.textTheme.titleMedium?.copyWith(
@@ -144,7 +147,7 @@ class ReceiptEditScreen extends StatelessWidget {
               right: 16.0,
               child: FloatingActionButton.extended(
                 onPressed: () => _handeOnSaveChanges(context, viewModel),
-                label: const Text('Zapisz zmiany'),
+                label: Text(context.l10n.commonSaveChanges),
                 icon: const Icon(Icons.save),
                 heroTag: 'receipt_edit_save_btn',
               ),

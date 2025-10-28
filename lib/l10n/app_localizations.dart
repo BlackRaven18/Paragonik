@@ -122,12 +122,6 @@ abstract class AppLocalizations {
   /// **'Paragony'**
   String get receipts;
 
-  /// No description provided for @totalReceipts.
-  ///
-  /// In pl, this message translates to:
-  /// **'Całkowita liczba paragonów'**
-  String get totalReceipts;
-
   /// No description provided for @receiptsCount.
   ///
   /// In pl, this message translates to:
@@ -157,6 +151,18 @@ abstract class AppLocalizations {
   /// In pl, this message translates to:
   /// **'Zapisz'**
   String get commonSave;
+
+  /// Etykieta przycisku do zapisywania zmian.
+  ///
+  /// In pl, this message translates to:
+  /// **'Zapisz zmiany'**
+  String get commonSaveChanges;
+
+  /// Etykieta przycisku do usuwania elementu.
+  ///
+  /// In pl, this message translates to:
+  /// **'Usuń'**
+  String get commonDelete;
 
   /// No description provided for @screensCameraInitialViewTitle.
   ///
@@ -277,6 +283,96 @@ abstract class AppLocalizations {
   /// In pl, this message translates to:
   /// **'Otwórz ustawienia'**
   String get screensCameraHelpersPermissionDialogOpenSettingsButton;
+
+  /// Tekst wyświetlany na ekranie listy paragonów, gdy nie ma jeszcze żadnych zapisanych paragonów.
+  ///
+  /// In pl, this message translates to:
+  /// **'Brak zapisanych paragonów.'**
+  String get screensReceiptsNoReceiptsSaved;
+
+  /// Etykieta dla pola z kwotą na ekranie edycji paragonu.
+  ///
+  /// In pl, this message translates to:
+  /// **'Kwota:'**
+  String get screensReceiptsEditAmountLabel;
+
+  /// Etykieta dla pola z datą na ekranie edycji paragonu.
+  ///
+  /// In pl, this message translates to:
+  /// **'Data i godzina'**
+  String get screensReceiptsEditDateTimeLabel;
+
+  /// Etykieta dla pola ze sklepem na ekranie edycji paragonu.
+  ///
+  /// In pl, this message translates to:
+  /// **'Sklep'**
+  String get screensReceiptsEditStoreLabel;
+
+  /// Komunikat wyświetlany po pomyślnym zapisaniu zmian.
+  ///
+  /// In pl, this message translates to:
+  /// **'Zapisano zmiany!'**
+  String get notificationsSuccessChangesSaved;
+
+  /// Tekst wyświetlany na liście paragonów, gdy filtry nie znajdują żadnych pasujących wyników.
+  ///
+  /// In pl, this message translates to:
+  /// **'Nie znaleziono pasujących paragonów.'**
+  String get screensReceiptsReceiptsListNoMatchingReceipts;
+
+  /// Tytuł okna dialogowego z prośbą o potwierdzenie usunięcia paragonu.
+  ///
+  /// In pl, this message translates to:
+  /// **'Potwierdź usunięcie'**
+  String get screensReceiptsReceiptsListConfirmDeleteDialogTitle;
+
+  /// Treść okna dialogowego z prośbą o potwierdzenie usunięcia paragonu.
+  ///
+  /// In pl, this message translates to:
+  /// **'Czy na pewno chcesz usunąć ten paragon?'**
+  String get screensReceiptsReceiptsListConfirmDeleteDialogContent;
+
+  /// Komunikat wyświetlany po pomyślnym usunięciu paragonu.
+  ///
+  /// In pl, this message translates to:
+  /// **'Paragon usunięty!'**
+  String get notificationsSuccessReceiptDeleted;
+
+  /// Tekst wyświetlany jako podpowiedź w polu wyszukiwania na liście paragonów.
+  ///
+  /// In pl, this message translates to:
+  /// **'Szukaj...'**
+  String get screensReceiptsReceiptsScreenWidgetsSearchLabel;
+
+  /// Etykieta karty pokazującej całkowitą liczbę wszystkich paragonów.
+  ///
+  /// In pl, this message translates to:
+  /// **'Całkowita liczba paragonów'**
+  String get screensReceiptsReceiptsScreenWidgetsCounterTitle;
+
+  /// Etykieta przycisku do grupowania paragonów po dacie zakupu.
+  ///
+  /// In pl, this message translates to:
+  /// **'Data paragonu'**
+  String get screensReceiptsReceiptsScreenWidgetsGroupingToggleReceiptDate;
+
+  /// Etykieta przycisku do grupowania paragonów po dacie ich dodania do aplikacji.
+  ///
+  /// In pl, this message translates to:
+  /// **'Data dodania'**
+  String get screensReceiptsReceiptsScreenWidgetsGroupingToggleAddedDate;
+
+  /// Tytuł okna modalnego do filtrowania paragonów po sklepie.
+  ///
+  /// In pl, this message translates to:
+  /// **'Filtruj po sklepie'**
+  String get screensReceiptsReceiptsScreenWidgetsModalsFilterTitle;
+
+  /// Etykieta opcji w dropdownie, która usuwa filtr sklepu.
+  ///
+  /// In pl, this message translates to:
+  /// **'Wszystkie sklepy'**
+  String get screensReceiptsReceiptsScreenWidgetsModalsFilterAllStoresOption;
 }
 
 class _AppLocalizationsDelegate

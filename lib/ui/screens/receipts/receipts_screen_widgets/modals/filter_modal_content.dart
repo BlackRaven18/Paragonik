@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:paragonik/extensions/localization_extensions.dart';
 import 'package:paragonik/notifiers/store_notifier.dart';
 import 'package:paragonik/ui/widgets/store_display.dart';
 import 'package:paragonik/view_models/screens/receipts/receipts_view_model.dart';
@@ -20,7 +21,7 @@ class FilterModalContent extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Filtruj po sklepie',
+            context.l10n.screensReceiptsReceiptsScreenWidgetsModalsFilterTitle,
             style: Theme.of(context).textTheme.titleLarge,
           ),
           const SizedBox(height: 16),
@@ -32,9 +33,13 @@ class FilterModalContent extends StatelessWidget {
             ),
             initialValue: receiptsViewModel.selectedStoreFilter,
             items: [
-              const DropdownMenuItem<String>(
+              DropdownMenuItem<String>(
                 value: null,
-                child: Text('Wszystkie sklepy'),
+                child: Text(
+                  context
+                      .l10n
+                      .screensReceiptsReceiptsScreenWidgetsModalsFilterAllStoresOption,
+                ),
               ),
               ...allStores.map((store) {
                 return DropdownMenuItem<String>(

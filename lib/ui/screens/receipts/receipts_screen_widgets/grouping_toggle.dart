@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:paragonik/extensions/localization_extensions.dart';
 import 'package:paragonik/view_models/screens/receipts/receipts_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -11,14 +12,22 @@ class GroupingToggle extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
       child: SegmentedButton<GroupingOption>(
-        segments: const [
+        segments: [
           ButtonSegment(
             value: GroupingOption.byReceiptDate,
-            label: Text('Data paragonu'),
+            label: Text(
+              context
+                  .l10n
+                  .screensReceiptsReceiptsScreenWidgetsGroupingToggleReceiptDate,
+            ),
           ),
           ButtonSegment(
             value: GroupingOption.byAddedDate,
-            label: Text('Data dodania'),
+            label: Text(
+              context
+                  .l10n
+                  .screensReceiptsReceiptsScreenWidgetsGroupingToggleAddedDate,
+            ),
           ),
         ],
         selected: {viewModel.groupingOption},

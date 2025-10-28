@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:paragonik/extensions/localization_extensions.dart';
 import 'package:paragonik/ui/screens/receipts/receipts_list/receipt_list_item.dart';
 import 'package:paragonik/ui/screens/receipts/receipts_list/section_header.dart';
 import 'package:paragonik/view_models/screens/receipts/receipts_view_model.dart';
@@ -43,7 +44,7 @@ class _ReceiptsListState extends State<ReceiptsList> {
     }
 
     if (viewModel.groupedReceipts.isEmpty) {
-      return const Center(child: Text('Nie znaleziono pasujących paragonów.'));
+      return Center(child: Text(context.l10n.screensReceiptsReceiptsListNoMatchingReceipts));
     }
 
     return RefreshIndicator(

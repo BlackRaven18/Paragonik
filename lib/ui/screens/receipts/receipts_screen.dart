@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:paragonik/extensions/localization_extensions.dart';
 import 'package:paragonik/ui/screens/receipts/receipts_list/receipts_list.dart';
 import 'package:paragonik/ui/screens/receipts/receipts_screen_widgets/filter_button.dart';
 import 'package:paragonik/ui/screens/receipts/receipts_screen_widgets/grouping_toggle.dart';
@@ -22,7 +23,7 @@ class ReceiptsScreen extends StatelessWidget {
         onRefresh: viewModel.fetchReceipts,
         child: Stack(
           children: [
-            Center(child: Text('Brak zapisanych paragonów.')),
+            Center(child: Text(context.l10n.screensReceiptsNoReceiptsSaved)),
             ListView(),
           ],
         ),

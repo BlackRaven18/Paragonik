@@ -1,10 +1,10 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
 import 'package:paragonik/data/models/database/receipt.dart';
 import 'package:paragonik/data/services/notifications/notification_service.dart';
 import 'package:paragonik/extensions/formatters.dart';
+import 'package:paragonik/extensions/localization_extensions.dart';
 import 'package:paragonik/ui/widgets/store_display.dart';
 import 'package:paragonik/view_models/screens/receipts/receipts_view_model.dart';
 import 'package:provider/provider.dart';
@@ -24,19 +24,19 @@ class ReceiptListItem extends StatelessWidget {
       final shouldDelete = await showDialog<bool>(
         context: context,
         builder: (context) => AlertDialog(
-          title: const Text('Potwierdź usunięcie'),
-          content: const Text('Czy na pewno chcesz usunąć ten paragon?'),
+          title: Text(context.l10n.screensReceiptsReceiptsListConfirmDeleteDialogTitle),
+          content: Text(context.l10n.screensReceiptsReceiptsListConfirmDeleteDialogContent),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(false),
-              child: const Text('Anuluj'),
+              child: Text(context.l10n.commonCancel),
             ),
             TextButton(
               onPressed: () => {
                 Navigator.of(context).pop(true),
-                NotificationService.showSuccess('Paragon usunięty!'),
+                NotificationService.showSuccess(context.l10n.notificationsSuccessReceiptDeleted),
               },
-              child: const Text('Usuń', style: TextStyle(color: Colors.red)),
+              child: Text(context.l10n.commonDelete, style: TextStyle(color: Colors.red)),
             ),
           ],
         ),
