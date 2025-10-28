@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:paragonik/extensions/localization_extensions.dart';
 import 'package:paragonik/view_models/screens/camera/camera_view_model.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -24,21 +25,29 @@ Future<void> requestAndGetImage(
       showDialog(
         context: context,
         builder: (_) => AlertDialog(
-          title: const Text('Brak uprawnień'),
+          title: Text(context.l10n.screensCameraHelpersPermissionDialogTitle),
           content: Text(
-            'Aplikacja potrzebuje dostępu do ${source == ImageSource.camera ? "aparatu" : "galerii"}. Proszę włączyć uprawnienie w ustawieniach aplikacji.',
+            source == ImageSource.camera
+                ? context.l10n.screensCameraHelpersPermissionDialogContentCamera
+                : context
+                      .l10n
+                      .screensCameraHelpersPermissionDialogContentGallery,
           ),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('Anuluj'),
+              child: Text(context.l10n.commonCancel),
             ),
             TextButton(
               onPressed: () {
                 openAppSettings();
                 Navigator.pop(context);
               },
-              child: const Text('Otwórz ustawienia'),
+              child: Text(
+                context
+                    .l10n
+                    .screensCameraHelpersPermissionDialogOpenSettingsButton,
+              ),
             ),
           ],
         ),

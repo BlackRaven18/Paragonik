@@ -102,4 +102,19 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get screensCameraActionPanelProcessButton => 'Przetwórz';
+
+  @override
+  String get screensCameraHelpersPermissionDialogTitle => 'Brak uprawnień';
+
+  @override
+  String get screensCameraHelpersPermissionDialogContentCamera =>
+      'Aplikacja potrzebuje dostępu do aparatu. Proszę włączyć uprawnienie w ustawieniach aplikacji.';
+
+  @override
+  String get screensCameraHelpersPermissionDialogContentGallery =>
+      'Aplikacja potrzebuje dostępu do galerii. Proszę włączyć uprawnienie w ustawieniach aplikacji.';
+
+  @override
+  String get screensCameraHelpersPermissionDialogOpenSettingsButton =>
+      'Otwórz ustawienia';
 }

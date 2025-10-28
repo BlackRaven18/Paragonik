@@ -70,5 +70,25 @@
     "screensCameraActionPanelProcessButton": "Przetwórz",
     "@screensCameraActionPanelProcessButton": {
         "description": "Etykieta przycisku do rozpoczęcia analizy OCR zdjęcia."
+    },
+
+    "screensCameraHelpersPermissionDialogTitle": "Brak uprawnień",
+    "@screensCameraHelpersPermissionDialogTitle": {
+        "description": "Tytuł okna dialogowego informującego o braku uprawnień."
+    },
+
+    "screensCameraHelpersPermissionDialogContentCamera": "Aplikacja potrzebuje dostępu do aparatu. Proszę włączyć uprawnienie w ustawieniach aplikacji.",
+    "@screensCameraHelpersPermissionDialogContentCamera": {
+        "description": "Treść okna dialogowego z prośbą o włączenie uprawnień do aparatu."
+    },
+
+    "screensCameraHelpersPermissionDialogContentGallery": "Aplikacja potrzebuje dostępu do galerii. Proszę włączyć uprawnienie w ustawieniach aplikacji.",
+    "@screensCameraHelpersPermissionDialogContentGallery": {
+        "description": "Treść okna dialogowego z prośbą o włączenie uprawnień do galerii."
+    },
+    
+    "screensCameraHelpersPermissionDialogOpenSettingsButton": "Otwórz ustawienia",
+    "@screensCameraHelpersPermissionDialogOpenSettingsButton": {
+        "description": "Etykieta przycisku, który przenosi użytkownika do ustawień aplikacji."
     }
 }

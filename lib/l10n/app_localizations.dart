@@ -253,6 +253,30 @@ abstract class AppLocalizations {
   /// In pl, this message translates to:
   /// **'Przetwórz'**
   String get screensCameraActionPanelProcessButton;
+
+  /// Tytuł okna dialogowego informującego o braku uprawnień.
+  ///
+  /// In pl, this message translates to:
+  /// **'Brak uprawnień'**
+  String get screensCameraHelpersPermissionDialogTitle;
+
+  /// Treść okna dialogowego z prośbą o włączenie uprawnień do aparatu.
+  ///
+  /// In pl, this message translates to:
+  /// **'Aplikacja potrzebuje dostępu do aparatu. Proszę włączyć uprawnienie w ustawieniach aplikacji.'**
+  String get screensCameraHelpersPermissionDialogContentCamera;
+
+  /// Treść okna dialogowego z prośbą o włączenie uprawnień do galerii.
+  ///
+  /// In pl, this message translates to:
+  /// **'Aplikacja potrzebuje dostępu do galerii. Proszę włączyć uprawnienie w ustawieniach aplikacji.'**
+  String get screensCameraHelpersPermissionDialogContentGallery;
+
+  /// Etykieta przycisku, który przenosi użytkownika do ustawień aplikacji.
+  ///
+  /// In pl, this message translates to:
+  /// **'Otwórz ustawienia'**
+  String get screensCameraHelpersPermissionDialogOpenSettingsButton;
 }
 
 class _AppLocalizationsDelegate
