@@ -68,7 +68,7 @@ class _ReceiptsListState extends State<ReceiptsList> {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SectionHeader(title: entry.key),
+                SectionHeader(title: entry.key, count: entry.value.length),
                 ...entry.value.map(
                   (receipt) => ReceiptListItem(receipt: receipt),
                 ),
