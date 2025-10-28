@@ -44,6 +44,12 @@ class AppLocalizationsPl extends AppLocalizations {
   String get saveChanges => 'Zapisz zmiany';
 
   @override
+  String get commonCancel => 'Anuluj';
+
+  @override
+  String get commonSave => 'Zapisz';
+
+  @override
   String get screensCameraInitialViewTitle => 'Rozpocznij Skanowanie';
 
   @override
@@ -92,4 +98,10 @@ class AppLocalizationsPl extends AppLocalizations {
   @override
   String get screensCameraImagePreviewViewImageDisplayShowScanTooltip =>
       'Pokaż skan';
+
+  @override
+  String get screensCameraActionPanelChangePhotoButton => 'Zmień zdjęcie';
+
+  @override
+  String get screensCameraActionPanelProcessButton => 'Przetwórz';
 }

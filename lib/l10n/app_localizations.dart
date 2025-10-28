@@ -146,6 +146,18 @@ abstract class AppLocalizations {
   /// **'Zapisz zmiany'**
   String get saveChanges;
 
+  /// Etykieta przycisku do anulowania akcji.
+  ///
+  /// In pl, this message translates to:
+  /// **'Anuluj'**
+  String get commonCancel;
+
+  /// Etykieta przycisku do zapisywania danych.
+  ///
+  /// In pl, this message translates to:
+  /// **'Zapisz'**
+  String get commonSave;
+
   /// No description provided for @screensCameraInitialViewTitle.
   ///
   /// In pl, this message translates to:
@@ -229,6 +241,18 @@ abstract class AppLocalizations {
   /// In pl, this message translates to:
   /// **'Pokaż skan'**
   String get screensCameraImagePreviewViewImageDisplayShowScanTooltip;
+
+  /// Etykieta przycisku do zmiany wybranego zdjęcia paragonu.
+  ///
+  /// In pl, this message translates to:
+  /// **'Zmień zdjęcie'**
+  String get screensCameraActionPanelChangePhotoButton;
+
+  /// Etykieta przycisku do rozpoczęcia analizy OCR zdjęcia.
+  ///
+  /// In pl, this message translates to:
+  /// **'Przetwórz'**
+  String get screensCameraActionPanelProcessButton;
 }
 
 class _AppLocalizationsDelegate

@@ -9,6 +9,15 @@
     "addReceipt": "Dodaj paragon",
     "saveChanges": "Zapisz zmiany",
 
+    "commonCancel": "Anuluj",
+    "@commonCancel": {
+        "description": "Etykieta przycisku do anulowania akcji."
+    },
+    "commonSave": "Zapisz",
+    "@commonSave": {
+        "description": "Etykieta przycisku do zapisywania danych."
+    },
+
     "screensCameraInitialViewTitle": "Rozpocznij Skanowanie",
     "screensCameraInitialViewDescription": "Zrób zdjęcie paragonu lub wybierz istniejące z galerii, aby dodać nowy wydatek.",
     "screensCameraInitialViewTakePhotoButton": "Zrób zdjęcie",
@@ -49,9 +58,17 @@
     "@screensCameraImagePreviewViewImageDisplayShowOriginalTooltip": {
         "description": "Tooltip przycisku do przełączania podglądu na oryginalne zdjęcie."
     },
-
     "screensCameraImagePreviewViewImageDisplayShowScanTooltip": "Pokaż skan",
     "@screensCameraImagePreviewViewImageDisplayShowScanTooltip": {
         "description": "Tooltip przycisku do przełączania podglądu na przetworzony skan."
+    },
+
+    "screensCameraActionPanelChangePhotoButton": "Zmień zdjęcie",
+    "@screensCameraActionPanelChangePhotoButton": {
+        "description": "Etykieta przycisku do zmiany wybranego zdjęcia paragonu."
+    },
+    "screensCameraActionPanelProcessButton": "Przetwórz",
+    "@screensCameraActionPanelProcessButton": {
+        "description": "Etykieta przycisku do rozpoczęcia analizy OCR zdjęcia."
     }
 }

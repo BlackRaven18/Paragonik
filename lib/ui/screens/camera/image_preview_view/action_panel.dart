@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:paragonik/extensions/localization_extensions.dart';
 import 'package:paragonik/ui/helpers/modals/future_date_warning_dialog_helper.dart';
 import 'package:paragonik/view_models/screens/camera/camera_view_model.dart';
 import 'package:provider/provider.dart';
@@ -34,12 +35,14 @@ class ActionPanel extends StatelessWidget {
             TextButton.icon(
               onPressed: viewModel.clearImage,
               icon: const Icon(Icons.refresh),
-              label: const Text('Zmień zdjęcie'),
+              label: Text(
+                context.l10n.screensCameraActionPanelChangePhotoButton,
+              ),
             ),
             ElevatedButton.icon(
               onPressed: viewModel.processImage,
               icon: const Icon(Icons.checklist_rtl),
-              label: const Text('Przetwórz'),
+              label: Text(context.l10n.screensCameraActionPanelProcessButton),
             ),
           ],
         ),
@@ -54,12 +57,12 @@ class ActionPanel extends StatelessWidget {
           TextButton.icon(
             onPressed: viewModel.clearImage,
             icon: const Icon(Icons.cancel_outlined),
-            label: const Text('Anuluj'),
+            label: Text(context.l10n.commonCancel),
           ),
           ElevatedButton.icon(
             onPressed: () => _handleOnSave(context, viewModel),
             icon: const Icon(Icons.check_circle),
-            label: const Text('Zapisz'),
+            label: Text(context.l10n.commonSave),
           ),
         ],
       ),
