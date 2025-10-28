@@ -1,7 +1,7 @@
-
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:paragonik/data/models/database/receipt.dart';
+import 'package:paragonik/data/services/notifications/notification_service.dart';
 import 'package:paragonik/data/services/receipt_service.dart';
 import 'package:paragonik/data/services/thumbnail_service.dart';
 import 'package:uuid/uuid.dart';
@@ -9,10 +9,18 @@ import 'package:uuid/uuid.dart';
 class ReceiptNotifier extends ChangeNotifier {
   final ReceiptService _receiptService;
   final ThumbnailService _thumbnailService;
-  
+
   List<Receipt> _receipts = [];
   List<Receipt> get receipts => _receipts;
-  int get totalReceipts => _receipts.length;
+
+  int _totalReceiptsCount = 0;
+  int get totalReceipts => _totalReceiptsCount;
+
+  static const _pageSize = 20;
+  int _currentPage = 0;
+  bool _hasMoreData = true;
+  bool isLoadingInitial = false;
+  bool isLoadingMore = false;
 
   bool isLoading = false;
 
@@ -21,11 +29,59 @@ class ReceiptNotifier extends ChangeNotifier {
   }
 
   Future<void> fetchReceipts() async {
-    _setLoading(true);
+    isLoadingInitial = true;
+    notifyListeners();
 
-    _receipts = await _receiptService.getAllReceipts();
+    _currentPage = 0;
+    _receipts = [];
+    _hasMoreData = true;
 
-    _setLoading(false);
+    try {
+      final results = await Future.wait([
+        _receiptService.getReceiptsPaginated(limit: _pageSize, offset: 0),
+        _receiptService.getReceiptsCount(),
+      ]);
+
+      _receipts.addAll(results[0] as List<Receipt>);
+      _totalReceiptsCount = results[1] as int;
+    } catch (e) {
+      NotificationService.showError(
+        "Ups! Coś poszlo nie tak przy ładowaniu paragonów",
+      );
+    } finally {
+      isLoadingInitial = false;
+      notifyListeners();
+    }
+  }
+
+  Future<void> fetchMoreReceipts() async {
+    if (isLoadingMore || !_hasMoreData) return;
+
+    isLoadingMore = true;
+    notifyListeners();
+
+    _currentPage++;
+    final offset = _currentPage * _pageSize;
+
+    try {
+      final newReceipts = await _receiptService.getReceiptsPaginated(
+        limit: _pageSize,
+        offset: offset,
+      );
+
+      if (newReceipts.length < _pageSize) {
+        _hasMoreData = false;
+      }
+
+      _receipts.addAll(newReceipts);
+    } catch (e) {
+      NotificationService.showError(
+        "Ups! Coś poszlo nie tak przy ładowaniu paragonów",
+      );
+    } finally {
+      isLoadingMore = false;
+      notifyListeners();
+    }
   }
 
   Future<void> addReceipt({
@@ -34,7 +90,6 @@ class ReceiptNotifier extends ChangeNotifier {
     required DateTime date,
     required String storeName,
   }) async {
-
     final thumbnailFile = await _thumbnailService.createThumbnail(imageFile);
 
     final newReceipt = Receipt(

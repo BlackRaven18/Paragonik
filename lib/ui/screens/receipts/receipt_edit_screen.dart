@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:paragonik/data/services/notifications/notification_service.dart';
 import 'package:paragonik/helpers/date_picker.dart';
 import 'package:paragonik/helpers/store_selection_modal_helper.dart';
 import 'package:paragonik/helpers/sum_input_dialog_helper.dart';
@@ -53,12 +54,7 @@ class ReceiptEditScreen extends StatelessWidget {
         child: Stack(
           children: [
             SingleChildScrollView(
-              padding: const EdgeInsets.fromLTRB(
-                16.0,
-                70.0,
-                16.0,
-                100.0,
-              ),
+              padding: const EdgeInsets.fromLTRB(16.0, 70.0, 16.0, 100.0),
               child: Column(
                 children: [
                   SizedBox(
@@ -128,6 +124,7 @@ class ReceiptEditScreen extends StatelessWidget {
               child: FloatingActionButton.extended(
                 onPressed: () {
                   viewModel.saveChanges();
+                  NotificationService.showSuccess('Zapisano zmiany!');
                   Navigator.of(context).pop();
                 },
                 label: const Text('Zapisz zmiany'),

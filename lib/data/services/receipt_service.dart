@@ -1,4 +1,3 @@
-
 import 'package:paragonik/data/models/database/receipt.dart';
 import 'package:paragonik/data/services/database_service.dart';
 import 'package:sqflite/sqflite.dart';
@@ -38,12 +37,17 @@ class ReceiptService {
     );
   }
 
-  Future<List<Receipt>> getAllReceipts() async {
+  Future<List<Receipt>> getReceiptsPaginated({
+    required int limit,
+    required int offset,
+  }) async {
     final db = await _database;
     final List<Map<String, dynamic>> maps = await db.query(
       'receipts',
       where: 'deleted_at IS NULL',
       orderBy: 'date DESC',
+      limit: limit,
+      offset: offset,
     );
 
     return List.generate(maps.length, (i) {
@@ -64,5 +68,15 @@ class ReceiptService {
       return Receipt.fromMap(maps.first);
     }
     return null;
+  }
+
+  Future<int> getReceiptsCount() async {
+    final db = await _database;
+    final count = Sqflite.firstIntValue(
+      await db.rawQuery(
+        'SELECT COUNT(*) FROM receipts WHERE deleted_at IS NULL',
+      ),
+    );
+    return count ?? 0;
   }
 }

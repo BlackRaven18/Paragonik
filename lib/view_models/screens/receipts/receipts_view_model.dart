@@ -17,10 +17,14 @@ class ReceiptsViewModel extends ChangeNotifier {
   bool get isLoading => _receiptNotifier.isLoading;
   int get totalReceipts => _receiptNotifier.totalReceipts;
 
+  bool get isLoadingInitial => _receiptNotifier.isLoadingInitial;
+  bool get isLoadingMore => _receiptNotifier.isLoadingMore;
+
   String? _selectedStoreFilter;
   String? get selectedStoreFilter => _selectedStoreFilter;
 
   Future<void> fetchReceipts() => _receiptNotifier.fetchReceipts();
+  Future<void> fetchMoreReceipts() => _receiptNotifier.fetchMoreReceipts();
   Future<void> deleteReceipt(String id) => _receiptNotifier.deleteReceipt(id);
 
   Map<String, List<Receipt>> get groupedReceipts {
