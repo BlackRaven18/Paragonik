@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:paragonik/extensions/localization_extensions.dart';
 
 class AppBottomNavigationBar extends StatelessWidget {
   const AppBottomNavigationBar({super.key});
@@ -35,7 +36,7 @@ class AppBottomNavigationBar extends StatelessWidget {
     return BottomNavigationBar(
       currentIndex: _calculateSelectedIndex(context),
       onTap: (index) => _onItemTapped(index, context),
-      items: const [
+      items: [
         BottomNavigationBarItem(icon: Icon(Icons.camera_alt), label: 'Skaner'),
         BottomNavigationBarItem(
           icon: Icon(Icons.receipt_long),
@@ -43,7 +44,7 @@ class AppBottomNavigationBar extends StatelessWidget {
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.bar_chart),
-          label: 'Statystyki',
+          label: context.l10n.statistics,
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.settings),

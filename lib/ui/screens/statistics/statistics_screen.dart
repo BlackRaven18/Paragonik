@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:paragonik/extensions/formatters.dart';
+import 'package:paragonik/extensions/localization_extensions.dart';
 import 'package:paragonik/ui/screens/statistics/stat_card.dart';
 import 'package:paragonik/ui/screens/statistics/store_spending_list_item.dart';
 import 'package:paragonik/view_models/screens/statistics/statistics_view_model.dart';
@@ -27,7 +28,6 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
   @override
   Widget build(BuildContext context) {
     final viewModel = context.watch<StatisticsViewModel>();
-    final currencyFormat = NumberFormat.currency(locale: 'pl_PL', symbol: 'zł');
     final theme = Theme.of(context);
 
     return Scaffold(
@@ -41,7 +41,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
                   Padding(
                     padding: const EdgeInsets.only(top: 16.0, bottom: 24.0),
                     child: Text(
-                      'Statystyki',
+                      context.l10n.statistics,
                       style: theme.textTheme.headlineMedium,
                     ),
                   ),
@@ -62,7 +62,9 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
                     children: [
                       StatCard(
                         title: 'Wydatki',
-                        value: currencyFormat.format(viewModel.totalSpending),
+                        value: Formatters.formatCurrency(
+                          viewModel.totalSpending,
+                        ),
                       ),
 
                       if (viewModel.selectedTimeRange == TimeRange.month)
@@ -70,7 +72,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
                           title: 'Poprzedni miesiąc',
                           value:
                               '${viewModel.comparisonPercentage.toStringAsFixed(1)}%',
-                          subtitle: currencyFormat.format(
+                          subtitle: Formatters.formatCurrency(
                             viewModel.comparisonAbsolute,
                           ),
                         )
@@ -79,7 +81,7 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
 
                       StatCard(
                         title: 'Średnio dziennie',
-                        value: currencyFormat.format(
+                        value: Formatters.formatCurrency(
                           viewModel.averageDailySpending,
                         ),
                       ),

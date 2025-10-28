@@ -1,0 +1,11 @@
+{
+    "@@locale": "en",
+    "scanner": "Scanner",
+    "settings": "Settings",
+    "statistics": "Statistics",
+    "receipts": "Receipts",
+    "totalReceipts": "Total number of receipts",
+    "receiptsCount": "{count, plural, =0{No receipts} =1{{count} receipt} other{{count} receipts}}",
+    "addReceipt": "Add receipt",
+    "saveChanges": "Save changes"
+}

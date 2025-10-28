@@ -1,0 +1,18 @@
+{
+    "@@locale": "pl",
+    "scanner": "Skaner",
+    "settings": "Ustawienia",
+    "statistics": "Statystyki",
+    "receipts": "Paragony",
+    "totalReceipts": "Całkowita liczba paragonów",
+    "receiptsCount": "{count, plural, =0{Brak paragonów} =1{{count} paragon} few{{count} paragony} many{{count} paragonów} other{{count} paragonu}}",
+    "addReceipt": "Dodaj paragon",
+    "saveChanges": "Zapisz zmiany",
+
+    "screensCameraInitialViewTitle": "Rozpocznij Skanowanie",
+    "screensCameraInitialViewDescription": "Zrób zdjęcie paragonu lub wybierz istniejące z galerii, aby dodać nowy wydatek.",
+    "screensCameraInitialViewTakePhotoButton": "Zrób zdjęcie",
+    "screensCameraInitialViewChooseFromGalleryButton": "Wybierz z galerii",
+
+    "screensCameraProcessingViewStatus": "Analizuję paragon..."
+}

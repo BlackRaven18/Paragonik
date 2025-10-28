@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:paragonik/extensions/localization_extensions.dart';
 
 class ProcessingView extends StatelessWidget {
   const ProcessingView({super.key});
@@ -14,7 +15,10 @@ class ProcessingView extends StatelessWidget {
           size: 80.0,
         ),
         const SizedBox(height: 20),
-        const Text('Analizuję paragon...', style: TextStyle(fontSize: 18)),
+        Text(
+          context.l10n.screensCameraProcessingViewStatus,
+          style: TextStyle(fontSize: 18),
+        ),
       ],
     );
   }

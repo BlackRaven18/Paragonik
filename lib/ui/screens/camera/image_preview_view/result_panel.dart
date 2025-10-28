@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:paragonik/extensions/formatters.dart';
 import 'package:paragonik/ui/helpers/modals/store_selection_modal_helper.dart';
 import 'package:paragonik/ui/screens/camera/image_preview_view/helpers/date_time_picker_dialog_helper.dart';
 import 'package:paragonik/ui/helpers/sum_input_dialog_helper.dart';
@@ -27,14 +27,8 @@ class ResultPanel extends StatelessWidget {
     final viewModel = context.watch<CameraViewModel>();
     final theme = Theme.of(context);
 
-    final DateFormat displayDateFormat = DateFormat(
-      'dd.MM.yyyy HH:mm',
-      'pl_PL',
-    );
-
-    final sumString = viewModel.ocrResult?.sum ?? '0.00';
     final dateDisplayString = viewModel.ocrResult?.date != null
-        ? displayDateFormat.format(viewModel.ocrResult!.date!)
+        ? Formatters.formatDateTime(viewModel.ocrResult!.date!)
         : 'Nie znaleziono';
     final storeString = viewModel.ocrResult?.storeName ?? 'Nieznany sklep';
 
@@ -47,7 +41,9 @@ class ResultPanel extends StatelessWidget {
                 ? 'Kwota (Poprawiona):'
                 : 'Kwota:',
             content: Text(
-              '$sumString PLN',
+              Formatters.formatCurrency(
+                double.tryParse(viewModel.ocrResult?.sum ?? '') ?? 0.0,
+              ),
               style: theme.textTheme.headlineSmall?.copyWith(
                 fontWeight: FontWeight.bold,
               ),
@@ -55,7 +51,9 @@ class ResultPanel extends StatelessWidget {
             icon: Icons.edit,
             onEdit: () => showSumInputDialog(
               context,
-              initialValue: viewModel.ocrResult?.sum ?? '0.00',
+              initialValue: Formatters.formatCurrency(
+                double.tryParse(viewModel.ocrResult?.sum ?? '') ?? 0.0,
+              ),
               onValueSaved: viewModel.updateSum,
             ),
           ),

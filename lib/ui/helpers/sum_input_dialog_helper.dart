@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:paragonik/extensions/formatters.dart';
 
 Future<void> showSumInputDialog(
   BuildContext context, {
@@ -15,9 +16,9 @@ Future<void> showSumInputDialog(
         controller: amountController,
         autofocus: true,
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
-        decoration: const InputDecoration(
+        decoration: InputDecoration(
           labelText: 'Wpisz poprawną kwotę',
-          suffixText: 'PLN',
+          suffixText: Formatters.currencySymbol,
         ),
       ),
       actions: [

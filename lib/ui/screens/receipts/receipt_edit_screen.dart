@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:paragonik/data/services/notifications/notification_service.dart';
+import 'package:paragonik/extensions/formatters.dart';
 import 'package:paragonik/ui/helpers/date_picker.dart';
 import 'package:paragonik/ui/helpers/modals/future_date_warning_dialog_helper.dart';
 import 'package:paragonik/ui/helpers/modals/store_selection_modal_helper.dart';
@@ -87,7 +87,9 @@ class ReceiptEditScreen extends StatelessWidget {
                   EditableField(
                     label: 'Kwota:',
                     content: Text(
-                      '${viewModel.updatedSum} PLN',
+                      Formatters.formatCurrency(
+                        double.tryParse(viewModel.updatedSum) ?? 0.0,
+                      ),
                       style: theme.textTheme.headlineSmall?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
@@ -103,9 +105,7 @@ class ReceiptEditScreen extends StatelessWidget {
                   EditableField(
                     label: 'Data i godzina',
                     content: Text(
-                      DateFormat(
-                        'dd.MM.yyyy HH:mm',
-                      ).format(viewModel.selectedDateTime),
+                      Formatters.formatDateTime(viewModel.selectedDateTime),
                       style: theme.textTheme.titleMedium?.copyWith(
                         fontWeight: FontWeight.bold,
                       ),

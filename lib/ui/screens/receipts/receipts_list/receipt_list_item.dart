@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:paragonik/data/models/database/receipt.dart';
 import 'package:paragonik/data/services/notifications/notification_service.dart';
+import 'package:paragonik/extensions/formatters.dart';
 import 'package:paragonik/ui/widgets/store_display.dart';
 import 'package:paragonik/view_models/screens/receipts/receipts_view_model.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +18,7 @@ class ReceiptListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final receiptsViewModel = context.watch<ReceiptsViewModel>();
     final theme = Theme.of(context);
-    final formattedDate = DateFormat('dd.MM.yyyy HH:mm').format(receipt.date);
+    final formattedDate = Formatters.formatDateTime(receipt.date);
 
     Future<void> handleDeleteReceipt(String id) async {
       final shouldDelete = await showDialog<bool>(
@@ -75,7 +76,7 @@ class ReceiptListItem extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    '${receipt.amount.toStringAsFixed(2)} PLN',
+                    Formatters.formatCurrency(receipt.amount),
                     style: theme.textTheme.bodyLarge?.copyWith(
                       color: theme.colorScheme.primary,
                       fontWeight: FontWeight.w600,

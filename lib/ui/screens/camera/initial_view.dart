@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:paragonik/extensions/localization_extensions.dart';
 import 'package:paragonik/ui/screens/camera/helpers/request_and_get_image_helper.dart';
 import 'package:paragonik/view_models/screens/camera/camera_view_model.dart';
 import 'package:provider/provider.dart';
@@ -24,7 +25,7 @@ class InitialView extends StatelessWidget {
           ),
           const SizedBox(height: 24),
           Text(
-            'Rozpocznij Skanowanie',
+            context.l10n.screensCameraInitialViewTitle,
             style: theme.textTheme.headlineSmall?.copyWith(
               fontWeight: FontWeight.bold,
             ),
@@ -32,7 +33,7 @@ class InitialView extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           Text(
-            'Zrób zdjęcie paragonu lub wybierz istniejące z galerii, aby dodać nowy wydatek.',
+            context.l10n.screensCameraInitialViewDescription,
             style: theme.textTheme.bodyLarge?.copyWith(
               color: Colors.grey.shade600,
             ),
@@ -55,7 +56,7 @@ class InitialView extends StatelessWidget {
                     viewModel,
                   ),
             icon: const Icon(Icons.camera_alt),
-            label: const Text('Zrób zdjęcie'),
+            label: Text(context.l10n.screensCameraInitialViewTakePhotoButton),
           ),
           const SizedBox(height: 16),
           TextButton(
@@ -66,7 +67,9 @@ class InitialView extends StatelessWidget {
                     ImageSource.gallery,
                     viewModel,
                   ),
-            child: const Text('Wybierz z galerii'),
+            child: Text(
+              context.l10n.screensCameraInitialViewChooseFromGalleryButton,
+            ),
           ),
         ],
       ),

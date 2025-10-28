@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:paragonik/extensions/formatters.dart';
 import 'package:paragonik/ui/widgets/store_display.dart';
 import 'package:paragonik/view_models/screens/statistics/statistics_view_model.dart';
 
@@ -16,7 +16,6 @@ class StoreSpendingListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final currencyFormat = NumberFormat.currency(locale: 'pl_PL', symbol: 'zł');
     final barWidthFactor = maxAmount > 0
         ? storeSpending.totalAmount / maxAmount
         : 0.0;
@@ -37,7 +36,7 @@ class StoreSpendingListItem extends StatelessWidget {
               ),
               const SizedBox(width: 16),
               Text(
-                currencyFormat.format(storeSpending.totalAmount),
+                Formatters.formatCurrency(storeSpending.totalAmount),
                 style: theme.textTheme.bodyMedium,
               ),
             ],
