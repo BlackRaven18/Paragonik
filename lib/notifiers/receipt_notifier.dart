@@ -5,6 +5,8 @@ import 'package:paragonik/data/services/l10n_service.dart';
 import 'package:paragonik/data/services/notifications/notification_service.dart';
 import 'package:paragonik/data/services/receipt_service.dart';
 import 'package:paragonik/data/services/thumbnail_service.dart';
+import 'package:path/path.dart' as p;
+import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
 
 class ReceiptNotifier extends ChangeNotifier {
@@ -91,12 +93,27 @@ class ReceiptNotifier extends ChangeNotifier {
     required DateTime date,
     required String storeName,
   }) async {
+    final documentsDirectory = await getApplicationDocumentsDirectory();
+
+    final uniqueId = const Uuid().v4();
+    final imageExtension = p.extension(imageFile.path);
+    final newImageName = '$uniqueId$imageExtension';
+    final newThumbnailName = '${uniqueId}_thumb$imageExtension';
+
+    final permanentImagePath = p.join(documentsDirectory.path, newImageName);
+    final permanentThumbnailPath = p.join(
+      documentsDirectory.path,
+      newThumbnailName,
+    );
+
+    await imageFile.copy(permanentImagePath);
     final thumbnailFile = await _thumbnailService.createThumbnail(imageFile);
+    await thumbnailFile.copy(permanentThumbnailPath);
 
     final newReceipt = Receipt(
-      id: const Uuid().v4(),
-      imagePath: imageFile.path,
-      thumbnailPath: thumbnailFile.path,
+      id: uniqueId,
+      imagePath: permanentImagePath,
+      thumbnailPath: permanentThumbnailPath,
       amount: amount,
       date: date,
       storeName: storeName,
@@ -107,9 +124,8 @@ class ReceiptNotifier extends ChangeNotifier {
     await _receiptService.addReceipt(newReceipt);
 
     _receipts.insert(0, newReceipt);
-
     await updateReceiptCount();
-
+    
     notifyListeners();
   }
 
