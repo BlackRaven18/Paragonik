@@ -27,6 +27,10 @@
     "@commonDelete": {
         "description": "Etykieta przycisku do usuwania elementu."
     },
+    "commonContinue": "Kontynuuj",
+    "@commonContinue": {
+        "description": "Etykieta przycisku do kontynuowania akcji."
+    },
 
 
     "screensCameraInitialViewTitle": "Rozpocznij Skanowanie",
@@ -259,5 +263,26 @@
     "widgetsModalsStoreSelectionSearchLabel": "Wyszukaj sklep...",
     "@widgetsModalsStoreSelectionSearchLabel": {
         "description": "Tekst wyświetlany jako podpowiedź w polu wyszukiwania w oknie wyboru sklepu."
+    },
+
+
+    "helpersSumInputDialogTitle": "Ręczna poprawa kwoty",
+    "@helpersSumInputDialogTitle": {
+        "description": "Tytuł okna dialogowego do ręcznej edycji kwoty paragonu."
+    },
+
+    "helpersSumInputDialogLabel": "Wpisz poprawną kwotę",
+    "@helpersSumInputDialogLabel": {
+        "description": "Etykieta pola tekstowego do wprowadzania kwoty."
+    },
+
+
+    "helpersModalsFutureDateWarningDialogTitle": "Data z przyszłości",
+    "@helpersModalsFutureDateWarningDialogTitle": {
+        "description": "Tytuł okna dialogowego ostrzegającego o dacie z przyszłości."
+    },
+    "helpersModalsFutureDateWarningDialogContent": "Wybrana data paragonu jest z przyszłości. Czy na pewno chcesz kontynuować?",
+    "@helpersModalsFutureDateWarningDialogContent": {
+        "description": "Treść okna dialogowego z prośbą o potwierdzenie zapisu paragonu z datą z przyszłości."
     }
 }

@@ -51,6 +51,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get commonDelete => 'Usuń';
 
   @override
+  String get commonContinue => 'Kontynuuj';
+
+  @override
   String get screensCameraInitialViewTitle => 'Rozpocznij Skanowanie';
 
   @override
@@ -228,4 +231,17 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get widgetsModalsStoreSelectionSearchLabel => 'Wyszukaj sklep...';
+
+  @override
+  String get helpersSumInputDialogTitle => 'Ręczna poprawa kwoty';
+
+  @override
+  String get helpersSumInputDialogLabel => 'Wpisz poprawną kwotę';
+
+  @override
+  String get helpersModalsFutureDateWarningDialogTitle => 'Data z przyszłości';
+
+  @override
+  String get helpersModalsFutureDateWarningDialogContent =>
+      'Wybrana data paragonu jest z przyszłości. Czy na pewno chcesz kontynuować?';
 }

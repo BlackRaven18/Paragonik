@@ -164,6 +164,12 @@ abstract class AppLocalizations {
   /// **'Usuń'**
   String get commonDelete;
 
+  /// Etykieta przycisku do kontynuowania akcji.
+  ///
+  /// In pl, this message translates to:
+  /// **'Kontynuuj'**
+  String get commonContinue;
+
   /// No description provided for @screensCameraInitialViewTitle.
   ///
   /// In pl, this message translates to:
@@ -475,6 +481,30 @@ abstract class AppLocalizations {
   /// In pl, this message translates to:
   /// **'Wyszukaj sklep...'**
   String get widgetsModalsStoreSelectionSearchLabel;
+
+  /// Tytuł okna dialogowego do ręcznej edycji kwoty paragonu.
+  ///
+  /// In pl, this message translates to:
+  /// **'Ręczna poprawa kwoty'**
+  String get helpersSumInputDialogTitle;
+
+  /// Etykieta pola tekstowego do wprowadzania kwoty.
+  ///
+  /// In pl, this message translates to:
+  /// **'Wpisz poprawną kwotę'**
+  String get helpersSumInputDialogLabel;
+
+  /// Tytuł okna dialogowego ostrzegającego o dacie z przyszłości.
+  ///
+  /// In pl, this message translates to:
+  /// **'Data z przyszłości'**
+  String get helpersModalsFutureDateWarningDialogTitle;
+
+  /// Treść okna dialogowego z prośbą o potwierdzenie zapisu paragonu z datą z przyszłości.
+  ///
+  /// In pl, this message translates to:
+  /// **'Wybrana data paragonu jest z przyszłości. Czy na pewno chcesz kontynuować?'**
+  String get helpersModalsFutureDateWarningDialogContent;
 }
 
 class _AppLocalizationsDelegate
