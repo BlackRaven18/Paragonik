@@ -217,6 +217,18 @@ abstract class AppLocalizations {
   /// In pl, this message translates to:
   /// **'Sklep:'**
   String get screensCameraImagePreviewViewResultPanelStoreLabel;
+
+  /// Tooltip przycisku do przełączania podglądu na oryginalne zdjęcie.
+  ///
+  /// In pl, this message translates to:
+  /// **'Pokaż oryginał'**
+  String get screensCameraImagePreviewViewImageDisplayShowOriginalTooltip;
+
+  /// Tooltip przycisku do przełączania podglądu na przetworzony skan.
+  ///
+  /// In pl, this message translates to:
+  /// **'Pokaż skan'**
+  String get screensCameraImagePreviewViewImageDisplayShowScanTooltip;
 }
 
 class _AppLocalizationsDelegate

@@ -84,4 +84,12 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get screensCameraImagePreviewViewResultPanelStoreLabel => 'Sklep:';
+
+  @override
+  String get screensCameraImagePreviewViewImageDisplayShowOriginalTooltip =>
+      'Pokaż oryginał';
+
+  @override
+  String get screensCameraImagePreviewViewImageDisplayShowScanTooltip =>
+      'Pokaż skan';
 }

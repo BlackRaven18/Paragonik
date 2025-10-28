@@ -43,5 +43,15 @@
     "screensCameraImagePreviewViewResultPanelStoreLabel": "Sklep:",
     "@screensCameraImagePreviewViewResultPanelStoreLabel": {
         "description": "Etykieta dla pola z nazwą sklepu."
+    },
+
+    "screensCameraImagePreviewViewImageDisplayShowOriginalTooltip": "Pokaż oryginał",
+    "@screensCameraImagePreviewViewImageDisplayShowOriginalTooltip": {
+        "description": "Tooltip przycisku do przełączania podglądu na oryginalne zdjęcie."
+    },
+
+    "screensCameraImagePreviewViewImageDisplayShowScanTooltip": "Pokaż skan",
+    "@screensCameraImagePreviewViewImageDisplayShowScanTooltip": {
+        "description": "Tooltip przycisku do przełączania podglądu na przetworzony skan."
     }
 }

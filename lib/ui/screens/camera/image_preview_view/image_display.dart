@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:paragonik/extensions/localization_extensions.dart';
 import 'package:paragonik/ui/core/widgets/full_screen_image_viewer.dart';
 import 'package:paragonik/view_models/screens/camera/camera_view_model.dart';
 import 'package:provider/provider.dart';
@@ -38,8 +39,13 @@ class ImageDisplay extends StatelessWidget {
                 right: 8,
                 child: FloatingActionButton.small(
                   onPressed: viewModel.toggleImageType,
-                  tooltip:
-                      'Pokaż ${viewModel.showProcessedImage ? "oryginał" : "skan"}',
+                  tooltip: viewModel.showProcessedImage
+                      ? context
+                            .l10n
+                            .screensCameraImagePreviewViewImageDisplayShowOriginalTooltip
+                      : context
+                            .l10n
+                            .screensCameraImagePreviewViewImageDisplayShowScanTooltip,
                   child: Icon(
                     viewModel.showProcessedImage
                         ? Icons.image_outlined
