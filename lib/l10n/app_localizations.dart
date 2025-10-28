@@ -529,6 +529,18 @@ abstract class AppLocalizations {
   /// In pl, this message translates to:
   /// **'Wcześniej'**
   String get viewModelsScreensReceiptsGroupEarlier;
+
+  /// Etykieta ustawienia wyboru języka.
+  ///
+  /// In pl, this message translates to:
+  /// **'Język aplikacji'**
+  String get screensSettingsLanguageSettingTitle;
+
+  /// Tytuł okna dialogowego do wyboru języka.
+  ///
+  /// In pl, this message translates to:
+  /// **'Wybierz język'**
+  String get screensSettingsLanguageDialogTitle;
 }
 
 class _AppLocalizationsDelegate

@@ -249,4 +249,10 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get viewModelsScreensReceiptsGroupEarlier => 'Wcześniej';
+
+  @override
+  String get screensSettingsLanguageSettingTitle => 'Język aplikacji';
+
+  @override
+  String get screensSettingsLanguageDialogTitle => 'Wybierz język';
 }

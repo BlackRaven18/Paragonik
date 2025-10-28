@@ -3,6 +3,7 @@ import 'package:paragonik/data/services/l10n_service.dart';
 import 'package:paragonik/data/services/notifications/notification_service.dart';
 import 'package:paragonik/data/services/settings_service.dart';
 import 'package:paragonik/l10n/app_localizations.dart';
+import 'package:paragonik/notifiers/locale_notifier.dart';
 import 'package:paragonik/routing/app_router.dart';
 import 'package:paragonik/ui/core/themes/theme.dart';
 import 'package:paragonik/ui/core/themes/theme_notifier.dart';
@@ -13,9 +14,15 @@ Future<void> main() async {
 
   await SettingsService.instance.init();
 
+  final localeNotifier = LocaleNotifier();
+  await localeNotifier.loadSavedLocale();
+
   runApp(
     MultiProvider(
-      providers: [ChangeNotifierProvider(create: (_) => ThemeNotifier())],
+      providers: [
+        ChangeNotifierProvider(create: (_) => ThemeNotifier()),
+        ChangeNotifierProvider.value(value: localeNotifier),
+      ],
       child: const MainApp(),
     ),
   );
@@ -27,6 +34,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeNotifier = context.watch<ThemeNotifier>();
+    final localeNotifier = context.watch<LocaleNotifier>();
 
     return MaterialApp.router(
       title: 'Paragonik',
@@ -37,6 +45,7 @@ class MainApp extends StatelessWidget {
       themeMode: themeNotifier.themeMode,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
+      locale: localeNotifier.locale,
       builder: (context, child) {
         L10nService.initialize(AppLocalizations.of(context)!);
         return child!;

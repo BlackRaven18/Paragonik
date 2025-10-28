@@ -249,4 +249,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get viewModelsScreensReceiptsGroupEarlier => 'Earlier';
+
+  @override
+  String get screensSettingsLanguageSettingTitle => 'App Language';
+
+  @override
+  String get screensSettingsLanguageDialogTitle => 'Choose language';
 }

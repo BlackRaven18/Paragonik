@@ -317,5 +317,15 @@
   "viewModelsScreensReceiptsGroupEarlier": "Earlier",
   "@viewModelsScreensReceiptsGroupEarlier": {
     "description": "Group header for receipts older than the current week."
+  },
+
+
+  "screensSettingsLanguageSettingTitle": "App Language",
+  "@screensSettingsLanguageSettingTitle": {
+    "description": "Label for the language selection setting."
+  },
+  "screensSettingsLanguageDialogTitle": "Choose language",
+  "@screensSettingsLanguageDialogTitle": {
+    "description": "Title of the dialog box for language selection."
   }
 }

@@ -346,5 +346,16 @@
     "viewModelsScreensReceiptsGroupEarlier": "Wcześniej",
     "@viewModelsScreensReceiptsGroupEarlier": {
         "description": "Nagłówek grupy dla paragonów starszych niż bieżący tydzień."
+    },
+
+
+    "screensSettingsLanguageSettingTitle": "Język aplikacji",
+    "@screensSettingsLanguageSettingTitle": {
+        "description": "Etykieta ustawienia wyboru języka."
+    },
+    "screensSettingsLanguageDialogTitle": "Wybierz język",
+    "@screensSettingsLanguageDialogTitle": {
+        "description": "Tytuł okna dialogowego do wyboru języka."
     }
+
 }
