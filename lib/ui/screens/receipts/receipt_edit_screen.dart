@@ -2,9 +2,10 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:paragonik/data/services/notifications/notification_service.dart';
-import 'package:paragonik/helpers/date_picker.dart';
-import 'package:paragonik/helpers/store_selection_modal_helper.dart';
-import 'package:paragonik/helpers/sum_input_dialog_helper.dart';
+import 'package:paragonik/ui/helpers/date_picker.dart';
+import 'package:paragonik/ui/helpers/modals/future_date_warning_dialog_helper.dart';
+import 'package:paragonik/ui/helpers/modals/store_selection_modal_helper.dart';
+import 'package:paragonik/ui/helpers/sum_input_dialog_helper.dart';
 import 'package:paragonik/ui/widgets/editable_field.dart';
 import 'package:paragonik/ui/widgets/image_viewer.dart';
 import 'package:paragonik/ui/widgets/store_display.dart';
@@ -38,6 +39,26 @@ class ReceiptEditScreen extends StatelessWidget {
 
     if (pickedDateTime == null) return;
     viewModel.updateDateTime(pickedDateTime);
+  }
+
+  Future<void> _handeOnSaveChanges(
+    BuildContext context,
+    ReceiptEditViewModel viewModel,
+  ) async {
+    if (viewModel.selectedDateTime.isAfter(DateTime.now())) {
+      final bool confirmed = await showFutureDateWarningDialog(context);
+
+      if (!confirmed) {
+        return;
+      }
+    }
+
+    viewModel.saveChanges();
+    NotificationService.showSuccess('Zapisano zmiany!');
+
+    if (context.mounted) {
+      Navigator.of(context).pop();
+    }
   }
 
   @override
@@ -122,11 +143,7 @@ class ReceiptEditScreen extends StatelessWidget {
               bottom: 16.0,
               right: 16.0,
               child: FloatingActionButton.extended(
-                onPressed: () {
-                  viewModel.saveChanges();
-                  NotificationService.showSuccess('Zapisano zmiany!');
-                  Navigator.of(context).pop();
-                },
+                onPressed: () => _handeOnSaveChanges(context, viewModel),
                 label: const Text('Zapisz zmiany'),
                 icon: const Icon(Icons.save),
                 heroTag: 'receipt_edit_save_btn',

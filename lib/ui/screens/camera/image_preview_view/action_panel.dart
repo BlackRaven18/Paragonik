@@ -1,9 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:paragonik/ui/helpers/modals/future_date_warning_dialog_helper.dart';
 import 'package:paragonik/view_models/screens/camera/camera_view_model.dart';
 import 'package:provider/provider.dart';
 
 class ActionPanel extends StatelessWidget {
   const ActionPanel({super.key});
+
+  Future<void> _handleOnSave(
+    BuildContext context,
+    CameraViewModel viewModel,
+  ) async {
+    if (viewModel.ocrResult!.date!.isAfter(DateTime.now())) {
+      final bool confirmed = await showFutureDateWarningDialog(context);
+
+      if (!confirmed) {
+        return;
+      }
+    }
+
+    viewModel.saveResult();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +56,7 @@ class ActionPanel extends StatelessWidget {
             label: const Text('Anuluj'),
           ),
           ElevatedButton.icon(
-            onPressed: viewModel.saveResult,
+            onPressed: () => _handleOnSave(context, viewModel),
             icon: const Icon(Icons.check_circle),
             label: const Text('Zapisz'),
           ),
