@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:paragonik/data/models/database/store.dart';
 import 'package:paragonik/data/models/ocr_result.dart';
 import 'package:paragonik/data/services/l10n_service.dart';
@@ -13,7 +12,6 @@ enum CameraUIState { initial, processing, preview }
 class CameraViewModel extends ChangeNotifier {
   final OcrService _ocrService;
   final ReceiptNotifier _receiptNotifier;
-  final _picker = ImagePicker();
 
   CameraUIState _uiState = CameraUIState.initial;
   CameraUIState get uiState => _uiState;
@@ -36,12 +34,9 @@ class CameraViewModel extends ChangeNotifier {
   bool _isDateManuallyCorrected = false;
   bool get isDateManuallyCorrected => _isDateManuallyCorrected;
 
-  bool _isPickerActive = false;
-  bool get isPickerActive => _isPickerActive;
-
   bool _isPermissionRequesting = false;
 
-  bool get isBusy => _isPickerActive || _isPermissionRequesting;
+  bool get isBusy => _isPermissionRequesting;
 
   CameraViewModel({
     required OcrService ocrService,

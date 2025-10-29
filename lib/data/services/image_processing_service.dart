@@ -15,11 +15,24 @@ Future<List<int>> _processImageInBackground(_ProcessRequest request) async {
     throw Exception('Nie udało się zdekodować obrazu w tle.');
   }
 
-  final resizedImage = img.copyResize(image, width: 1200);
+  final resizedImage = resizeForOcr(image);
   final grayscaleImage = img.grayscale(resizedImage);
   final contrastImage = img.contrast(grayscaleImage, contrast: 200);
 
-  return img.encodeJpg(contrastImage, quality: 95);
+  return img.encodePng(contrastImage);
+}
+
+img.Image resizeForOcr(img.Image image) {
+  final int targetWidth = 1500;
+  final double aspectRatio = image.height / image.width;
+  final int targetHeight = (targetWidth * aspectRatio).round();
+
+  return img.copyResize(
+    image,
+    width: targetWidth,
+    height: targetHeight,
+    interpolation: img.Interpolation.cubic,
+  );
 }
 
 class ImageProcessingService {
@@ -32,7 +45,10 @@ class ImageProcessingService {
     );
 
     final tempDir = await getTemporaryDirectory();
-    final tempPath = join(tempDir.path, '${DateTime.now().millisecondsSinceEpoch}_processed.jpg');
+    final tempPath = join(
+      tempDir.path,
+      '${DateTime.now().millisecondsSinceEpoch}_processed.jpg',
+    );
     final processedFile = File(tempPath);
     await processedFile.writeAsBytes(processedBytes);
 

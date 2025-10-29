@@ -3,6 +3,7 @@ import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart
 import 'package:paragonik/data/models/ocr_result.dart';
 import 'package:paragonik/data/models/processed_ocr_result.dart';
 import 'package:paragonik/data/services/image_processing_service.dart';
+import 'package:paragonik/data/services/notifications/notification_service.dart';
 import 'package:paragonik/data/services/store_service.dart';
 
 class OcrService {
@@ -35,11 +36,15 @@ class OcrService {
       final String? foundStore = await _findStoreNameInText(fullText);
 
       return ProcessedOcrResult(
-        result: OcrResult(sum: foundSum, date: foundDate, storeName: foundStore),
+        result: OcrResult(
+          sum: foundSum,
+          date: foundDate,
+          storeName: foundStore,
+        ),
         processedImageFile: processedImageFile,
       );
     } catch (e) {
-      print('Błąd w OcrService: $e');
+      NotificationService.showError(e.toString());
       await processedImageFile?.delete();
       return null;
     }
@@ -100,14 +105,57 @@ class OcrService {
   Future<String?> _findStoreNameInText(String text) async {
     final lowerCaseText = text.toLowerCase();
     final allStores = await _storeService.getAllStores();
+    const maxDistance = 2;
 
     for (final store in allStores) {
       for (final keyword in store.keywords) {
-        if (keyword.isNotEmpty && lowerCaseText.contains(keyword.trim())) {
+        if (keyword.isEmpty) continue;
+
+        final keywordLower = keyword.trim().toLowerCase();
+
+        if (lowerCaseText.contains(keywordLower)) {
           return store.name;
+        }
+
+        final words = lowerCaseText.split(RegExp(r'\s+'));
+        for (final word in words) {
+          if (levenshteinDistance(word, keywordLower) <= maxDistance) {
+            return store.name;
+          }
         }
       }
     }
-    return _storeService.getUnknownStore().then((value) => value.name);
+
+    return (await _storeService.getUnknownStore()).name;
+  }
+
+  int levenshteinDistance(String s, String t) {
+    final m = s.length;
+    final n = t.length;
+    final dp = List.generate(m + 1, (_) => List.filled(n + 1, 0));
+
+    for (var i = 0; i <= m; i++) {
+      dp[i][0] = i;
+    }
+    for (var j = 0; j <= n; j++) {
+      dp[0][j] = j;
+    }
+
+    for (var i = 1; i <= m; i++) {
+      for (var j = 1; j <= n; j++) {
+        if (s[i - 1] == t[j - 1]) {
+          dp[i][j] = dp[i - 1][j - 1];
+        } else {
+          dp[i][j] =
+              1 +
+              [
+                dp[i - 1][j],
+                dp[i][j - 1],
+                dp[i - 1][j - 1],
+              ].reduce((a, b) => a < b ? a : b);
+        }
+      }
+    }
+    return dp[m][n];
   }
 }

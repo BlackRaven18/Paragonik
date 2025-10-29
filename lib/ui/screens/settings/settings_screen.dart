@@ -6,42 +6,45 @@ import 'package:provider/provider.dart';
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
 
-  // Helper do wyświetlania dialogu wyboru języka
   void _showLanguageSelectionDialog(BuildContext context) {
     final localeNotifier = context.read<LocaleNotifier>();
 
     showDialog(
       context: context,
       builder: (context) {
-        return AlertDialog(
-          title: Text(context.l10n.screensSettingsLanguageDialogTitle),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              RadioListTile<Locale>(
-                title: const Text('Polski'),
-                value: const Locale('pl'),
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return AlertDialog(
+              title: Text(context.l10n.screensSettingsLanguageDialogTitle),
+              content: RadioGroup<Locale>(
                 groupValue: localeNotifier.locale,
                 onChanged: (locale) {
                   if (locale != null) {
                     localeNotifier.setLocale(locale);
                   }
-                  Navigator.of(context).pop();
+                  setState(() {});
+                  Future.delayed(const Duration(milliseconds: 200), () {
+                    if (context.mounted) {
+                      Navigator.of(context).pop();
+                    }
+                  });
                 },
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: const [
+                    RadioListTile<Locale>(
+                      title: Text('Polski'),
+                      value: Locale('pl'),
+                    ),
+                    RadioListTile<Locale>(
+                      title: Text('English'),
+                      value: Locale('en'),
+                    ),
+                  ],
+                ),
               ),
-              RadioListTile<Locale>(
-                title: const Text('English'),
-                value: const Locale('en'),
-                groupValue: localeNotifier.locale,
-                onChanged: (locale) {
-                  if (locale != null) {
-                    localeNotifier.setLocale(locale);
-                  }
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          ),
+            );
+          },
         );
       },
     );
