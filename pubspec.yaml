@@ -27,6 +27,7 @@ dependencies:
   permission_handler: ^12.0.1
   shared_preferences: ^2.5.3
   camera: ^0.11.3
+  flutter_tesseract_ocr: ^0.4.30
 
 dev_dependencies:
   flutter_test:
@@ -41,6 +42,8 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
+    - assets/tessdata_config.json
+    - assets/tessdata/
 
 flutter_launcher_icons:
   android: true
