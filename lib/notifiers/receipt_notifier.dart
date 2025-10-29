@@ -87,6 +87,16 @@ class ReceiptNotifier extends ChangeNotifier {
     }
   }
 
+  Future<List<Receipt>> getReceiptsInDateRange({
+    required DateTime startDate,
+    required DateTime endDate,
+  }) async {
+    return await _receiptService.getReceiptsInDateRange(
+      startDate: startDate,
+      endDate: endDate,
+    );
+  }
+
   Future<void> addReceipt({
     required File imageFile,
     required double amount,

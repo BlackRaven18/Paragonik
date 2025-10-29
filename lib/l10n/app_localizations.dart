@@ -152,6 +152,12 @@ abstract class AppLocalizations {
   /// **'Kontynuuj'**
   String get commonContinue;
 
+  /// Etykieta przycisku do eksportowania danych.
+  ///
+  /// In pl, this message translates to:
+  /// **'Eksportuj'**
+  String get commonExport;
+
   /// Komunikat wyświetlany po błędzie ładowania paragonów.
   ///
   /// In pl, this message translates to:
@@ -398,6 +404,26 @@ abstract class AppLocalizations {
   /// **'Wszystkie sklepy'**
   String get screensReceiptsReceiptsScreenWidgetsModalsFilterAllStoresOption;
 
+  /// Tytuł okna dialogowego do eksportowania paragonów.
+  ///
+  /// In pl, this message translates to:
+  /// **'Eksportuj paragony'**
+  String
+  get screensReceiptsReceiptsScreenWidgetsModalsExportReceiptsDialogTitle;
+
+  /// Etykieta pola do wyboru zakresu dat.
+  ///
+  /// In pl, this message translates to:
+  /// **'Wybierz zakres dat:'**
+  String
+  get screensReceiptsReceiptsScreenWidgetsModalsExportReceiptsDialogDateRangeLabel;
+
+  /// Opis przycisku do eksportowania paragonów.
+  ///
+  /// In pl, this message translates to:
+  /// **'Eksportuj paragony'**
+  String get screensReceiptsReceiptsScreenExportReceiptsButtonTooltip;
+
   /// Główny tytuł na ekranie statystyk.
   ///
   /// In pl, this message translates to:
@@ -542,6 +568,30 @@ abstract class AppLocalizations {
   /// **'Wcześniej'**
   String get viewModelsScreensReceiptsGroupEarlier;
 
+  /// Komunikat błędu wyświetlany, gdy użytkownik próbuje wyeksportować dane z pustego zakresu dat.
+  ///
+  /// In pl, this message translates to:
+  /// **'Brak paragonów w wybranym okresie.'**
+  String get viewModelsScreensReceiptsExportNoReceiptsInDateRangeError;
+
+  /// Treść udostępnianej wiadomości/e-maila podczas eksportu.
+  ///
+  /// In pl, this message translates to:
+  /// **'Eksport paragonów z Paragonik dla okresu: {dateRange}'**
+  String viewModelsScreensReceiptsExportShareText(String dateRange);
+
+  /// Tytuł e-maila podczas eksportu paragonów.
+  ///
+  /// In pl, this message translates to:
+  /// **'Paragonik - eksport paragonów z okresu {dateRange}'**
+  String viewModelsScreensReceiptsExportShareSubject(String dateRange);
+
+  /// Prefiks nazwy pliku dla eksportu paragonów do CSV.
+  ///
+  /// In pl, this message translates to:
+  /// **'paragony'**
+  String get viewModelsScreensReceiptsExportFileNamePrefix;
+
   /// Etykieta ustawienia wyboru języka.
   ///
   /// In pl, this message translates to:
@@ -553,6 +603,30 @@ abstract class AppLocalizations {
   /// In pl, this message translates to:
   /// **'Wybierz język'**
   String get screensSettingsLanguageDialogTitle;
+
+  /// Nagłówek kolumny 'Data Zakupu' w pliku CSV.
+  ///
+  /// In pl, this message translates to:
+  /// **'Data Zakupu'**
+  String get servicesCsvExportHeaderPurchaseDate;
+
+  /// Nagłówek kolumny 'Sklep' w pliku CSV.
+  ///
+  /// In pl, this message translates to:
+  /// **'Sklep'**
+  String get servicesCsvExportHeaderStore;
+
+  /// Nagłówek kolumny 'Kwota' w pliku CSV.
+  ///
+  /// In pl, this message translates to:
+  /// **'Kwota'**
+  String get servicesCsvExportHeaderAmount;
+
+  /// Nagłówek kolumny 'Data Dodania' w pliku CSV.
+  ///
+  /// In pl, this message translates to:
+  /// **'Data Dodania'**
+  String get servicesCsvExportHeaderDateAdded;
 }
 
 class _AppLocalizationsDelegate

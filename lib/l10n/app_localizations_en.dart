@@ -38,6 +38,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get commonContinue => 'Continue';
 
   @override
+  String get commonExport => 'Export';
+
+  @override
   String get notificationsErrorLoadingReceipts =>
       'Oops! Something went wrong while loading receipts';
 
@@ -183,6 +186,20 @@ class AppLocalizationsEn extends AppLocalizations {
       'All stores';
 
   @override
+  String
+  get screensReceiptsReceiptsScreenWidgetsModalsExportReceiptsDialogTitle =>
+      'Export receipts';
+
+  @override
+  String
+  get screensReceiptsReceiptsScreenWidgetsModalsExportReceiptsDialogDateRangeLabel =>
+      'Select date range:';
+
+  @override
+  String get screensReceiptsReceiptsScreenExportReceiptsButtonTooltip =>
+      'Export receipts';
+
+  @override
   String get screensStatisticsScreenTitle => 'Summary';
 
   @override
@@ -257,8 +274,37 @@ class AppLocalizationsEn extends AppLocalizations {
   String get viewModelsScreensReceiptsGroupEarlier => 'Earlier';
 
   @override
+  String get viewModelsScreensReceiptsExportNoReceiptsInDateRangeError =>
+      'No receipts in the selected date range.';
+
+  @override
+  String viewModelsScreensReceiptsExportShareText(String dateRange) {
+    return 'Paragonik - receipts export for the period $dateRange';
+  }
+
+  @override
+  String viewModelsScreensReceiptsExportShareSubject(String dateRange) {
+    return 'Paragonik - receipts export $dateRange';
+  }
+
+  @override
+  String get viewModelsScreensReceiptsExportFileNamePrefix => 'receipts';
+
+  @override
   String get screensSettingsLanguageSettingTitle => 'App Language';
 
   @override
   String get screensSettingsLanguageDialogTitle => 'Choose language';
+
+  @override
+  String get servicesCsvExportHeaderPurchaseDate => 'Purchase Date';
+
+  @override
+  String get servicesCsvExportHeaderStore => 'Store';
+
+  @override
+  String get servicesCsvExportHeaderAmount => 'Amount';
+
+  @override
+  String get servicesCsvExportHeaderDateAdded => 'Date Added';
 }

@@ -39,6 +39,10 @@
     "@commonContinue": {
         "description": "Etykieta przycisku do kontynuowania akcji."
     },
+    "commonExport": "Eksportuj",
+    "@commonExport": {
+        "description": "Etykieta przycisku do eksportowania danych."
+    },
 
 
     "notificationsErrorLoadingReceipts": "Ups! Coś poszło nie tak przy ładowaniu paragonów",
@@ -240,6 +244,21 @@
     },
 
 
+    "screensReceiptsReceiptsScreenWidgetsModalsExportReceiptsDialogTitle": "Eksportuj paragony",
+    "@screensReceiptsReceiptsScreenWidgetsModalsExportReceiptsDialogTitle": {
+        "description": "Tytuł okna dialogowego do eksportowania paragonów."
+    },
+    "screensReceiptsReceiptsScreenWidgetsModalsExportReceiptsDialogDateRangeLabel": "Wybierz zakres dat:",
+    "@screensReceiptsReceiptsScreenWidgetsModalsExportReceiptsDialogDateRangeLabel": {
+        "description": "Etykieta pola do wyboru zakresu dat."
+    },
+
+    "screensReceiptsReceiptsScreenExportReceiptsButtonTooltip": "Eksportuj paragony",
+    "@screensReceiptsReceiptsScreenExportReceiptsButtonTooltip": {
+        "description": "Opis przycisku do eksportowania paragonów."
+    },
+
+
     "screensStatisticsScreenTitle": "Podsumowanie",
     "@screensStatisticsScreenTitle": {
         "description": "Główny tytuł na ekranie statystyk."
@@ -337,20 +356,45 @@
     "@viewModelsScreensReceiptsGroupToday": {
         "description": "Nagłówek grupy dla paragonów z dzisiejszego dnia."
     },
-
     "viewModelsScreensReceiptsGroupYesterday": "Wczoraj",
     "@viewModelsScreensReceiptsGroupYesterday": {
         "description": "Nagłówek grupy dla paragonów z wczorajszego dnia."
     },
-    
     "viewModelsScreensReceiptsGroupThisWeek": "W tym tygodniu",
     "@viewModelsScreensReceiptsGroupThisWeek": {
         "description": "Nagłówek grupy dla paragonów z bieżącego tygodnia."
     },
-    
     "viewModelsScreensReceiptsGroupEarlier": "Wcześniej",
     "@viewModelsScreensReceiptsGroupEarlier": {
         "description": "Nagłówek grupy dla paragonów starszych niż bieżący tydzień."
+    },
+    "viewModelsScreensReceiptsExportNoReceiptsInDateRangeError": "Brak paragonów w wybranym okresie.",
+    "@viewModelsScreensReceiptsExportNoReceiptsInDateRangeError": {
+        "description": "Komunikat błędu wyświetlany, gdy użytkownik próbuje wyeksportować dane z pustego zakresu dat."
+    },
+    "viewModelsScreensReceiptsExportShareText": "Eksport paragonów z Paragonik dla okresu: {dateRange}",
+    "@viewModelsScreensReceiptsExportShareText": {
+        "description": "Treść udostępnianej wiadomości/e-maila podczas eksportu.",
+        "placeholders": {
+        "dateRange": {
+            "type": "String",
+            "example": "01.10.2025 - 29.10.2025"
+        }
+        }
+    },
+    "viewModelsScreensReceiptsExportShareSubject": "Paragonik - eksport paragonów z okresu {dateRange}",
+    "@viewModelsScreensReceiptsExportShareSubject": {
+        "description": "Tytuł e-maila podczas eksportu paragonów.",
+        "placeholders": {
+        "dateRange": {
+            "type": "String",
+            "example": "01.10.2025 - 29.10.2025"
+        }
+        }
+    },
+    "viewModelsScreensReceiptsExportFileNamePrefix": "paragony",
+    "@viewModelsScreensReceiptsExportFileNamePrefix": {
+        "description": "Prefiks nazwy pliku dla eksportu paragonów do CSV."
     },
 
 
@@ -361,6 +405,19 @@
     "screensSettingsLanguageDialogTitle": "Wybierz język",
     "@screensSettingsLanguageDialogTitle": {
         "description": "Tytuł okna dialogowego do wyboru języka."
-    }
+    },
+
+
+    "servicesCsvExportHeaderPurchaseDate": "Data Zakupu",
+    "@servicesCsvExportHeaderPurchaseDate": { "description": "Nagłówek kolumny 'Data Zakupu' w pliku CSV." },
+    
+    "servicesCsvExportHeaderStore": "Sklep",
+    "@servicesCsvExportHeaderStore": { "description": "Nagłówek kolumny 'Sklep' w pliku CSV." },
+    
+    "servicesCsvExportHeaderAmount": "Kwota",
+    "@servicesCsvExportHeaderAmount": { "description": "Nagłówek kolumny 'Kwota' w pliku CSV." },
+    
+    "servicesCsvExportHeaderDateAdded": "Data Dodania",
+    "@servicesCsvExportHeaderDateAdded": { "description": "Nagłówek kolumny 'Data Dodania' w pliku CSV." }
 
 }

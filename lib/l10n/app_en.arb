@@ -38,6 +38,10 @@
   "@commonContinue": {
     "description": "Label for a button to continue an action."
   },
+  "commonExport": "Export",
+    "@commonExport": {
+        "description": "Label for a button to export data."
+    },
 
 
   "notificationsErrorLoadingReceipts": "Oops! Something went wrong while loading receipts",
@@ -224,6 +228,23 @@
     "description": "Label for the dropdown option that clears the store filter."
   },
 
+
+  "screensReceiptsReceiptsScreenWidgetsModalsExportReceiptsDialogTitle": "Export receipts",
+  "@screensReceiptsReceiptsScreenWidgetsModalsExportReceiptsDialogTitle": {
+      "description": "Title of the modal window for exporting receipts."
+  },
+  "screensReceiptsReceiptsScreenWidgetsModalsExportReceiptsDialogDateRangeLabel": "Select date range:",
+  "@screensReceiptsReceiptsScreenWidgetsModalsExportReceiptsDialogDateRangeLabel": {
+      "description": "Label for the date range picker in the export receipts modal."
+  },
+
+
+  "screensReceiptsReceiptsScreenExportReceiptsButtonTooltip": "Export receipts",
+    "@screensReceiptsReceiptsScreenExportReceiptsButtonTooltip": {
+        "description": "Tooltip for the export receipts button."
+    },
+
+
   "screensStatisticsScreenTitle": "Summary",
   "@screensStatisticsScreenTitle": {
     "description": "Main title on the statistics screen."
@@ -328,6 +349,34 @@
   "@viewModelsScreensReceiptsGroupEarlier": {
     "description": "Group header for receipts older than the current week."
   },
+  "viewModelsScreensReceiptsExportNoReceiptsInDateRangeError": "No receipts in the selected date range.",
+    "@viewModelsScreensReceiptsExportNoReceiptsInDateRangeError": {
+        "description": "Error message displayed when there are no receipts in the selected date range."
+    },
+  "viewModelsScreensReceiptsExportShareText": "Paragonik - receipts export for the period {dateRange}",
+  "@viewModelsScreensReceiptsExportShareText": {
+      "description": "Text of the e-mail sent when exporting receipts.",
+      "placeholders": {
+      "dateRange": {
+          "type": "String",
+          "example": "01.10.2025 - 29.10.2025"
+      }
+      }
+  },
+  "viewModelsScreensReceiptsExportShareSubject": "Paragonik - receipts export {dateRange}",
+  "@viewModelsScreensReceiptsExportShareSubject": {
+      "description": "Subject of the e-mail sent when exporting receipts.",
+      "placeholders": {
+      "dateRange": {
+          "type": "String",
+          "example": "01.10.2025 - 29.10.2025"
+      }
+      }
+  },
+  "viewModelsScreensReceiptsExportFileNamePrefix": "receipts",
+    "@viewModelsScreensReceiptsExportFileNamePrefix": {
+      "description": "Prefix for the file name when exporting receipts to CSV."
+  },
 
 
   "screensSettingsLanguageSettingTitle": "App Language",
@@ -337,5 +386,18 @@
   "screensSettingsLanguageDialogTitle": "Choose language",
   "@screensSettingsLanguageDialogTitle": {
     "description": "Title of the dialog box for language selection."
-  }
+  },
+
+
+  "servicesCsvExportHeaderPurchaseDate": "Purchase Date",
+  "@servicesCsvExportHeaderPurchaseDate": { "description": "Header for the 'Purchase Date' column in the CSV file." },
+  
+  "servicesCsvExportHeaderStore": "Store",
+  "@servicesCsvExportHeaderStore": { "description": "Header for the 'Store' column in the CSV file." },
+  
+  "servicesCsvExportHeaderAmount": "Amount",
+  "@servicesCsvExportHeaderAmount": { "description": "Header for the 'Amount' column in the CSV file." },
+  
+  "servicesCsvExportHeaderDateAdded": "Date Added",
+  "@servicesCsvExportHeaderDateAdded": { "description": "Header for the 'Date Added' column in the CSV file." }
 }

@@ -38,6 +38,9 @@ class AppLocalizationsPl extends AppLocalizations {
   String get commonContinue => 'Kontynuuj';
 
   @override
+  String get commonExport => 'Eksportuj';
+
+  @override
   String get notificationsErrorLoadingReceipts =>
       'Ups! Coś poszło nie tak przy ładowaniu paragonów';
 
@@ -183,6 +186,20 @@ class AppLocalizationsPl extends AppLocalizations {
       'Wszystkie sklepy';
 
   @override
+  String
+  get screensReceiptsReceiptsScreenWidgetsModalsExportReceiptsDialogTitle =>
+      'Eksportuj paragony';
+
+  @override
+  String
+  get screensReceiptsReceiptsScreenWidgetsModalsExportReceiptsDialogDateRangeLabel =>
+      'Wybierz zakres dat:';
+
+  @override
+  String get screensReceiptsReceiptsScreenExportReceiptsButtonTooltip =>
+      'Eksportuj paragony';
+
+  @override
   String get screensStatisticsScreenTitle => 'Podsumowanie';
 
   @override
@@ -257,8 +274,37 @@ class AppLocalizationsPl extends AppLocalizations {
   String get viewModelsScreensReceiptsGroupEarlier => 'Wcześniej';
 
   @override
+  String get viewModelsScreensReceiptsExportNoReceiptsInDateRangeError =>
+      'Brak paragonów w wybranym okresie.';
+
+  @override
+  String viewModelsScreensReceiptsExportShareText(String dateRange) {
+    return 'Eksport paragonów z Paragonik dla okresu: $dateRange';
+  }
+
+  @override
+  String viewModelsScreensReceiptsExportShareSubject(String dateRange) {
+    return 'Paragonik - eksport paragonów z okresu $dateRange';
+  }
+
+  @override
+  String get viewModelsScreensReceiptsExportFileNamePrefix => 'paragony';
+
+  @override
   String get screensSettingsLanguageSettingTitle => 'Język aplikacji';
 
   @override
   String get screensSettingsLanguageDialogTitle => 'Wybierz język';
+
+  @override
+  String get servicesCsvExportHeaderPurchaseDate => 'Data Zakupu';
+
+  @override
+  String get servicesCsvExportHeaderStore => 'Sklep';
+
+  @override
+  String get servicesCsvExportHeaderAmount => 'Kwota';
+
+  @override
+  String get servicesCsvExportHeaderDateAdded => 'Data Dodania';
 }

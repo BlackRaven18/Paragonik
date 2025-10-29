@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:paragonik/data/services/l10n_service.dart';
 import 'package:paragonik/extensions/localization_extensions.dart';
+import 'package:paragonik/ui/screens/receipts/receipts_screen_widgets/modals/export_receipts_dialog_helper.dart';
 import 'package:paragonik/ui/screens/receipts/receipts_list/receipts_list.dart';
 import 'package:paragonik/ui/screens/receipts/receipts_screen_widgets/filter_button.dart';
 import 'package:paragonik/ui/screens/receipts/receipts_screen_widgets/grouping_toggle.dart';
@@ -10,6 +12,19 @@ import 'package:provider/provider.dart';
 
 class ReceiptsScreen extends StatelessWidget {
   const ReceiptsScreen({super.key});
+
+  Future<void> _showExportDialog(BuildContext context, ReceiptsViewModel viewModel) async {
+
+    final selectedDateRange = await showModalBottomSheet<DateTimeRange>(
+      context: context,
+      isScrollControlled: true,
+      builder: (_) => const ExportReceiptsDialog(),
+    );
+
+    if (selectedDateRange != null) {
+      await viewModel.exportReceiptsWithDateRange(selectedDateRange);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +54,11 @@ class ReceiptsScreen extends StatelessWidget {
               const Expanded(child: ReceiptsSearchBar()),
               const SizedBox(width: 8),
               const FilterButton(),
+              IconButton(
+                icon: const Icon(Icons.download),
+                tooltip: L10nService.l10n.screensReceiptsReceiptsScreenExportReceiptsButtonTooltip,
+                onPressed: () => _showExportDialog(context, viewModel),
+              ),
             ],
           ),
         ),

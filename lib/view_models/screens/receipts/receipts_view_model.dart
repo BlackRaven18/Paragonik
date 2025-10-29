@@ -1,7 +1,13 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:paragonik/data/models/database/receipt.dart';
+import 'package:paragonik/data/services/csv_export_service.dart';
 import 'package:paragonik/data/services/l10n_service.dart';
+import 'package:paragonik/data/services/notifications/notification_service.dart';
+import 'package:paragonik/extensions/formatters.dart';
 import 'package:paragonik/notifiers/receipt_notifier.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:share_plus/share_plus.dart';
 
 enum GroupingOption { byReceiptDate, byAddedDate }
 
@@ -111,5 +117,43 @@ class ReceiptsViewModel extends ChangeNotifier {
       }
     }
     return grouped;
+  }
+
+  Future<void> exportReceiptsWithDateRange(DateTimeRange dateRange) async {
+    final l10n = L10nService.l10n;
+
+    final receiptsToExport = await _receiptNotifier.getReceiptsInDateRange(
+      startDate: dateRange.start,
+      endDate: dateRange.end,
+    );
+
+    final dateRangeString =
+        '${Formatters.formatDate(dateRange.start)} - ${Formatters.formatDate(dateRange.end)}';
+
+    if (receiptsToExport.isEmpty) {
+      NotificationService.showError(
+        l10n.viewModelsScreensReceiptsExportNoReceiptsInDateRangeError,
+      );
+      return;
+    }
+
+    final csvData = CsvExportService().receiptsToCsv(receiptsToExport);
+
+    final tempDir = await getTemporaryDirectory();
+    final fileName =
+        '${l10n.viewModelsScreensReceiptsExportFileNamePrefix}_$dateRangeString.csv';
+    final filePath = '${tempDir.path}/$fileName';
+    final file = File(filePath);
+    await file.writeAsString(csvData);
+
+    await SharePlus.instance.share(
+      ShareParams(
+        text: l10n.viewModelsScreensReceiptsExportShareText(dateRangeString),
+        files: [XFile(filePath)],
+        subject: l10n.viewModelsScreensReceiptsExportShareSubject(
+          dateRangeString,
+        ),
+      ),
+    );
   }
 }
