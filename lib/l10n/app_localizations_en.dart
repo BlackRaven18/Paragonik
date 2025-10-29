@@ -51,6 +51,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get notificationsSuccessReceiptAdded => 'Receipt added!';
 
   @override
+  String get notificationErrorLoadingCamera =>
+      'Oops! Something went wrong while loading the camera.';
+
+  @override
+  String get notificationErrorTakingPicture =>
+      'Oops! Something went wrong while taking a picture.';
+
+  @override
   String get unknownStore => 'Unknown store';
 
   @override
@@ -69,6 +77,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get screensCameraProcessingViewStatus => 'Analyzing receipt...';
+
+  @override
+  String get screensCameraFlashTooltip => 'Toggle flashlight';
 
   @override
   String get screensCameraImagePreviewViewResultPanelDateNotFound =>

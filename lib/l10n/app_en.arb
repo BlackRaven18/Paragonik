@@ -39,6 +39,7 @@
     "description": "Label for a button to continue an action."
   },
 
+
   "notificationsErrorLoadingReceipts": "Oops! Something went wrong while loading receipts",
   "@notificationsErrorLoadingReceipts": {
     "description": "Message displayed after a failure to load receipts."
@@ -55,6 +56,15 @@
   "@notificationsSuccessReceiptAdded": {
     "description": "Message displayed after successfully adding a receipt."
   },
+  "notificationErrorLoadingCamera": "Oops! Something went wrong while loading the camera.",
+    "@notificationErrorLoadingCamera": {
+        "description": "Message displayed after a failure to load the camera."
+  },
+  "notificationErrorTakingPicture": "Oops! Something went wrong while taking a picture.",
+    "@notificationErrorTakingPicture": {
+        "description": "Message displayed after a failure to take a picture."
+    },
+
 
   "unknownStore": "Unknown store",
   "@unknownStore": {
@@ -78,10 +88,18 @@
     "description": "Label for the button to open the gallery to select a photo."
   },
 
+
   "screensCameraProcessingViewStatus": "Analyzing receipt...",
   "@screensCameraProcessingViewStatus": {
     "description": "Message displayed while the OCR is analyzing the receipt image."
   },
+
+
+  "screensCameraFlashTooltip": "Toggle flashlight",
+  "@screensCameraFlashTooltip": {
+    "description": "Tooltip for the flash button."
+  },
+
 
   "screensCameraImagePreviewViewResultPanelDateNotFound": "Not found",
   "@screensCameraImagePreviewViewResultPanelDateNotFound": {

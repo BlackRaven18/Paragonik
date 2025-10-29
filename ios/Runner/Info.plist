@@ -3,7 +3,9 @@
 <plist version="1.0">
 	<dict>
 		<key>NSCameraUsageDescription</key>
-		<string>Aplikacja potrzebuje dostępu do aparatu, aby zeskanować paragony.</string>
+		<string>Ta aplikacja potrzebuje dostępu do aparatu, aby móc skanować paragony.</string>
+		<key>NSMicrophoneUsageDescription</key>
+		<string>Ta aplikacja nie używa mikrofonu, ale jest on wymagany przez paczkę aparatu do działania.</string>
 		<key>NSPhotoLibraryUsageDescription</key>
 		<string>Aplikacja potrzebuje dostępu do galerii, aby wybrać zdjęcia paragonów.</string>
 		<key>CFBundleDevelopmentRegion</key>

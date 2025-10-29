@@ -173,8 +173,20 @@ abstract class AppLocalizations {
   /// Komunikat wyświetlany po pomyślnym dodaniu paragonu.
   ///
   /// In pl, this message translates to:
-  /// **'Paragon usunięty!'**
+  /// **'Paragon dodany!'**
   String get notificationsSuccessReceiptAdded;
+
+  /// Komunikat wyświetlany po błędzie ładowania aparatu.
+  ///
+  /// In pl, this message translates to:
+  /// **'Ups! Coś poszło nie tak przy ładowaniu aparatu.'**
+  String get notificationErrorLoadingCamera;
+
+  /// Komunikat wyświetlany po błędzie przy robieniu zdjęcia.
+  ///
+  /// In pl, this message translates to:
+  /// **'Ups! Coś poszło nie tak przy robieniu zdjęcia.'**
+  String get notificationErrorTakingPicture;
 
   /// Domyślny tekst dla nierozpoznanej nazwy sklepu.
   ///
@@ -211,6 +223,12 @@ abstract class AppLocalizations {
   /// In pl, this message translates to:
   /// **'Analizuję paragon...'**
   String get screensCameraProcessingViewStatus;
+
+  /// Tooltip dla przycisku do przełączania latarki.
+  ///
+  /// In pl, this message translates to:
+  /// **'Przełącz latarkę'**
+  String get screensCameraFlashTooltip;
 
   /// Tekst wyświetlany, gdy data nie została znaleziona na paragonie.
   ///

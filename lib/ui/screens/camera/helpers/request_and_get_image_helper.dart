@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:paragonik/data/services/notifications/notification_service.dart';
 import 'package:paragonik/extensions/localization_extensions.dart';
+import 'package:paragonik/ui/screens/camera/take_picture.dart';
 import 'package:paragonik/view_models/screens/camera/camera_view_model.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -19,8 +23,26 @@ Future<void> requestAndGetImage(
         : Permission.photos;
     final status = await permission.request();
 
+    String? imagePath;
+
     if (status.isGranted) {
-      await viewModel.getImage(source);
+      if (source == ImageSource.camera) {
+        if (context.mounted) {
+          imagePath = await Navigator.of(context).push<String>(
+            MaterialPageRoute(builder: (context) => const TakePicture()),
+          );
+        }
+      } else {
+        final pickedFile = await ImagePicker().pickImage(
+          source: source,
+          imageQuality: 100,
+        );
+        imagePath = pickedFile?.path;
+      }
+
+      if (imagePath != null) {
+        await viewModel.setImage(File(imagePath));
+      }
     } else if (status.isPermanentlyDenied && context.mounted) {
       showDialog(
         context: context,
@@ -53,6 +75,8 @@ Future<void> requestAndGetImage(
         ),
       );
     }
+  } catch (e) {
+    NotificationService.showError(e.toString());
   } finally {
     viewModel.updateIsPermissionRequesting(false);
   }

@@ -55,27 +55,11 @@ class CameraViewModel extends ChangeNotifier {
     super.dispose();
   }
 
-  Future<void> getImage(ImageSource source) async {
-    if (_isPickerActive) return;
-
-    try {
-      _isPickerActive = true;
-      notifyListeners();
-
-      final pickedFile = await _picker.pickImage(
-        source: source,
-        imageQuality: 100,
-      );
-      if (pickedFile != null) {
-        await clearImage();
-        _originalImageFile = File(pickedFile.path);
-        _uiState = CameraUIState.preview;
-        notifyListeners();
-      }
-    } finally {
-      _isPickerActive = false;
-      notifyListeners();
-    }
+  Future<void> setImage(File imageFile) async {
+    await clearImage();
+    _originalImageFile = imageFile;
+    _uiState = CameraUIState.preview;
+    notifyListeners();
   }
 
   Future<void> processImage() async {
@@ -123,7 +107,9 @@ class CameraViewModel extends ChangeNotifier {
     );
     clearImage();
 
-    NotificationService.showSuccess(L10nService.l10n.notificationsSuccessReceiptAdded);
+    NotificationService.showSuccess(
+      L10nService.l10n.notificationsSuccessReceiptAdded,
+    );
   }
 
   void toggleImageType() {

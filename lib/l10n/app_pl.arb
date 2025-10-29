@@ -53,10 +53,19 @@
     "@notificationsSuccessReceiptDeleted": {
         "description": "Komunikat wyświetlany po pomyślnym usunięciu paragonu."
     },
-    "notificationsSuccessReceiptAdded": "Paragon usunięty!",
+    "notificationsSuccessReceiptAdded": "Paragon dodany!",
     "@notificationsSuccessReceiptAdded": {
         "description": "Komunikat wyświetlany po pomyślnym dodaniu paragonu."
     },
+    "notificationErrorLoadingCamera": "Ups! Coś poszło nie tak przy ładowaniu aparatu.",
+    "@notificationErrorLoadingCamera": {
+        "description": "Komunikat wyświetlany po błędzie ładowania aparatu."
+    },
+    "notificationErrorTakingPicture": "Ups! Coś poszło nie tak przy robieniu zdjęcia.",
+    "@notificationErrorTakingPicture": {
+        "description": "Komunikat wyświetlany po błędzie przy robieniu zdjęcia."
+    },
+
 
     "unknownStore": "Nieznany sklep",
     "@unknownStore": {
@@ -88,6 +97,12 @@
     "screensCameraProcessingViewStatus": "Analizuję paragon...",
     "@screensCameraProcessingViewStatus": {
         "description": "Komunikat wyświetlany podczas analizy obrazu paragonu przez OCR."
+    },
+
+
+    "screensCameraFlashTooltip": "Przełącz latarkę",
+    "@screensCameraFlashTooltip": {
+        "description": "Tooltip dla przycisku do przełączania latarki."
     },
 
 

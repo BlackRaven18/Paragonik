@@ -48,7 +48,15 @@ class AppLocalizationsPl extends AppLocalizations {
   String get notificationsSuccessReceiptDeleted => 'Paragon usunięty!';
 
   @override
-  String get notificationsSuccessReceiptAdded => 'Paragon usunięty!';
+  String get notificationsSuccessReceiptAdded => 'Paragon dodany!';
+
+  @override
+  String get notificationErrorLoadingCamera =>
+      'Ups! Coś poszło nie tak przy ładowaniu aparatu.';
+
+  @override
+  String get notificationErrorTakingPicture =>
+      'Ups! Coś poszło nie tak przy robieniu zdjęcia.';
 
   @override
   String get unknownStore => 'Nieznany sklep';
@@ -69,6 +77,9 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get screensCameraProcessingViewStatus => 'Analizuję paragon...';
+
+  @override
+  String get screensCameraFlashTooltip => 'Przełącz latarkę';
 
   @override
   String get screensCameraImagePreviewViewResultPanelDateNotFound =>
