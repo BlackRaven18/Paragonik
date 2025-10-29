@@ -172,12 +172,7 @@ class AppLocalizationsPl extends AppLocalizations {
       'Wszystkie sklepy';
 
   @override
-  String get screensStatisticsScreenTitle => 'Statystyki';
-
-  @override
-  String screensStatisticsSummaryTitleWithRange(String range) {
-    return 'Podsumowanie ($range)';
-  }
+  String get screensStatisticsScreenTitle => 'Podsumowanie';
 
   @override
   String get screensStatisticsCardSpendingTitle => 'Wydatki';

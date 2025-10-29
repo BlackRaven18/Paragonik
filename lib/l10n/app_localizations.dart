@@ -383,14 +383,8 @@ abstract class AppLocalizations {
   /// Główny tytuł na ekranie statystyk.
   ///
   /// In pl, this message translates to:
-  /// **'Statystyki'**
+  /// **'Podsumowanie'**
   String get screensStatisticsScreenTitle;
-
-  /// Tytuł sekcji podsumowania, zawierający wybrany zakres czasu.
-  ///
-  /// In pl, this message translates to:
-  /// **'Podsumowanie ({range})'**
-  String screensStatisticsSummaryTitleWithRange(String range);
 
   /// Tytuł karty pokazującej sumę wydatków.
   ///

@@ -225,21 +225,11 @@
     },
 
 
-    "screensStatisticsScreenTitle": "Statystyki",
+    "screensStatisticsScreenTitle": "Podsumowanie",
     "@screensStatisticsScreenTitle": {
         "description": "Główny tytuł na ekranie statystyk."
     },
 
-    "screensStatisticsSummaryTitleWithRange": "Podsumowanie ({range})",
-    "@screensStatisticsSummaryTitleWithRange": {
-        "description": "Tytuł sekcji podsumowania, zawierający wybrany zakres czasu.",
-        "placeholders": {
-        "range": {
-            "type": "String",
-            "example": "Bieżący miesiąc"
-        }
-        }
-    },
 
     "screensStatisticsCardSpendingTitle": "Wydatki",
     "@screensStatisticsCardSpendingTitle": {

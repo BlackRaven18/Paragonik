@@ -206,25 +206,17 @@
     "description": "Label for the dropdown option that clears the store filter."
   },
 
-  "screensStatisticsScreenTitle": "Statistics",
+  "screensStatisticsScreenTitle": "Summary",
   "@screensStatisticsScreenTitle": {
     "description": "Main title on the statistics screen."
   },
-  "screensStatisticsSummaryTitleWithRange": "Summary ({range})",
-  "@screensStatisticsSummaryTitleWithRange": {
-    "description": "Title of the summary section, containing the selected time range.",
-    "placeholders": {
-      "range": {
-        "type": "String",
-        "example": "Current Month"
-      }
-    }
-  },
+ 
+
   "screensStatisticsCardSpendingTitle": "Spending",
   "@screensStatisticsCardSpendingTitle": {
     "description": "Title of the card showing the sum of expenses."
   },
-  "screensStatisticsCardVsPreviousMonthTitle": "vs Previous Month",
+  "screensStatisticsCardVsPreviousMonthTitle": "Previous Month",
   "@screensStatisticsCardVsPreviousMonthTitle": {
     "description": "Title of the card comparing spending with the previous month."
   },
