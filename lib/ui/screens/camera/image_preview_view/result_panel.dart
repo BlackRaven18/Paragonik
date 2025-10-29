@@ -58,9 +58,7 @@ class ResultPanel extends StatelessWidget {
             icon: Icons.edit,
             onEdit: () => showSumInputDialog(
               context,
-              initialValue: Formatters.formatCurrency(
-                double.tryParse(viewModel.ocrResult?.sum ?? '') ?? 0.0,
-              ),
+              initialValue: viewModel.ocrResult?.sum ?? '0.0',
               onValueSaved: viewModel.updateSum,
             ),
           ),

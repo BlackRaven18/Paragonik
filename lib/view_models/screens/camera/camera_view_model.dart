@@ -113,9 +113,16 @@ class CameraViewModel extends ChangeNotifier {
   }
 
   void updateSum(String sum) {
-    _ocrResult = _ocrResult?.copyWith(sum: sum);
-    _isSumManuallyCorrected = true;
-    notifyListeners();
+    String cleanedSum = sum.replaceAll(RegExp(r'[^0-9,.]'), '');
+    final normalizedSum = cleanedSum.replaceAll(',', '.');
+
+    if (double.tryParse(normalizedSum) != null) {
+      _ocrResult = _ocrResult?.copyWith(sum: normalizedSum);
+      _isSumManuallyCorrected = true;
+      notifyListeners();
+    } else {
+      NotificationService.showError('Wprowadzono nieprawidłową kwotę.');
+    }
   }
 
   void updateDate(DateTime date) {

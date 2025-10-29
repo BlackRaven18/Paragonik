@@ -15,11 +15,15 @@ Future<List<int>> _processImageInBackground(_ProcessRequest request) async {
     throw Exception('Nie udało się zdekodować obrazu w tle.');
   }
 
+  final stopwatch = Stopwatch()..start();
+
   final resizedImage = resizeForOcr(image);
   final grayscaleImage = img.grayscale(resizedImage);
   final contrastImage = img.contrast(grayscaleImage, contrast: 200);
 
-  return img.encodePng(contrastImage);
+  stopwatch.stop();
+
+  return img.encodeJpg(contrastImage, quality: 95);
 }
 
 img.Image resizeForOcr(img.Image image) {
@@ -31,7 +35,7 @@ img.Image resizeForOcr(img.Image image) {
     image,
     width: targetWidth,
     height: targetHeight,
-    interpolation: img.Interpolation.cubic,
+    interpolation: img.Interpolation.linear,
   );
 }
 
@@ -39,10 +43,14 @@ class ImageProcessingService {
   Future<File> processImageForOcr(File inputFile) async {
     final imageBytes = await inputFile.readAsBytes();
 
+    final stopwatch = Stopwatch()..start();
+
     final processedBytes = await compute(
-      _processImageInBackground,
+       _processImageInBackground,
       _ProcessRequest(imageBytes),
     );
+
+    stopwatch.stop();
 
     final tempDir = await getTemporaryDirectory();
     final tempPath = join(
