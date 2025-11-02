@@ -1,29 +1,34 @@
 import 'dart:io';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:image/image.dart' as img;
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 
-class _ProcessRequest {
-  final Uint8List imageBytes;
-  _ProcessRequest(this.imageBytes);
+Future<Uint8List> processImageFast(Uint8List imageBytes) async {
+  final result = await FlutterImageCompress.compressWithList(
+    imageBytes,
+    minWidth: 1500,
+    quality: 95,
+    format: CompressFormat.jpeg,
+  );
+  return result;
 }
 
-Future<List<int>> _processImageInBackground(_ProcessRequest request) async {
-  final image = img.decodeImage(request.imageBytes);
+Uint8List setGrayscaleAndConstrast(Uint8List imageBytes) {
+  final image = img.decodeImage(imageBytes);
   if (image == null) {
-    throw Exception('Nie udało się zdekodować obrazu w tle.');
+    throw Exception('Nie udało się zdekodować obrazu.');
   }
 
   final stopwatch = Stopwatch()..start();
 
-  final resizedImage = resizeForOcr(image);
-  final grayscaleImage = img.grayscale(resizedImage);
+  final grayscaleImage = img.grayscale(image);
   final contrastImage = img.contrast(grayscaleImage, contrast: 200);
 
   stopwatch.stop();
 
-  return img.encodeJpg(contrastImage, quality: 95);
+  return Uint8List.fromList(img.encodeJpg(contrastImage, quality: 95));
 }
 
 img.Image resizeForOcr(img.Image image) {
@@ -35,7 +40,7 @@ img.Image resizeForOcr(img.Image image) {
     image,
     width: targetWidth,
     height: targetHeight,
-    interpolation: img.Interpolation.linear,
+    interpolation: img.Interpolation.nearest,
   );
 }
 
@@ -43,14 +48,9 @@ class ImageProcessingService {
   Future<File> processImageForOcr(File inputFile) async {
     final imageBytes = await inputFile.readAsBytes();
 
-    final stopwatch = Stopwatch()..start();
+    var processedBytes = await processImageFast(imageBytes);
 
-    final processedBytes = await compute(
-       _processImageInBackground,
-      _ProcessRequest(imageBytes),
-    );
-
-    stopwatch.stop();
+    processedBytes = setGrayscaleAndConstrast(processedBytes);
 
     final tempDir = await getTemporaryDirectory();
     final tempPath = join(
