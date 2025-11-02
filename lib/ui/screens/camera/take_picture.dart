@@ -66,7 +66,7 @@ class _TakePictureState extends State<TakePicture> {
   }
 
   IconData _getFlashIcon() {
-   if (_flashMode == FlashMode.torch) {
+    if (_flashMode == FlashMode.torch) {
       return Icons.flash_on;
     } else {
       return Icons.flash_off;
@@ -121,7 +121,19 @@ class _TakePictureState extends State<TakePicture> {
                         onPressed: _takePicture,
                         child: const Icon(Icons.camera_alt),
                       ),
-                      const SizedBox(width: 48),
+                      IconButton(
+                        icon: const Icon(
+                          Icons.close,
+                          color: Colors.white,
+                          size: 30,
+                        ),
+                        tooltip: context
+                            .l10n
+                            .commonCancel,
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
                     ],
                   ),
                 ),
