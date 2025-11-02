@@ -109,7 +109,7 @@ class ReceiptsViewModel extends ChangeNotifier {
         grouped[l10n.viewModelsScreensReceiptsGroupToday]!.add(receipt);
       } else if (receiptDate.isAtSameMomentAs(yesterday)) {
         grouped[l10n.viewModelsScreensReceiptsGroupYesterday]!.add(receipt);
-      } else if (receiptDate.isAfter(startOfWeek) &&
+      } else if (!receiptDate.isBefore(startOfWeek) &&
           !receiptDate.isAfter(today)) {
         grouped[l10n.viewModelsScreensReceiptsGroupThisWeek]!.add(receipt);
       } else {
