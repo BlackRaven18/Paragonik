@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:paragonik/data/models/database/receipt.dart';
 import 'package:paragonik/data/services/receipt_service.dart';
+import 'package:paragonik/notifiers/receipt_notifier.dart';
 
 enum TimeRange { week, month, custom }
 
@@ -18,11 +19,14 @@ class StoreSpending {
 
 class StatisticsViewModel extends ChangeNotifier {
   final ReceiptService _receiptService;
+  final ReceiptNotifier _receiptNotifier;
 
-  StatisticsViewModel(this._receiptService) {
+  StatisticsViewModel(this._receiptService, this._receiptNotifier) {
     fetchStatistics();
+    _receiptNotifier.addListener(_onReceiptsChanged);
   }
 
+  bool _isDirty = true;
   bool _isLoading = true;
   TimeRange _selectedTimeRange = TimeRange.month;
 
@@ -36,6 +40,23 @@ class StatisticsViewModel extends ChangeNotifier {
 
   bool get isLoading => _isLoading;
   TimeRange get selectedTimeRange => _selectedTimeRange;
+
+  @override
+  void dispose() {
+    _receiptNotifier.removeListener(_onReceiptsChanged);
+    super.dispose();
+  }
+
+  void _onReceiptsChanged() {
+    _isDirty = true;
+    refreshDataIfDirty();
+  }
+
+  void refreshDataIfDirty() {
+    if (_isDirty && !_isLoading) {
+      fetchStatistics();
+    }
+  }
 
   Future<void> fetchStatistics({TimeRange? range}) async {
     _isLoading = true;
@@ -93,6 +114,8 @@ class StatisticsViewModel extends ChangeNotifier {
         currentEndDate,
       );
       _calculateStoreStats(receiptsInCurrentRange);
+
+      _isDirty = false;
     } finally {
       _isLoading = false;
       notifyListeners();

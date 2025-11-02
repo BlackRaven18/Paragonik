@@ -105,8 +105,10 @@ final GoRouter router = GoRouter(
             GoRoute(
               path: '/statistics',
               builder: (context, state) => ChangeNotifierProvider(
-                create: (context) =>
-                    StatisticsViewModel(context.read<ReceiptService>()),
+                create: (context) => StatisticsViewModel(
+                  context.read<ReceiptService>(),
+                  context.read<ReceiptNotifier>(),
+                ),
                 child: const StatisticsScreen(),
               ),
             ),
