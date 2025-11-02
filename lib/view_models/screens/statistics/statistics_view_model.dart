@@ -34,6 +34,7 @@ class StatisticsViewModel extends ChangeNotifier {
   double comparisonPercentage = 0;
   double comparisonAbsolute = 0;
   double averageDailySpending = 0;
+  double lastMonthSpending = 0;
   int receiptCount = 0;
 
   List<StoreSpending> spendingByStore = [];
@@ -135,7 +136,7 @@ class StatisticsViewModel extends ChangeNotifier {
     averageDailySpending = daysInRange > 0 ? totalSpending / daysInRange : 0;
 
     if (_selectedTimeRange == TimeRange.month) {
-      final lastMonthSpending = previousReceipts.fold(
+      lastMonthSpending = previousReceipts.fold(
         0.0,
         (sum, r) => sum + r.amount,
       );
@@ -149,6 +150,7 @@ class StatisticsViewModel extends ChangeNotifier {
     } else {
       comparisonAbsolute = 0;
       comparisonPercentage = 0;
+      lastMonthSpending = 0;
     }
   }
 

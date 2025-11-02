@@ -14,23 +14,34 @@ class StatisticsScreen extends StatefulWidget {
 }
 
 class _StatisticsScreenState extends State<StatisticsScreen> {
-  String _getRangeLabel(TimeRange range) {
-    final l10n = context.l10n;
-    switch (range) {
-      case TimeRange.week:
-        return l10n.screensStatisticsRangeLabelCurrentWeek;
-      case TimeRange.month:
-        return l10n.screensStatisticsRangeLabelCurrentMonth;
-      case TimeRange.custom:
-        return l10n.screensStatisticsRangeLabelCustom;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final viewModel = context.watch<StatisticsViewModel>();
     final theme = Theme.of(context);
     final l10n = context.l10n;
+
+    final double savingsValue = viewModel.comparisonAbsolute * -1;
+
+    final bool isGood = savingsValue > 0;
+    final bool isNeutral = savingsValue == 0;
+
+    final Color goodColor = Colors.green.shade400;
+    final Color badColor = Colors.red.shade400;
+    final Color? neutralColor = theme.textTheme.titleLarge?.color;
+
+    final Color? comparisonColor = isNeutral
+        ? neutralColor
+        : (isGood ? goodColor : badColor);
+
+    final String absoluteString;
+    if (savingsValue > 0) {
+      absoluteString = '+ ${Formatters.formatCurrency(savingsValue)}';
+    } else {
+      absoluteString = Formatters.formatCurrency(savingsValue);
+    }
+
+    final String contextString =
+        '(${Formatters.formatCurrency(viewModel.lastMonthSpending)})';
 
     return Scaffold(
       body: Column(
@@ -90,11 +101,9 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
                               StatCard(
                                 title: l10n
                                     .screensStatisticsCardVsPreviousMonthTitle,
-                                value:
-                                    '${viewModel.comparisonPercentage.toStringAsFixed(1)}%',
-                                subtitle: Formatters.formatCurrency(
-                                  viewModel.comparisonAbsolute,
-                                ),
+                                value: absoluteString,
+                                subtitle: contextString,
+                                valueColor: comparisonColor,
                               )
                             else
                               const SizedBox.shrink(),

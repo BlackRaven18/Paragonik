@@ -21,6 +21,14 @@ class Formatters {
   }
 
   static String formatCurrency(double amount) {
+    if (amount == 0.0) {
+      return _currencyFormatter.format(0.0);
+    }
+    
+    if (amount < 0) {
+      return "- ${_currencyFormatter.format(amount.abs())}";
+    }
+
     return _currencyFormatter.format(amount);
   }
 }
