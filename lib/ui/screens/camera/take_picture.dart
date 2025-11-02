@@ -57,8 +57,6 @@ class _TakePictureState extends State<TakePicture> {
 
     setState(() {
       if (_flashMode == FlashMode.off) {
-        _flashMode = FlashMode.auto;
-      } else if (_flashMode == FlashMode.auto) {
         _flashMode = FlashMode.torch;
       } else {
         _flashMode = FlashMode.off;
@@ -68,13 +66,10 @@ class _TakePictureState extends State<TakePicture> {
   }
 
   IconData _getFlashIcon() {
-    switch (_flashMode) {
-      case FlashMode.torch:
-        return Icons.flash_on;
-      case FlashMode.auto:
-        return Icons.flash_auto;
-      default:
-        return Icons.flash_off;
+   if (_flashMode == FlashMode.torch) {
+      return Icons.flash_on;
+    } else {
+      return Icons.flash_off;
     }
   }
 
