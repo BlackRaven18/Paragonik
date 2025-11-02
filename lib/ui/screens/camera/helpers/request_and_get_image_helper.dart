@@ -1,7 +1,9 @@
 import 'dart:io';
 
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:paragonik/data/services/l10n_service.dart';
 import 'package:paragonik/data/services/notifications/notification_service.dart';
 import 'package:paragonik/extensions/localization_extensions.dart';
 import 'package:paragonik/ui/screens/camera/take_picture.dart';
@@ -15,12 +17,26 @@ Future<void> requestAndGetImage(
 ) async {
   if (viewModel.isBusy) return;
 
+  final l10n = L10nService.l10n;
+  Permission permission;
+
   try {
     viewModel.updateIsPermissionRequesting(true);
 
-    final permission = source == ImageSource.camera
-        ? Permission.camera
-        : Permission.photos;
+    if (source == ImageSource.camera) {
+      permission = Permission.camera;
+    } else {
+      if (Platform.isAndroid) {
+        final androidInfo = await DeviceInfoPlugin().androidInfo;
+        if (androidInfo.version.sdkInt >= 33) {
+          permission = Permission.photos;
+        } else {
+          permission = Permission.storage;
+        }
+      } else {
+        permission = Permission.photos;
+      }
+    }
     final status = await permission.request();
 
     String? imagePath;
@@ -43,10 +59,12 @@ Future<void> requestAndGetImage(
       if (imagePath != null) {
         await viewModel.setImage(File(imagePath));
       }
+    } else if (status.isDenied) {
+      NotificationService.showError(l10n.notifictationRefusedPermission);
     } else if (status.isPermanentlyDenied && context.mounted) {
       showDialog(
         context: context,
-        builder: (_) => AlertDialog(
+        builder: (dialogContext) => AlertDialog(
           title: Text(context.l10n.screensCameraHelpersPermissionDialogTitle),
           content: Text(
             source == ImageSource.camera
@@ -57,13 +75,13 @@ Future<void> requestAndGetImage(
           ),
           actions: [
             TextButton(
-              onPressed: () => Navigator.pop(context),
+              onPressed: () => Navigator.pop(dialogContext),
               child: Text(context.l10n.commonCancel),
             ),
             TextButton(
               onPressed: () {
+                Navigator.pop(dialogContext); 
                 openAppSettings();
-                Navigator.pop(context);
               },
               child: Text(
                 context

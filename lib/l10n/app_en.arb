@@ -68,6 +68,10 @@
     "@notificationErrorTakingPicture": {
         "description": "Message displayed after a failure to take a picture."
     },
+   "notifictationRefusedPermission": "Permission denied.",
+    "@notifictationRefusedPermission": {
+        "description": "Message displayed after refusing permission."
+    },
 
 
   "unknownStore": "Unknown store",

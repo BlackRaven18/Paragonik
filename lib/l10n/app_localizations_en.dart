@@ -62,6 +62,9 @@ class AppLocalizationsEn extends AppLocalizations {
       'Oops! Something went wrong while taking a picture.';
 
   @override
+  String get notifictationRefusedPermission => 'Permission denied.';
+
+  @override
   String get unknownStore => 'Unknown store';
 
   @override

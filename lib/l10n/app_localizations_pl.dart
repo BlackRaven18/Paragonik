@@ -62,6 +62,10 @@ class AppLocalizationsPl extends AppLocalizations {
       'Ups! Coś poszło nie tak przy robieniu zdjęcia.';
 
   @override
+  String get notifictationRefusedPermission =>
+      'Odmówiono dostępu do uprawnień.';
+
+  @override
   String get unknownStore => 'Nieznany sklep';
 
   @override

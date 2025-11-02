@@ -194,6 +194,12 @@ abstract class AppLocalizations {
   /// **'Ups! Coś poszło nie tak przy robieniu zdjęcia.'**
   String get notificationErrorTakingPicture;
 
+  /// Komunikat wyświetlany po odmowie dostępu do uprawnień.
+  ///
+  /// In pl, this message translates to:
+  /// **'Odmówiono dostępu do uprawnień.'**
+  String get notifictationRefusedPermission;
+
   /// Domyślny tekst dla nierozpoznanej nazwy sklepu.
   ///
   /// In pl, this message translates to:

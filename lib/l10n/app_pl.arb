@@ -69,6 +69,10 @@
     "@notificationErrorTakingPicture": {
         "description": "Komunikat wyświetlany po błędzie przy robieniu zdjęcia."
     },
+    "notifictationRefusedPermission": "Odmówiono dostępu do uprawnień.",
+    "@notifictationRefusedPermission": {
+        "description": "Komunikat wyświetlany po odmowie dostępu do uprawnień."
+    },
 
 
     "unknownStore": "Nieznany sklep",
