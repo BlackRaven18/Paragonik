@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:paragonik/extensions/formatters.dart';
 import 'package:paragonik/extensions/localization_extensions.dart';
+import 'package:paragonik/ui/core/widgets/decimal_text_input_formatter.dart';
 
 Future<void> showSumInputDialog(
   BuildContext context, {
   required String initialValue,
   required void Function(String) onValueSaved,
 }) async {
+  final cleanInitialValue = initialValue
+      .replaceAll(Formatters.currencySymbol, '')
+      .replaceAll(' ', '');
+  final amountController = TextEditingController(text: cleanInitialValue);
+
   final l10n = context.l10n;
-  final amountController = TextEditingController(text: initialValue);
 
   final newValue = await showDialog<String>(
     context: context,
@@ -22,6 +27,9 @@ Future<void> showSumInputDialog(
           labelText: l10n.helpersSumInputDialogLabel,
           suffixText: Formatters.currencySymbol,
         ),
+        inputFormatters: [
+          DecimalTextInputFormatter(maxBeforeDecimal: 6, maxAfterDecimal: 2),
+        ],
       ),
       actions: [
         TextButton(

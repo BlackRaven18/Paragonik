@@ -66,6 +66,9 @@ class AppLocalizationsPl extends AppLocalizations {
       'Odmówiono dostępu do uprawnień.';
 
   @override
+  String get notificationInvalidSum => 'Wprowadzono nieprawidłową kwotę.';
+
+  @override
   String get unknownStore => 'Nieznany sklep';
 
   @override

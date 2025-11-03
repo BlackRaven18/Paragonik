@@ -65,6 +65,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get notifictationRefusedPermission => 'Permission denied.';
 
   @override
+  String get notificationInvalidSum => 'Invalid sum entered.';
+
+  @override
   String get unknownStore => 'Unknown store';
 
   @override

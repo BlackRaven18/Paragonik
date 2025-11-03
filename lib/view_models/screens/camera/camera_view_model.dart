@@ -38,6 +38,8 @@ class CameraViewModel extends ChangeNotifier {
 
   bool get isBusy => _isPermissionRequesting;
 
+  final l10n = L10nService.l10n;
+
   CameraViewModel({
     required OcrService ocrService,
     required ReceiptNotifier receiptNotifier,
@@ -121,7 +123,7 @@ class CameraViewModel extends ChangeNotifier {
       _isSumManuallyCorrected = true;
       notifyListeners();
     } else {
-      NotificationService.showError('Wprowadzono nieprawidłową kwotę.');
+      NotificationService.showError(l10n.notificationInvalidSum);
     }
   }
 

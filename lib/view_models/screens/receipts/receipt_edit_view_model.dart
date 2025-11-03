@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:paragonik/data/models/database/receipt.dart';
+import 'package:paragonik/data/services/l10n_service.dart';
+import 'package:paragonik/data/services/notifications/notification_service.dart';
 import 'package:paragonik/data/services/receipt_service.dart';
 import 'package:paragonik/notifiers/receipt_notifier.dart';
 
@@ -15,20 +17,21 @@ class ReceiptEditViewModel extends ChangeNotifier {
   late DateTime selectedDateTime;
   late String updatedSum;
 
+  final l10n = L10nService.l10n;
+
   ReceiptEditViewModel({
     required String receiptId,
     required ReceiptService receiptService,
     required ReceiptNotifier receiptNotifier,
-  })  : _receiptId = receiptId,
-        _receiptService = receiptService,
-        _receiptNotifier = receiptNotifier {
+  }) : _receiptId = receiptId,
+       _receiptService = receiptService,
+       _receiptNotifier = receiptNotifier {
     loadReceiptData();
   }
 
   Future<void> loadReceiptData() async {
     _receipt = await _receiptService.getReceiptById(_receiptId);
     if (_receipt != null) {
-
       selectedStoreName = _receipt!.storeName;
       selectedDateTime = _receipt!.date;
       updatedSum = _receipt!.amount.toStringAsFixed(2);
@@ -48,8 +51,15 @@ class ReceiptEditViewModel extends ChangeNotifier {
   }
 
   void updateSum(String sum) {
-    updatedSum = sum;
-    notifyListeners();
+    String cleanedSum = sum.replaceAll(RegExp(r'[^0-9,.]'), '');
+    final normalizedSum = cleanedSum.replaceAll(',', '.');
+
+    if (double.tryParse(normalizedSum) != null) {
+      updatedSum = normalizedSum;
+      notifyListeners();
+    } else {
+      NotificationService.showError(l10n.notificationInvalidSum);
+    }
   }
 
   void saveChanges() {

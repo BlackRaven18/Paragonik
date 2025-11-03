@@ -73,6 +73,10 @@
     "@notifictationRefusedPermission": {
         "description": "Komunikat wyświetlany po odmowie dostępu do uprawnień."
     },
+    "notificationInvalidSum": "Wprowadzono nieprawidłową kwotę.",
+    "@notificationInvalidSum": {
+        "description": "Komunikat wyświetlany po wprowadzeniu nieprawidłowej kwoty."
+    },
 
 
     "unknownStore": "Nieznany sklep",

@@ -200,6 +200,12 @@ abstract class AppLocalizations {
   /// **'Odmówiono dostępu do uprawnień.'**
   String get notifictationRefusedPermission;
 
+  /// Komunikat wyświetlany po wprowadzeniu nieprawidłowej kwoty.
+  ///
+  /// In pl, this message translates to:
+  /// **'Wprowadzono nieprawidłową kwotę.'**
+  String get notificationInvalidSum;
+
   /// Domyślny tekst dla nierozpoznanej nazwy sklepu.
   ///
   /// In pl, this message translates to:

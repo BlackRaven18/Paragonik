@@ -65,13 +65,18 @@
         "description": "Message displayed after a failure to load the camera."
   },
   "notificationErrorTakingPicture": "Oops! Something went wrong while taking a picture.",
-    "@notificationErrorTakingPicture": {
-        "description": "Message displayed after a failure to take a picture."
+  "@notificationErrorTakingPicture": {
+      "description": "Message displayed after a failure to take a picture."
+  },
+  "notifictationRefusedPermission": "Permission denied.",
+  "@notifictationRefusedPermission": {
+      "description": "Message displayed after refusing permission."
+  },
+  "notificationInvalidSum": "Invalid sum entered.",
+    "@notificationInvalidSum": {
+        "description": "Message displayed after entering an invalid sum."
     },
-   "notifictationRefusedPermission": "Permission denied.",
-    "@notifictationRefusedPermission": {
-        "description": "Message displayed after refusing permission."
-    },
+
 
 
   "unknownStore": "Unknown store",
