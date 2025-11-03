@@ -18,25 +18,33 @@ class ReceiptListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final receiptsViewModel = context.watch<ReceiptsViewModel>();
     final theme = Theme.of(context);
+    final l10n = context.l10n;
     final formattedDate = Formatters.formatDateTime(receipt.date);
 
     Future<void> handleDeleteReceipt(String id) async {
       final shouldDelete = await showDialog<bool>(
         context: context,
-        builder: (context) => AlertDialog(
-          title: Text(context.l10n.screensReceiptsReceiptsListConfirmDeleteDialogTitle),
-          content: Text(context.l10n.screensReceiptsReceiptsListConfirmDeleteDialogContent),
+        builder: (dialogContext) => AlertDialog(
+          title: Text(l10n.screensReceiptsReceiptsListConfirmDeleteDialogTitle),
+          content: Text(
+            l10n.screensReceiptsReceiptsListConfirmDeleteDialogContent,
+          ),
           actions: [
             TextButton(
-              onPressed: () => Navigator.of(context).pop(false),
-              child: Text(context.l10n.commonCancel),
+              onPressed: () => Navigator.of(dialogContext).pop(false),
+              child: Text(l10n.commonCancel),
             ),
             TextButton(
               onPressed: () => {
-                Navigator.of(context).pop(true),
-                NotificationService.showSuccess(context.l10n.notificationsSuccessReceiptDeleted),
+                Navigator.of(dialogContext).pop(true),
+                NotificationService.showSuccess(
+                  l10n.notificationsSuccessReceiptDeleted,
+                ),
               },
-              child: Text(context.l10n.commonDelete, style: TextStyle(color: Colors.red)),
+              child: Text(
+                l10n.commonDelete,
+                style: TextStyle(color: Colors.red),
+              ),
             ),
           ],
         ),
@@ -50,62 +58,67 @@ class ReceiptListItem extends StatelessWidget {
 
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Row(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(8.0),
-              child: Image.file(
-                File(receipt.thumbnailPath),
-                width: 70,
-                height: 70,
-                fit: BoxFit.cover,
+      clipBehavior: Clip.antiAlias,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(12.0),
+        onTap: () => handleEditReceipt(receipt.id),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(8.0),
+                child: Image.file(
+                  File(receipt.thumbnailPath),
+                  width: 70,
+                  height: 70,
+                  fit: BoxFit.cover,
+                ),
               ),
-            ),
-            const SizedBox(width: 16),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    StoreDisplay(
+                      storeName: receipt.storeName,
+                      textStyle: theme.textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      Formatters.formatCurrency(receipt.amount),
+                      style: theme.textTheme.bodyLarge?.copyWith(
+                        color: theme.colorScheme.primary,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      formattedDate,
+                      style: theme.textTheme.bodySmall?.copyWith(
+                        color: Colors.grey.shade600,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Row(
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  StoreDisplay(
-                    storeName: receipt.storeName,
-                    textStyle: theme.textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
+                  IconButton(
+                    icon: Icon(Icons.edit, color: Colors.blue.shade700),
+                    onPressed: () => handleEditReceipt(receipt.id),
                   ),
-                  const SizedBox(height: 4),
-                  Text(
-                    Formatters.formatCurrency(receipt.amount),
-                    style: theme.textTheme.bodyLarge?.copyWith(
-                      color: theme.colorScheme.primary,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    formattedDate,
-                    style: theme.textTheme.bodySmall?.copyWith(
-                      color: Colors.grey.shade600,
-                    ),
+                  IconButton(
+                    icon: Icon(Icons.delete, color: Colors.red.shade700),
+                    onPressed: () => handleDeleteReceipt(receipt.id),
                   ),
                 ],
               ),
-            ),
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                IconButton(
-                  icon: Icon(Icons.edit, color: Colors.blue.shade700),
-                  onPressed: () => handleEditReceipt(receipt.id),
-                ),
-                IconButton(
-                  icon: Icon(Icons.delete, color: Colors.red.shade700),
-                  onPressed: () => handleDeleteReceipt(receipt.id),
-                ),
-              ],
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
