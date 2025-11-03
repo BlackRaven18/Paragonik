@@ -68,6 +68,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get notificationInvalidSum => 'Invalid sum entered.';
 
   @override
+  String get notificationFlashlightError =>
+      'Oops! Something went wrong with the flashlight :(';
+
+  @override
   String get unknownStore => 'Unknown store';
 
   @override

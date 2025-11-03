@@ -69,6 +69,9 @@ class AppLocalizationsPl extends AppLocalizations {
   String get notificationInvalidSum => 'Wprowadzono nieprawidłową kwotę.';
 
   @override
+  String get notificationFlashlightError => 'Ups! Błąd latarki :(';
+
+  @override
   String get unknownStore => 'Nieznany sklep';
 
   @override

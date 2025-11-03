@@ -77,6 +77,10 @@
     "@notificationInvalidSum": {
         "description": "Komunikat wyświetlany po wprowadzeniu nieprawidłowej kwoty."
     },
+    "notificationFlashlightError": "Ups! Błąd latarki :(",
+    "@notificationFlashlightError": {
+        "description": "Komunikat wyświetlany po błędzie latarki."
+    },
 
 
     "unknownStore": "Nieznany sklep",

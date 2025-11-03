@@ -206,6 +206,12 @@ abstract class AppLocalizations {
   /// **'Wprowadzono nieprawidłową kwotę.'**
   String get notificationInvalidSum;
 
+  /// Komunikat wyświetlany po błędzie latarki.
+  ///
+  /// In pl, this message translates to:
+  /// **'Ups! Błąd latarki :('**
+  String get notificationFlashlightError;
+
   /// Domyślny tekst dla nierozpoznanej nazwy sklepu.
   ///
   /// In pl, this message translates to:

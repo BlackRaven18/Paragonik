@@ -75,7 +75,11 @@
   "notificationInvalidSum": "Invalid sum entered.",
     "@notificationInvalidSum": {
         "description": "Message displayed after entering an invalid sum."
-    },
+  },
+  "notificationFlashlightError": "Oops! Something went wrong with the flashlight :(",
+  "@notificationFlashlightError": {
+     "description": "Message displayed after a failure to use the flashlight."
+  },
 
 
 
