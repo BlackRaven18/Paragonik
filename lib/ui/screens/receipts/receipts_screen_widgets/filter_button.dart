@@ -10,10 +10,16 @@ class FilterButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final viewModel = context.watch<ReceiptsViewModel>();
+    final bool isFilterActive = viewModel.selectedStoreFilter != null;
+    final theme = Theme.of(context);
+
     return IconButton(
       icon: Icon(
-        Icons.filter_list,
-        color: Theme.of(context).colorScheme.primary,
+        isFilterActive ? Icons.filter_alt : Icons.filter_list,
+        color: isFilterActive
+            ? theme.colorScheme.secondary
+            : theme.colorScheme.primary,
       ),
       onPressed: () {
         showModalBottomSheet(

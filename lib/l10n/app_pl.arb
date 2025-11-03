@@ -267,6 +267,22 @@
     },
 
 
+    "screensReceiptsActiveStoreFilterLabel": "Filtr: {storeName}",
+    "@screensReceiptsActiveStoreFilterLabel": {
+        "description": "Etykieta 'chipu' pokazującego aktywny filtr sklepu.",
+        "placeholders": {
+        "storeName": {
+            "type": "String",
+            "example": "Biedronka"
+        }
+        }
+    },
+    "screensReceiptsClearFilterTooltip": "Wyczyść filtr",
+    "@screensReceiptsClearFilterTooltip": {
+        "description": "Tooltip dla przycisku 'X' na chipie aktywnego filtra."
+    },
+
+
     "screensStatisticsScreenTitle": "Podsumowanie",
     "@screensStatisticsScreenTitle": {
         "description": "Główny tytuł na ekranie statystyk."

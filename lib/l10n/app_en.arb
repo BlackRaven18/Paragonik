@@ -254,6 +254,22 @@
     },
 
 
+  "screensReceiptsActiveStoreFilterLabel": "Filter: {storeName}",
+  "@screensReceiptsActiveStoreFilterLabel": {
+    "description": "Label for the chip showing the active store filter.",
+    "placeholders": {
+      "storeName": {
+        "type": "String",
+        "example": "Walmart"
+      }
+    }
+  },
+  "screensReceiptsClearFilterTooltip": "Clear filter",
+  "@screensReceiptsClearFilterTooltip": {
+    "description": "Tooltip for the 'X' button on the active filter chip."
+  },
+
+
   "screensStatisticsScreenTitle": "Summary",
   "@screensStatisticsScreenTitle": {
     "description": "Main title on the statistics screen."

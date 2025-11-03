@@ -207,6 +207,14 @@ class AppLocalizationsPl extends AppLocalizations {
       'Eksportuj paragony';
 
   @override
+  String screensReceiptsActiveStoreFilterLabel(String storeName) {
+    return 'Filtr: $storeName';
+  }
+
+  @override
+  String get screensReceiptsClearFilterTooltip => 'Wyczyść filtr';
+
+  @override
   String get screensStatisticsScreenTitle => 'Podsumowanie';
 
   @override

@@ -206,6 +206,14 @@ class AppLocalizationsEn extends AppLocalizations {
       'Export receipts';
 
   @override
+  String screensReceiptsActiveStoreFilterLabel(String storeName) {
+    return 'Filter: $storeName';
+  }
+
+  @override
+  String get screensReceiptsClearFilterTooltip => 'Clear filter';
+
+  @override
   String get screensStatisticsScreenTitle => 'Summary';
 
   @override

@@ -13,8 +13,10 @@ import 'package:provider/provider.dart';
 class ReceiptsScreen extends StatelessWidget {
   const ReceiptsScreen({super.key});
 
-  Future<void> _showExportDialog(BuildContext context, ReceiptsViewModel viewModel) async {
-
+  Future<void> _showExportDialog(
+    BuildContext context,
+    ReceiptsViewModel viewModel,
+  ) async {
     final selectedDateRange = await showModalBottomSheet<DateTimeRange>(
       context: context,
       isScrollControlled: true,
@@ -29,6 +31,7 @@ class ReceiptsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final viewModel = context.watch<ReceiptsViewModel>();
+    final l10n = context.l10n;
 
     if (viewModel.isLoading && viewModel.allReceipts.isEmpty) {
       return const Center(child: CircularProgressIndicator());
@@ -56,7 +59,9 @@ class ReceiptsScreen extends StatelessWidget {
               const FilterButton(),
               IconButton(
                 icon: const Icon(Icons.download),
-                tooltip: L10nService.l10n.screensReceiptsReceiptsScreenExportReceiptsButtonTooltip,
+                tooltip: L10nService
+                    .l10n
+                    .screensReceiptsReceiptsScreenExportReceiptsButtonTooltip,
                 onPressed: () => _showExportDialog(context, viewModel),
               ),
             ],
@@ -64,6 +69,27 @@ class ReceiptsScreen extends StatelessWidget {
         ),
         GroupingToggle(),
         ReceiptsCounter(),
+
+        if (viewModel.selectedStoreFilter != null)
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Chip(
+              label: Text(
+                l10n.screensReceiptsActiveStoreFilterLabel(
+                  viewModel.selectedStoreFilter!,
+                ),
+              ),
+              labelStyle: TextStyle(
+                color: Theme.of(context).colorScheme.onSecondaryContainer,
+              ),
+              backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
+              onDeleted: () {
+                context.read<ReceiptsViewModel>().setStoreFilter(null);
+              },
+              deleteButtonTooltipMessage:
+                  l10n.screensReceiptsClearFilterTooltip,
+            ),
+          ),
 
         Expanded(child: ReceiptsList()),
       ],

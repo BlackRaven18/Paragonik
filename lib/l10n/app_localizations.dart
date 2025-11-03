@@ -436,6 +436,18 @@ abstract class AppLocalizations {
   /// **'Eksportuj paragony'**
   String get screensReceiptsReceiptsScreenExportReceiptsButtonTooltip;
 
+  /// Etykieta 'chipu' pokazującego aktywny filtr sklepu.
+  ///
+  /// In pl, this message translates to:
+  /// **'Filtr: {storeName}'**
+  String screensReceiptsActiveStoreFilterLabel(String storeName);
+
+  /// Tooltip dla przycisku 'X' na chipie aktywnego filtra.
+  ///
+  /// In pl, this message translates to:
+  /// **'Wyczyść filtr'**
+  String get screensReceiptsClearFilterTooltip;
+
   /// Główny tytuł na ekranie statystyk.
   ///
   /// In pl, this message translates to:
