@@ -21,7 +21,6 @@ class Receipt {
     this.deletedAt,
   });
 
-  // Zaktualizuj toMap()
   Map<String, dynamic> toMap() {
     return {
       'id': id,
@@ -36,7 +35,6 @@ class Receipt {
     };
   }
 
-  // Zaktualizuj fromMap()
   factory Receipt.fromMap(Map<String, dynamic> map) {
     return Receipt(
       id: map['id'],

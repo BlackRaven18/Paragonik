@@ -13,7 +13,7 @@ class StoreDisplay extends StatelessWidget {
   Widget build(BuildContext context) {
     final storeNotifier = context.watch<StoreNotifier>();
 
-    final displayName = storeName.isEmpty
+    final displayName = storeName.isEmpty || storeName == 'Nieznany sklep'
         ? context.l10n.widgetsStoreDisplayUnknownStore
         : storeName;
 

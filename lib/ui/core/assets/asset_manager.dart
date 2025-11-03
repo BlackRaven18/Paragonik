@@ -1,5 +1,3 @@
-import 'package:paragonik/data/models/enums/store_enum.dart';
-
 class AssetManager {
   AssetManager._();
 
@@ -14,19 +12,4 @@ class AssetManager {
   static const String storeSpolem = '$_iconsPath/spolem.png';
   static const String storeDefault = '$_iconsPath/default_icon.png';
 
-  static String getIconForStore(StoreEnum store) {
-    switch (store) {
-      case StoreEnum.biedronka:
-        return storeBiedronka;
-      case StoreEnum.zabka:
-        return storeZabka;
-      case StoreEnum.lidl:
-        return storeLidl;
-      case StoreEnum.spolem:
-        return storeSpolem;
-      case StoreEnum.unknown:
-      default:
-        return storeDefault;
-    }
-  }
 }
