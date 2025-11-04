@@ -45,6 +45,7 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
+    - assets/migrations/
 
 flutter_launcher_icons:
   android: true
