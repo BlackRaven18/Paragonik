@@ -33,7 +33,7 @@ class ReceiptsScreen extends StatelessWidget {
     final viewModel = context.watch<ReceiptsViewModel>();
     final l10n = context.l10n;
 
-    if (viewModel.isLoading && viewModel.allReceipts.isEmpty) {
+    if (viewModel.isLoadingInitial && viewModel.allReceipts.isEmpty) {
       return const Center(child: CircularProgressIndicator());
     }
     if (viewModel.allReceipts.isEmpty) {
