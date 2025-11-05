@@ -28,7 +28,7 @@ class DatabaseService {
   }
 
   Future<void> _onCreate(Database db, int version) async {
-    await _executeSqlScript(db, 'assets/migrations/v1_create_tables.sql');
+    await _executeSqlScript(db, 'assets/migrations/v1_initial_script.sql');
     await _executeSqlScript(db, 'assets/migrations/v2_seed_stores.sql');
   }
 
