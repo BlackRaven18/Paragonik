@@ -105,28 +105,43 @@ class OcrService {
   Future<String?> _findStoreNameInText(String text) async {
     final lowerCaseText = text.toLowerCase();
     final allStores = await _storeService.getAllStores();
-    const maxDistance = 2;
 
+    final List<({String keyword, String storeName})> allKeywords = [];
     for (final store in allStores) {
       for (final keyword in store.keywords) {
-        if (keyword.isEmpty) continue;
-
-        final keywordLower = keyword.trim().toLowerCase();
-
-        if (lowerCaseText.contains(keywordLower)) {
-          return store.name;
+        if (keyword.isNotEmpty) {
+          allKeywords.add((
+            keyword: keyword.trim().toLowerCase(),
+            storeName: store.name,
+          ));
         }
+      }
+    }
 
-        final words = lowerCaseText.split(RegExp(r'\s+'));
-        for (final word in words) {
-          if (levenshteinDistance(word, keywordLower) <= maxDistance) {
-            return store.name;
+    allKeywords.sort((a, b) => b.keyword.length.compareTo(a.keyword.length));
+
+    for (final entry in allKeywords) {
+      if (lowerCaseText.contains(entry.keyword)) {
+        return entry.storeName;
+      }
+    }
+
+    final words = lowerCaseText.split(RegExp(r'[\s\n]+'));
+    const maxDistance = 2;
+
+    for (final word in words) {
+      for (final entry in allKeywords) {
+        if (!entry.keyword.contains(' ') &&
+            (word.length - entry.keyword.length).abs() <= maxDistance) {
+          if (levenshteinDistance(word, entry.keyword) <= maxDistance) {
+            return entry.storeName;
           }
         }
       }
     }
 
-    return (await _storeService.getUnknownStore()).name;
+    final unknownStore = await _storeService.getUnknownStore();
+    return unknownStore.name;
   }
 
   int levenshteinDistance(String s, String t) {
