@@ -7,7 +7,7 @@ class DatabaseService {
   static final DatabaseService instance = DatabaseService._privateConstructor();
 
   static Database? _database;
-  static const int _dbVersion = 2;
+  static const int _dbVersion = 3;
 
   Future<Database> get database async {
     if (_database != null) return _database!;
@@ -30,11 +30,16 @@ class DatabaseService {
   Future<void> _onCreate(Database db, int version) async {
     await _executeSqlScript(db, 'assets/migrations/v1_initial_script.sql');
     await _executeSqlScript(db, 'assets/migrations/v2_seed_stores.sql');
+    await _executeSqlScript(db, 'assets/migrations/v3_updated_stores.sql');
   }
 
   Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
     if (oldVersion < 2) {
       await _executeSqlScript(db, 'assets/migrations/v2_seed_stores.sql');
+    }
+
+    if (oldVersion < 3) {
+      await _executeSqlScript(db, 'assets/migrations/v3_updated_stores.sql');
     }
   }
 
