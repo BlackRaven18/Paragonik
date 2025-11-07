@@ -3,10 +3,12 @@ import 'package:paragonik/data/services/l10n_service.dart';
 import 'package:paragonik/data/services/notifications/notification_service.dart';
 import 'package:paragonik/data/services/settings_service.dart';
 import 'package:paragonik/l10n/app_localizations.dart';
+import 'package:paragonik/notifiers/loading_notifier.dart';
 import 'package:paragonik/notifiers/locale_notifier.dart';
 import 'package:paragonik/routing/app_router.dart';
 import 'package:paragonik/ui/core/themes/theme.dart';
 import 'package:paragonik/ui/core/themes/theme_notifier.dart';
+import 'package:paragonik/ui/core/widgets/global_loading_overlay.dart';
 import 'package:provider/provider.dart';
 
 Future<void> main() async {
@@ -22,6 +24,7 @@ Future<void> main() async {
       providers: [
         ChangeNotifierProvider(create: (_) => ThemeNotifier()),
         ChangeNotifierProvider.value(value: localeNotifier),
+        ChangeNotifierProvider(create: (_) => LoadingNotifier.instance),
       ],
       child: const MainApp(),
     ),
@@ -48,7 +51,7 @@ class MainApp extends StatelessWidget {
       locale: localeNotifier.locale,
       builder: (context, child) {
         L10nService.initialize(AppLocalizations.of(context)!);
-        return child!;
+        return GlobalLoadingOverlay(child: child!);
       },
     );
   }

@@ -1,0 +1,47 @@
+import 'dart:ui';
+import 'package:flutter/material.dart';
+import 'package:paragonik/notifiers/loading_notifier.dart';
+import 'package:provider/provider.dart';
+
+class GlobalLoadingOverlay extends StatelessWidget {
+  final Widget child;
+  const GlobalLoadingOverlay({super.key, required this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    final isLoading = context.watch<LoadingNotifier>().isLoading;
+
+    return Stack(
+      children: [
+        child,
+        if (isLoading)
+          BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+            child: Container(color: Colors.black.withValues(alpha: 0.2)),
+          ),
+        if (isLoading)
+          Center(
+            child: Material(
+              color: Colors.transparent,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const CircularProgressIndicator(),
+                  const SizedBox(height: 16),
+                  Text(
+                    '',
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                      decoration: TextDecoration.none,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+      ],
+    );
+  }
+}

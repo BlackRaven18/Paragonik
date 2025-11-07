@@ -70,7 +70,7 @@ class ReceiptEditScreen extends StatelessWidget {
     final theme = Theme.of(context);
 
     if (viewModel.isLoading) {
-      return const Scaffold(body: Center(child: CircularProgressIndicator()));
+      return const Scaffold(body: Center(child: Text("")));
     }
 
     return Scaffold(

@@ -6,6 +6,7 @@ import 'package:paragonik/data/services/image_processing_service.dart';
 import 'package:paragonik/data/services/l10n_service.dart';
 import 'package:paragonik/data/services/notifications/notification_service.dart';
 import 'package:paragonik/data/services/ocr_service.dart';
+import 'package:paragonik/notifiers/loading_notifier.dart';
 import 'package:paragonik/notifiers/receipt_notifier.dart';
 
 enum CameraUIState { initial, processing, preview }
@@ -114,6 +115,8 @@ class CameraViewModel extends ChangeNotifier {
     _isProcessing = true;
     notifyListeners();
 
+    LoadingNotifier.show();
+
     try {
       final cleanOriginalFile = _getCleanFile(_originalImageFile!);
       await _imageProcessingService.rotateImage(cleanOriginalFile);
@@ -121,7 +124,6 @@ class CameraViewModel extends ChangeNotifier {
         '${cleanOriginalFile.path}?v=${DateTime.now().millisecondsSinceEpoch}',
       );
 
-      // 👇 POPRAWKA TUTAJ: Używamy globalnej pamięci podręcznej 👇
       PaintingBinding.instance.imageCache.evict(FileImage(cleanOriginalFile));
 
       if (_processedImageFile != null) {
@@ -130,7 +132,6 @@ class CameraViewModel extends ChangeNotifier {
         _processedImageFile = File(
           '${cleanProcessedFile.path}?v=${DateTime.now().millisecondsSinceEpoch}',
         );
-        // 👇 I POPRAWKA TUTAJ 👇
         PaintingBinding.instance.imageCache.evict(
           FileImage(cleanProcessedFile),
         );
@@ -140,6 +141,7 @@ class CameraViewModel extends ChangeNotifier {
     } finally {
       _isProcessing = false;
       notifyListeners();
+      LoadingNotifier.hide();
     }
   }
 

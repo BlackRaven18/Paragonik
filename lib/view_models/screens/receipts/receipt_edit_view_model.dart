@@ -6,6 +6,7 @@ import 'package:paragonik/data/services/image_processing_service.dart';
 import 'package:paragonik/data/services/l10n_service.dart';
 import 'package:paragonik/data/services/notifications/notification_service.dart';
 import 'package:paragonik/data/services/receipt_service.dart';
+import 'package:paragonik/notifiers/loading_notifier.dart';
 import 'package:paragonik/notifiers/receipt_notifier.dart';
 
 class ReceiptEditViewModel extends ChangeNotifier {
@@ -56,6 +57,7 @@ class ReceiptEditViewModel extends ChangeNotifier {
 
     isLoading = true;
     notifyListeners();
+    LoadingNotifier.show();
 
     try {
       String cleanImagePath = _receipt!.imagePath.split('?').first;
@@ -79,12 +81,11 @@ class ReceiptEditViewModel extends ChangeNotifier {
 
       await _receiptService.updateReceipt(_receipt!);
     } catch (e) {
-      NotificationService.showError(
-        "Błąd podczas obracania obrazu.", // TODO: Przetłumacz
-      );
+      NotificationService.showError(e.toString());
     } finally {
       isLoading = false;
       notifyListeners();
+      LoadingNotifier.hide();
     }
   }
 
