@@ -6,9 +6,15 @@ import 'package:paragonik/data/services/image_processing_service.dart';
 import 'package:paragonik/data/services/notifications/notification_service.dart';
 import 'package:paragonik/data/services/store_service.dart';
 
+typedef _LevenshteinConfig = ({int maxDistance, int minWordLength});
+
 class OcrService {
   final StoreService _storeService;
   final ImageProcessingService _imageProcessingService;
+  final _LevenshteinConfig _levenshteinConfig = (
+    maxDistance: 2,
+    minWordLength: 4,
+  );
 
   OcrService(this._storeService, this._imageProcessingService);
 
@@ -127,13 +133,16 @@ class OcrService {
     }
 
     final words = lowerCaseText.split(RegExp(r'[\s\n]+'));
-    const maxDistance = 2;
 
     for (final word in words) {
+      if (word.length < _levenshteinConfig.minWordLength) continue;
+
       for (final entry in allKeywords) {
         if (!entry.keyword.contains(' ') &&
-            (word.length - entry.keyword.length).abs() <= maxDistance) {
-          if (levenshteinDistance(word, entry.keyword) <= maxDistance) {
+            (word.length - entry.keyword.length).abs() <=
+                _levenshteinConfig.maxDistance) {
+          if (levenshteinDistance(word, entry.keyword) <=
+              _levenshteinConfig.maxDistance) {
             return entry.storeName;
           }
         }
