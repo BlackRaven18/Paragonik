@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:paragonik/data/models/database/receipt.dart';
+import 'package:paragonik/data/services/image_processing_service.dart';
 import 'package:paragonik/data/services/l10n_service.dart';
 import 'package:paragonik/data/services/notifications/notification_service.dart';
 import 'package:paragonik/data/services/receipt_service.dart';
@@ -9,6 +12,7 @@ class ReceiptEditViewModel extends ChangeNotifier {
   final String _receiptId;
   final ReceiptService _receiptService;
   final ReceiptNotifier _receiptNotifier;
+  final ImageProcessingService _imageProcessingService;
 
   Receipt? _receipt;
   bool isLoading = true;
@@ -17,15 +21,22 @@ class ReceiptEditViewModel extends ChangeNotifier {
   late DateTime selectedDateTime;
   late String updatedSum;
 
+  String get imagePath {
+    if (_receipt == null) return '';
+    return _receipt!.imagePath;
+  }
+
   final l10n = L10nService.l10n;
 
   ReceiptEditViewModel({
     required String receiptId,
     required ReceiptService receiptService,
     required ReceiptNotifier receiptNotifier,
+    required ImageProcessingService imageProcessingService,
   }) : _receiptId = receiptId,
        _receiptService = receiptService,
-       _receiptNotifier = receiptNotifier {
+       _receiptNotifier = receiptNotifier,
+       _imageProcessingService = imageProcessingService {
     loadReceiptData();
   }
 
@@ -35,6 +46,43 @@ class ReceiptEditViewModel extends ChangeNotifier {
       selectedStoreName = _receipt!.storeName;
       selectedDateTime = _receipt!.date;
       updatedSum = _receipt!.amount.toStringAsFixed(2);
+      isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  Future<void> rotateImage() async {
+    if (_receipt == null || isLoading) return;
+
+    isLoading = true;
+    notifyListeners();
+
+    try {
+      String cleanImagePath = _receipt!.imagePath.split('?').first;
+      String cleanThumbPath = _receipt!.thumbnailPath.split('?').first;
+
+      final originalFile = File(cleanImagePath);
+      final thumbnailFile = File(cleanThumbPath);
+
+      await _imageProcessingService.rotateImage(originalFile);
+      await _imageProcessingService.rotateImage(thumbnailFile);
+
+      PaintingBinding.instance.imageCache.evict(FileImage(originalFile));
+      PaintingBinding.instance.imageCache.evict(FileImage(thumbnailFile));
+
+      _receipt = _receipt!.copyWith(
+        imagePath: '$cleanImagePath?v=${DateTime.now().millisecondsSinceEpoch}',
+        thumbnailPath:
+            '$cleanThumbPath?v=${DateTime.now().millisecondsSinceEpoch}',
+        updatedAt: DateTime.now(),
+      );
+
+      await _receiptService.updateReceipt(_receipt!);
+    } catch (e) {
+      NotificationService.showError(
+        "Błąd podczas obracania obrazu.", // TODO: Przetłumacz
+      );
+    } finally {
       isLoading = false;
       notifyListeners();
     }
@@ -72,6 +120,4 @@ class ReceiptEditViewModel extends ChangeNotifier {
     );
     _receiptNotifier.updateReceipt(updatedReceipt);
   }
-
-  String get imagePath => _receipt?.imagePath ?? '';
 }

@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:paragonik/extensions/localization_extensions.dart';
 import 'package:paragonik/ui/core/widgets/full_screen_image_viewer.dart';
+import 'package:paragonik/ui/widgets/cache_busted_file_image.dart';
 
 class ImageViewer extends StatelessWidget {
   final File imageFile;
@@ -32,12 +33,15 @@ class ImageViewer extends StatelessWidget {
             onTap: () => Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (context) =>
-                    FullScreenImageViewer(imageFile: imageToShow),
+                    FullScreenImageViewer(imagePath: imageToShow.path),
               ),
             ),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(12),
-              child: Image.file(imageToShow, fit: BoxFit.contain),
+              child: CacheBustedFileImage(
+                filePath: imageToShow.path,
+                fit: BoxFit.contain,
+              ),
             ),
           ),
 

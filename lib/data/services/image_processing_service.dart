@@ -2,6 +2,8 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:image/image.dart' as img;
+import 'package:paragonik/data/services/l10n_service.dart';
+import 'package:paragonik/data/services/notifications/notification_service.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -18,7 +20,10 @@ Future<Uint8List> processImageFast(Uint8List imageBytes) async {
 Uint8List setGrayscaleAndConstrast(Uint8List imageBytes) {
   final image = img.decodeImage(imageBytes);
   if (image == null) {
-    throw Exception('Nie udało się zdekodować obrazu.');
+    NotificationService.showError(
+      L10nService.l10n.servicesImageProcessingError,
+    );
+    throw Exception(L10nService.l10n.servicesImageProcessingError);
   }
 
   final stopwatch = Stopwatch()..start();
@@ -29,6 +34,18 @@ Uint8List setGrayscaleAndConstrast(Uint8List imageBytes) {
   stopwatch.stop();
 
   return Uint8List.fromList(img.encodeJpg(contrastImage, quality: 95));
+}
+
+Uint8List _rotateInBackground(Uint8List imageBytes) {
+  final image = img.decodeImage(imageBytes);
+  if (image == null) {
+    NotificationService.showError(
+      L10nService.l10n.servicesImageProcessingError,
+    );
+    throw Exception(L10nService.l10n.servicesImageProcessingError);
+  }
+  final rotatedImage = img.copyRotate(image, angle: 90);
+  return img.encodeJpg(rotatedImage, quality: 100);
 }
 
 img.Image resizeForOcr(img.Image image) {
@@ -61,5 +78,18 @@ class ImageProcessingService {
     await processedFile.writeAsBytes(processedBytes);
 
     return processedFile;
+  }
+
+  Future<File> rotateImage(File imageFile) async {
+    final cleanPath = imageFile.path.split('?').first;
+    final fileToRead = File(cleanPath);
+
+    final imageBytes = await fileToRead.readAsBytes();
+
+    final processedBytes = await compute(_rotateInBackground, imageBytes);
+
+    await fileToRead.writeAsBytes(processedBytes);
+
+    return imageFile;
   }
 }

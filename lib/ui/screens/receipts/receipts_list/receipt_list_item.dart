@@ -1,10 +1,10 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:paragonik/data/models/database/receipt.dart';
 import 'package:paragonik/data/services/notifications/notification_service.dart';
 import 'package:paragonik/extensions/formatters.dart';
 import 'package:paragonik/extensions/localization_extensions.dart';
+import 'package:paragonik/ui/widgets/cache_busted_file_image.dart';
 import 'package:paragonik/ui/widgets/store_display.dart';
 import 'package:paragonik/view_models/screens/receipts/receipts_view_model.dart';
 import 'package:provider/provider.dart';
@@ -68,8 +68,8 @@ class ReceiptListItem extends StatelessWidget {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(8.0),
-                child: Image.file(
-                  File(receipt.thumbnailPath),
+                child: CacheBustedFileImage(
+                  filePath: receipt.thumbnailPath,
                   width: 70,
                   height: 70,
                   fit: BoxFit.cover,

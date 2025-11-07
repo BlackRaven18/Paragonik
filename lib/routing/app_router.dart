@@ -63,6 +63,8 @@ final GoRouter router = GoRouter(
                   create: (context) => CameraViewModel(
                     ocrService: context.read<OcrService>(),
                     receiptNotifier: context.read<ReceiptNotifier>(),
+                    imageProcessingService: context
+                        .read<ImageProcessingService>(),
                   ),
                   child: const CameraScreen(),
                 );
@@ -91,6 +93,8 @@ final GoRouter router = GoRouter(
                         receiptId: id,
                         receiptService: context.read<ReceiptService>(),
                         receiptNotifier: context.read<ReceiptNotifier>(),
+                        imageProcessingService: context
+                            .read<ImageProcessingService>(),
                       ),
                       child: const ReceiptEditScreen(),
                     );

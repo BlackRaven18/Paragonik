@@ -446,6 +446,11 @@
     "@servicesCsvExportHeaderAmount": { "description": "Nagłówek kolumny 'Kwota' w pliku CSV." },
     
     "servicesCsvExportHeaderDateAdded": "Data Dodania",
-    "@servicesCsvExportHeaderDateAdded": { "description": "Nagłówek kolumny 'Data Dodania' w pliku CSV." }
+    "@servicesCsvExportHeaderDateAdded": { "description": "Nagłówek kolumny 'Data Dodania' w pliku CSV." },
+
+    "servicesImageProcessingError": "Błąd podczas przetwarzania obrazu",
+    "@servicesImageProcessingError": {
+        "description": "Komunikat błędu wyświetlany, gdy wystąpi błań podczas przetwarzania obrazu."
+    }
 
 }

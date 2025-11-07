@@ -10,10 +10,13 @@ class ImageDisplay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final viewModel = context.watch<CameraViewModel>();
-    final imageToShow =
-        viewModel.showProcessedImage && viewModel.processedImageFile != null
-        ? viewModel.processedImageFile!
-        : viewModel.originalImageFile!;
+
+    final imageProvider = viewModel.displayImageProvider;
+    final imageKey = viewModel.displayImageKey;
+
+    if (imageProvider == null) {
+      return const Expanded(child: Center(child: CircularProgressIndicator()));
+    }
 
     return Expanded(
       child: Padding(
@@ -24,13 +27,18 @@ class ImageDisplay extends StatelessWidget {
             GestureDetector(
               onTap: () => Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) =>
-                      FullScreenImageViewer(imageFile: imageToShow),
+                  builder: (context) => FullScreenImageViewer(
+                    imagePath: viewModel.activeImageFile!.path,
+                  ),
                 ),
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(12),
-                child: Image.file(imageToShow, fit: BoxFit.contain),
+                child: Image(
+                  image: imageProvider,
+                  fit: BoxFit.contain,
+                  key: imageKey,
+                ),
               ),
             ),
             if (viewModel.processedImageFile != null)
@@ -53,6 +61,16 @@ class ImageDisplay extends StatelessWidget {
                   ),
                 ),
               ),
+
+            Positioned(
+              top: 60,
+              right: 8,
+              child: FloatingActionButton.small(
+                heroTag: 'camera_rotate_btn',
+                onPressed: viewModel.isBusy ? null : viewModel.rotateImage,
+                child: const Icon(Icons.rotate_90_degrees_cw_outlined),
+              ),
+            ),
           ],
         ),
       ),

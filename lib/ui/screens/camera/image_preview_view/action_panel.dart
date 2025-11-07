@@ -25,7 +25,8 @@ class ActionPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = context.read<CameraViewModel>();
+    final viewModel = context.watch<CameraViewModel>();
+
     if (viewModel.ocrResult == null) {
       return Padding(
         padding: const EdgeInsets.all(16.0),
@@ -33,14 +34,14 @@ class ActionPanel extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             TextButton.icon(
-              onPressed: viewModel.clearImage,
+              onPressed: viewModel.isBusy ? null : viewModel.clearImage,
               icon: const Icon(Icons.refresh),
               label: Text(
                 context.l10n.screensCameraActionPanelChangePhotoButton,
               ),
             ),
             ElevatedButton.icon(
-              onPressed: viewModel.processImage,
+              onPressed: viewModel.isBusy ? null : viewModel.processImage,
               icon: const Icon(Icons.checklist_rtl),
               label: Text(context.l10n.screensCameraActionPanelProcessButton),
             ),

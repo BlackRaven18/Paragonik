@@ -428,5 +428,11 @@
   "@servicesCsvExportHeaderAmount": { "description": "Header for the 'Amount' column in the CSV file." },
   
   "servicesCsvExportHeaderDateAdded": "Date Added",
-  "@servicesCsvExportHeaderDateAdded": { "description": "Header for the 'Date Added' column in the CSV file." }
+  "@servicesCsvExportHeaderDateAdded": { "description": "Header for the 'Date Added' column in the CSV file." },
+
+
+  "servicesImageProcessingError": "Image processing error",
+  "@servicesImageProcessingError": {
+      "description": "Error message displayed when an error occurs during image processing."
+  }
 }

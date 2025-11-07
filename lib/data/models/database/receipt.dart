@@ -22,10 +22,13 @@ class Receipt {
   });
 
   Map<String, dynamic> toMap() {
+    var cleanImagePath = imagePath.split('?').first;
+    var cleanThumbnailPath = thumbnailPath.split('?').first;
+
     return {
       'id': id,
-      'image_path': imagePath,
-      'thumbnail_path': thumbnailPath,
+      'image_path': cleanImagePath,
+      'thumbnail_path': cleanThumbnailPath,
       'amount': amount,
       'date': date.toIso8601String(),
       'store_name': storeName,
@@ -62,10 +65,17 @@ class Receipt {
     DateTime? updatedAt,
     DateTime? deletedAt,
   }) {
+    var cleanImagePath = imagePath != null
+        ? imagePath.split('?').first
+        : this.imagePath;
+    var cleanThumbnailPath = thumbnailPath != null
+        ? thumbnailPath.split('?').first
+        : this.thumbnailPath;
+
     return Receipt(
       id: id ?? this.id,
-      imagePath: imagePath ?? this.imagePath,
-      thumbnailPath: thumbnailPath ?? this.thumbnailPath,
+      imagePath: cleanImagePath,
+      thumbnailPath: cleanThumbnailPath,
       amount: amount ?? this.amount,
       date: date ?? this.date,
       storeName: storeName ?? this.storeName,

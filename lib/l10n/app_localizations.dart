@@ -657,6 +657,12 @@ abstract class AppLocalizations {
   /// In pl, this message translates to:
   /// **'Data Dodania'**
   String get servicesCsvExportHeaderDateAdded;
+
+  /// Komunikat błędu wyświetlany, gdy wystąpi błań podczas przetwarzania obrazu.
+  ///
+  /// In pl, this message translates to:
+  /// **'Błąd podczas przetwarzania obrazu'**
+  String get servicesImageProcessingError;
 }
 
 class _AppLocalizationsDelegate

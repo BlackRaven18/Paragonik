@@ -152,6 +152,16 @@ class ReceiptEditScreen extends StatelessWidget {
                 heroTag: 'receipt_edit_save_btn',
               ),
             ),
+
+            Positioned(
+              top: 60,
+              right: 8,
+              child: FloatingActionButton.small(
+                heroTag: 'camera_rotate_btn',
+                onPressed: viewModel.rotateImage,
+                child: const Icon(Icons.rotate_90_degrees_cw_outlined),
+              ),
+            ),
           ],
         ),
       ),

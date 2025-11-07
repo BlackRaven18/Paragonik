@@ -325,4 +325,8 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get servicesCsvExportHeaderDateAdded => 'Data Dodania';
+
+  @override
+  String get servicesImageProcessingError =>
+      'Błąd podczas przetwarzania obrazu';
 }

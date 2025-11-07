@@ -325,4 +325,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get servicesCsvExportHeaderDateAdded => 'Date Added';
+
+  @override
+  String get servicesImageProcessingError => 'Image processing error';
 }

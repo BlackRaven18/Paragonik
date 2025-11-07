@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:paragonik/data/models/database/store.dart';
 import 'package:paragonik/data/models/ocr_result.dart';
+import 'package:paragonik/data/services/image_processing_service.dart';
 import 'package:paragonik/data/services/l10n_service.dart';
 import 'package:paragonik/data/services/notifications/notification_service.dart';
 import 'package:paragonik/data/services/ocr_service.dart';
@@ -12,6 +13,7 @@ enum CameraUIState { initial, processing, preview }
 class CameraViewModel extends ChangeNotifier {
   final OcrService _ocrService;
   final ReceiptNotifier _receiptNotifier;
+  final ImageProcessingService _imageProcessingService;
 
   CameraUIState _uiState = CameraUIState.initial;
   CameraUIState get uiState => _uiState;
@@ -35,16 +37,40 @@ class CameraViewModel extends ChangeNotifier {
   bool get isDateManuallyCorrected => _isDateManuallyCorrected;
 
   bool _isPermissionRequesting = false;
+  bool _isProcessing = false;
 
-  bool get isBusy => _isPermissionRequesting;
+  bool get isBusy => _isPermissionRequesting || _isProcessing;
 
   final l10n = L10nService.l10n;
+
+  File? get activeImageFile {
+    if (_originalImageFile == null) return null;
+    return showProcessedImage && _processedImageFile != null
+        ? _processedImageFile
+        : _originalImageFile;
+  }
+
+  ImageProvider? get displayImageProvider {
+    final activeFile = activeImageFile;
+    if (activeFile == null) return null;
+
+    return FileImage(_getCleanFile(activeFile));
+  }
+
+  Key get displayImageKey {
+    final activeFile = activeImageFile;
+    if (activeFile == null) return ValueKey(null);
+
+    return ValueKey(activeFile.path);
+  }
 
   CameraViewModel({
     required OcrService ocrService,
     required ReceiptNotifier receiptNotifier,
+    required ImageProcessingService imageProcessingService,
   }) : _ocrService = ocrService,
-       _receiptNotifier = receiptNotifier;
+       _receiptNotifier = receiptNotifier,
+       _imageProcessingService = imageProcessingService;
 
   @override
   void dispose() {
@@ -60,14 +86,16 @@ class CameraViewModel extends ChangeNotifier {
   }
 
   Future<void> processImage() async {
-    if (_originalImageFile == null) return;
+    if (activeImageFile == null) return;
 
     _uiState = CameraUIState.processing;
     notifyListeners();
 
     try {
+      final fileToProcess = _getCleanFile(_originalImageFile!);
+
       final processedResult = await _ocrService.extractDataFromFile(
-        _originalImageFile!,
+        fileToProcess,
       );
       if (processedResult != null) {
         _ocrResult = processedResult.result;
@@ -80,8 +108,46 @@ class CameraViewModel extends ChangeNotifier {
     }
   }
 
+  Future<void> rotateImage() async {
+    if (_originalImageFile == null || isBusy) return;
+
+    _isProcessing = true;
+    notifyListeners();
+
+    try {
+      final cleanOriginalFile = _getCleanFile(_originalImageFile!);
+      await _imageProcessingService.rotateImage(cleanOriginalFile);
+      _originalImageFile = File(
+        '${cleanOriginalFile.path}?v=${DateTime.now().millisecondsSinceEpoch}',
+      );
+
+      // 👇 POPRAWKA TUTAJ: Używamy globalnej pamięci podręcznej 👇
+      PaintingBinding.instance.imageCache.evict(FileImage(cleanOriginalFile));
+
+      if (_processedImageFile != null) {
+        final cleanProcessedFile = _getCleanFile(_processedImageFile!);
+        await _imageProcessingService.rotateImage(cleanProcessedFile);
+        _processedImageFile = File(
+          '${cleanProcessedFile.path}?v=${DateTime.now().millisecondsSinceEpoch}',
+        );
+        // 👇 I POPRAWKA TUTAJ 👇
+        PaintingBinding.instance.imageCache.evict(
+          FileImage(cleanProcessedFile),
+        );
+      }
+    } catch (e) {
+      NotificationService.showError("Błąd podczas obracania obrazu.");
+    } finally {
+      _isProcessing = false;
+      notifyListeners();
+    }
+  }
+
   Future<void> clearImage() async {
-    await _processedImageFile?.delete();
+    if (processedImageFile != null) {
+      final cleanProcessedImageFile = _getCleanFile(_processedImageFile!);
+      await cleanProcessedImageFile.delete();
+    }
     _originalImageFile = null;
     _processedImageFile = null;
     _ocrResult = null;
@@ -97,7 +163,7 @@ class CameraViewModel extends ChangeNotifier {
     final ocrData = _ocrResult ?? OcrResult();
 
     _receiptNotifier.addReceipt(
-      imageFile: _originalImageFile!,
+      imageFile: _getCleanFile(_originalImageFile!),
       amount: double.tryParse(ocrData.sum ?? '0.0') ?? 0.0,
       date: ocrData.date ?? DateTime.now(),
       storeName: ocrData.storeName ?? '',
@@ -141,5 +207,10 @@ class CameraViewModel extends ChangeNotifier {
   void updateIsPermissionRequesting(bool value) {
     _isPermissionRequesting = value;
     notifyListeners();
+  }
+
+  File _getCleanFile(File file) {
+    final cleanPath = file.path.split('?').first;
+    return File(cleanPath);
   }
 }
