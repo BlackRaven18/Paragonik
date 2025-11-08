@@ -7,9 +7,9 @@
 -dontwarn com.google.firebase.**
 
 # Zachowaj klasy związane z TensorFlow i native models
--keep class com.google.android.gms.internal.mlkit_vision_** { *; }
--dontwarn com.google.android.gms.internal.mlkit_vision_**
+#-keep class com.google.android.gms.internal.mlkit_vision_** { *; }
+#-dontwarn com.google.android.gms.internal.mlkit_vision_**
 
 # Zachowaj Flutter plugin bridge (czasami też potrzebne)
--keep class io.flutter.plugins.** { *; }
--dontwarn io.flutter.plugins.**
+#-keep class io.flutter.plugins.** { *; }
+#-dontwarn io.flutter.plugins.**
