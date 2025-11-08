@@ -26,7 +26,11 @@ class GlobalLoadingOverlay extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const CircularProgressIndicator(),
+                  Image.asset(
+                    'assets/animations/loading.gif',
+                    width: 120,
+                    height: 120,
+                  ),
                   const SizedBox(height: 16),
                   Text(
                     '',
