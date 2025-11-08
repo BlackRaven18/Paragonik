@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:paragonik/data/services/l10n_service.dart';
+import 'package:paragonik/extensions/formatters.dart';
 import 'package:paragonik/extensions/localization_extensions.dart';
+import 'package:paragonik/ui/screens/receipts/receipts_screen_widgets/date_range_filter_button.dart';
 import 'package:paragonik/ui/screens/receipts/receipts_screen_widgets/modals/export_receipts_dialog_helper.dart';
 import 'package:paragonik/ui/screens/receipts/receipts_list/receipts_list.dart';
 import 'package:paragonik/ui/screens/receipts/receipts_screen_widgets/filter_button.dart';
@@ -28,6 +30,22 @@ class ReceiptsScreen extends StatelessWidget {
     }
   }
 
+  Widget _buildReceiptsList(ReceiptsViewModel viewModel) {
+    if (viewModel.allReceipts.isNotEmpty) {
+      return Expanded(child: ReceiptsList());
+    } else {
+      return Expanded(
+        child: Stack(
+          children: [
+            Center(
+              child: Text(L10nService.l10n.screensReceiptsNoReceiptsSaved),
+            ),
+          ],
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final viewModel = context.watch<ReceiptsViewModel>();
@@ -35,17 +53,6 @@ class ReceiptsScreen extends StatelessWidget {
 
     if (viewModel.isLoadingInitial && viewModel.allReceipts.isEmpty) {
       return const Center(child: CircularProgressIndicator());
-    }
-    if (viewModel.allReceipts.isEmpty) {
-      return RefreshIndicator(
-        onRefresh: viewModel.fetchReceipts,
-        child: Stack(
-          children: [
-            Center(child: Text(context.l10n.screensReceiptsNoReceiptsSaved)),
-            ListView(),
-          ],
-        ),
-      );
     }
 
     return Column(
@@ -56,6 +63,7 @@ class ReceiptsScreen extends StatelessWidget {
             children: [
               const Expanded(child: ReceiptsSearchBar()),
               const SizedBox(width: 8),
+              const DateRangeFilterButton(),
               const FilterButton(),
               IconButton(
                 icon: const Icon(Icons.download),
@@ -70,28 +78,58 @@ class ReceiptsScreen extends StatelessWidget {
         GroupingToggle(),
         ReceiptsCounter(),
 
-        if (viewModel.selectedStoreFilter != null)
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Chip(
-              label: Text(
-                l10n.screensReceiptsActiveStoreFilterLabel(
-                  viewModel.selectedStoreFilter!,
-                ),
+        if (viewModel.selectedStoreFilter != null ||
+            viewModel.dateRange != null)
+          SizedBox(
+            height: 50,
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Row(
+                children: [
+                  if (viewModel.selectedStoreFilter != null)
+                    Chip(
+                      label: Text(
+                        l10n.screensReceiptsActiveStoreFilterLabel(
+                          viewModel.selectedStoreFilter!,
+                        ),
+                      ),
+                      labelStyle: TextStyle(
+                        color: Theme.of(
+                          context,
+                        ).colorScheme.onSecondaryContainer,
+                      ),
+                      backgroundColor: Theme.of(
+                        context,
+                      ).colorScheme.secondaryContainer,
+                      onDeleted: () {
+                        context.read<ReceiptsViewModel>().setStoreFilter(null);
+                      },
+                      deleteButtonTooltipMessage:
+                          l10n.screensReceiptsClearFilterTooltip,
+                    ),
+
+                  if (viewModel.selectedStoreFilter != null &&
+                      viewModel.dateRange != null)
+                    const SizedBox(width: 8),
+
+                  if (viewModel.dateRange != null)
+                    Chip(
+                      label: Text(
+                        l10n.screensReceiptsActiveDateFilterLabel(
+                          '${Formatters.formatDate(viewModel.dateRange!.start)} - ${Formatters.formatDate(viewModel.dateRange!.end)}',
+                        ),
+                      ),
+                      onDeleted: () {
+                        viewModel.setDateRange(null);
+                      },
+                    ),
+                ],
               ),
-              labelStyle: TextStyle(
-                color: Theme.of(context).colorScheme.onSecondaryContainer,
-              ),
-              backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
-              onDeleted: () {
-                context.read<ReceiptsViewModel>().setStoreFilter(null);
-              },
-              deleteButtonTooltipMessage:
-                  l10n.screensReceiptsClearFilterTooltip,
             ),
           ),
 
-        Expanded(child: ReceiptsList()),
+        _buildReceiptsList(viewModel),
       ],
     );
   }

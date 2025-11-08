@@ -365,7 +365,7 @@ abstract class AppLocalizations {
   /// Tekst wyświetlany na ekranie listy paragonów, gdy nie ma jeszcze żadnych zapisanych paragonów.
   ///
   /// In pl, this message translates to:
-  /// **'Brak zapisanych paragonów.'**
+  /// **'Brak paragonów'**
   String get screensReceiptsNoReceiptsSaved;
 
   /// Etykieta dla pola z kwotą na ekranie edycji paragonu.
@@ -385,6 +385,12 @@ abstract class AppLocalizations {
   /// In pl, this message translates to:
   /// **'Sklep'**
   String get screensReceiptsEditStoreLabel;
+
+  /// Etykieta 'chipu' pokazującego aktywny filtr zakresu dat.
+  ///
+  /// In pl, this message translates to:
+  /// **'Zakres: {dateRange}'**
+  String screensReceiptsActiveDateFilterLabel(String dateRange);
 
   /// Tekst wyświetlany na liście paragonów, gdy filtry nie znajdują żadnych pasujących wyników.
   ///

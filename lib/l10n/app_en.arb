@@ -196,7 +196,7 @@
     "description": "Label for the button that takes the user to the app settings."
   },
 
-  "screensReceiptsNoReceiptsSaved": "No saved receipts.",
+  "screensReceiptsNoReceiptsSaved": "No receipts",
   "@screensReceiptsNoReceiptsSaved": {
     "description": "Text displayed on the receipts list screen when there are no saved receipts yet."
   },
@@ -212,6 +212,14 @@
   "@screensReceiptsEditStoreLabel": {
     "description": "Label for the store field on the receipt edit screen."
   },
+  "screensReceiptsActiveDateFilterLabel": "Range: {dateRange}",
+  "@screensReceiptsActiveDateFilterLabel": {
+    "description": "Label for the chip showing the active date range filter.",
+    "placeholders": {
+      "dateRange": { "type": "String", "example": "11/01/2025 - 11/08/2025" }
+    }
+  },
+
 
   "screensReceiptsReceiptsListNoMatchingReceipts": "No matching receipts found.",
   "@screensReceiptsReceiptsListNoMatchingReceipts": {

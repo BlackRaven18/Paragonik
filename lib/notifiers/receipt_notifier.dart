@@ -14,13 +14,23 @@ class ReceiptNotifier extends ChangeNotifier {
   final ReceiptService _receiptService;
   final ThumbnailService _thumbnailService;
 
+  static const _pageSize = 20;
+
   List<Receipt> _receipts = [];
   List<Receipt> get receipts => _receipts;
 
   int _totalReceiptsCount = 0;
   int get totalReceipts => _totalReceiptsCount;
 
-  static const _pageSize = 20;
+  String? _storeName;
+  String? get storeName => _storeName;
+
+  String? _searchQuery;
+  String? get searchQuery => _searchQuery;
+
+  DateTimeRange? _dateRange;
+  DateTimeRange? get dateRange => _dateRange;
+
   int _currentPage = 0;
   bool _hasMoreData = true;
   bool isLoadingInitial = false;
@@ -29,6 +39,13 @@ class ReceiptNotifier extends ChangeNotifier {
   bool isLoading = false;
 
   ReceiptNotifier(this._receiptService, this._thumbnailService) {
+    fetchReceipts();
+  }
+
+ void setFilters({String? storeName, String? searchQuery, DateTimeRange? dateRange}) {
+    _storeName = storeName;
+    _searchQuery = searchQuery;
+    _dateRange = dateRange;
     fetchReceipts();
   }
 
@@ -42,9 +59,14 @@ class ReceiptNotifier extends ChangeNotifier {
     _hasMoreData = true;
 
     try {
-      await Future.delayed(const Duration(seconds: 1));
       final results = await Future.wait([
-        _receiptService.getReceiptsPaginated(limit: _pageSize, offset: 0),
+        _receiptService.getReceiptsPaginated(
+          limit: _pageSize,
+          offset: 0,
+          storeName: _storeName,
+          searchQuery: _searchQuery,
+          dateRange: _dateRange,
+        ),
         _receiptService.getReceiptsCount(),
       ]);
 
@@ -74,6 +96,9 @@ class ReceiptNotifier extends ChangeNotifier {
       final newReceipts = await _receiptService.getReceiptsPaginated(
         limit: _pageSize,
         offset: offset,
+        storeName: _storeName,
+        searchQuery: _searchQuery,
+        dateRange: _dateRange,
       );
 
       if (newReceipts.length < _pageSize) {

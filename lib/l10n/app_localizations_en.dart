@@ -160,7 +160,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Open Settings';
 
   @override
-  String get screensReceiptsNoReceiptsSaved => 'No saved receipts.';
+  String get screensReceiptsNoReceiptsSaved => 'No receipts';
 
   @override
   String get screensReceiptsEditAmountLabel => 'Amount:';
@@ -170,6 +170,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get screensReceiptsEditStoreLabel => 'Store';
+
+  @override
+  String screensReceiptsActiveDateFilterLabel(String dateRange) {
+    return 'Range: $dateRange';
+  }
 
   @override
   String get screensReceiptsReceiptsListNoMatchingReceipts =>

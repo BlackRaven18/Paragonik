@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:paragonik/data/models/database/receipt.dart';
 import 'package:paragonik/data/services/database_service.dart';
 import 'package:sqflite/sqflite.dart';
@@ -40,19 +41,43 @@ class ReceiptService {
   Future<List<Receipt>> getReceiptsPaginated({
     required int limit,
     required int offset,
+    String? storeName,
+    String? searchQuery,
+    DateTimeRange? dateRange,
   }) async {
     final db = await _database;
+    
+    List<String> whereClauses = ['deleted_at IS NULL'];
+    List<dynamic> whereArgs = [];
+
+    if (storeName != null) {
+      whereClauses.add('store_name = ?');
+      whereArgs.add(storeName);
+    }
+    
+    if (searchQuery != null && searchQuery.isNotEmpty) {
+      whereClauses.add('(store_name LIKE ? OR amount LIKE ?)');
+      whereArgs.add('%$searchQuery%');
+      whereArgs.add('%$searchQuery%');
+    }
+    
+    if (dateRange != null) {
+      whereClauses.add('date >= ? AND date <= ?');
+      whereArgs.add(dateRange.start.toIso8601String());
+      whereArgs.add(dateRange.end.toIso8601String());
+    }
+
+    final whereStatement = whereClauses.join(' AND ');
+
     final List<Map<String, dynamic>> maps = await db.query(
       'receipts',
-      where: 'deleted_at IS NULL',
+      where: whereStatement,
+      whereArgs: whereArgs,
       orderBy: 'date DESC',
       limit: limit,
       offset: offset,
     );
-
-    return List.generate(maps.length, (i) {
-      return Receipt.fromMap(maps[i]);
-    });
+    return List.generate(maps.length, (i) => Receipt.fromMap(maps[i]));
   }
 
   Future<Receipt?> getReceiptById(String id) async {

@@ -17,8 +17,7 @@ class ReceiptsViewModel extends ChangeNotifier {
   GroupingOption _groupingOption = GroupingOption.byReceiptDate;
   GroupingOption get groupingOption => _groupingOption;
 
-  String _searchQuery = '';
-  String get searchQuery => _searchQuery;
+  String get searchQuery => _receiptNotifier.searchQuery ?? '';
 
   List<Receipt> get allReceipts => _receiptNotifier.receipts;
   bool get isLoading => _receiptNotifier.isLoading;
@@ -27,16 +26,16 @@ class ReceiptsViewModel extends ChangeNotifier {
   bool get isLoadingInitial => _receiptNotifier.isLoadingInitial;
   bool get isLoadingMore => _receiptNotifier.isLoadingMore;
 
-  String? _selectedStoreFilter;
-  String? get selectedStoreFilter => _selectedStoreFilter;
+  String? get selectedStoreFilter => _receiptNotifier.storeName;
+
+  DateTimeRange? get dateRange => _receiptNotifier.dateRange;
 
   Future<void> fetchReceipts() => _receiptNotifier.fetchReceipts();
   Future<void> fetchMoreReceipts() => _receiptNotifier.fetchMoreReceipts();
   Future<void> deleteReceipt(String id) => _receiptNotifier.deleteReceipt(id);
 
   Map<String, List<Receipt>> get groupedReceipts {
-    final filtered = _getFilteredReceipts();
-    return _groupReceipts(filtered);
+    return _groupReceipts(allReceipts);
   }
 
   ReceiptsViewModel(this._receiptNotifier) {
@@ -50,8 +49,11 @@ class ReceiptsViewModel extends ChangeNotifier {
   }
 
   void setSearchQuery(String query) {
-    _searchQuery = query;
-    notifyListeners();
+    _receiptNotifier.setFilters(
+      storeName: selectedStoreFilter,
+      searchQuery: query,
+      dateRange: dateRange,
+    );
   }
 
   void setGroupingOption(GroupingOption option) {
@@ -60,24 +62,19 @@ class ReceiptsViewModel extends ChangeNotifier {
   }
 
   void setStoreFilter(String? storeName) {
-    _selectedStoreFilter = storeName;
-    notifyListeners();
+    _receiptNotifier.setFilters(
+      storeName: storeName,
+      searchQuery: searchQuery,
+      dateRange: dateRange,
+    );
   }
 
-  List<Receipt> _getFilteredReceipts() {
-    final query = _searchQuery.toLowerCase();
-
-    return allReceipts.where((r) {
-      final queryMatch =
-          query.isEmpty ||
-          r.storeName.toLowerCase().contains(query) ||
-          r.amount.toString().contains(query);
-
-      final storeMatch =
-          _selectedStoreFilter == null || r.storeName == _selectedStoreFilter;
-
-      return queryMatch && storeMatch;
-    }).toList();
+  void setDateRange(DateTimeRange? newRange) {
+    _receiptNotifier.setFilters(
+      storeName: selectedStoreFilter,
+      searchQuery: searchQuery,
+      dateRange: newRange,
+    );
   }
 
   Map<String, List<Receipt>> _groupReceipts(List<Receipt> receipts) {

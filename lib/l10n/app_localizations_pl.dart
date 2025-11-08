@@ -160,7 +160,7 @@ class AppLocalizationsPl extends AppLocalizations {
       'Otwórz ustawienia';
 
   @override
-  String get screensReceiptsNoReceiptsSaved => 'Brak zapisanych paragonów.';
+  String get screensReceiptsNoReceiptsSaved => 'Brak paragonów';
 
   @override
   String get screensReceiptsEditAmountLabel => 'Kwota:';
@@ -170,6 +170,11 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get screensReceiptsEditStoreLabel => 'Sklep';
+
+  @override
+  String screensReceiptsActiveDateFilterLabel(String dateRange) {
+    return 'Zakres: $dateRange';
+  }
 
   @override
   String get screensReceiptsReceiptsListNoMatchingReceipts =>

@@ -204,7 +204,7 @@
     },
 
 
-    "screensReceiptsNoReceiptsSaved": "Brak zapisanych paragonów.",
+    "screensReceiptsNoReceiptsSaved": "Brak paragonów",
     "@screensReceiptsNoReceiptsSaved": {
         "description": "Tekst wyświetlany na ekranie listy paragonów, gdy nie ma jeszcze żadnych zapisanych paragonów."
     },
@@ -219,6 +219,13 @@
     "screensReceiptsEditStoreLabel": "Sklep",
     "@screensReceiptsEditStoreLabel": {
         "description": "Etykieta dla pola ze sklepem na ekranie edycji paragonu."
+    },
+    "screensReceiptsActiveDateFilterLabel": "Zakres: {dateRange}",
+    "@screensReceiptsActiveDateFilterLabel": {
+        "description": "Etykieta 'chipu' pokazującego aktywny filtr zakresu dat.",
+        "placeholders": {
+        "dateRange": { "type": "String", "example": "01.11.2025 - 08.11.2025" }
+        }
     },
 
 
