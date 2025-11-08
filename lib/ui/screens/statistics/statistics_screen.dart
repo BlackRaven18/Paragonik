@@ -14,6 +14,40 @@ class StatisticsScreen extends StatefulWidget {
 }
 
 class _StatisticsScreenState extends State<StatisticsScreen> {
+  Future<void> _pickCustomDateRange() async {
+    final viewModel = context.read<StatisticsViewModel>();
+    final now = DateTime.now();
+
+    final initialRange =
+        viewModel.customDateRange ??
+        DateTimeRange(start: now.subtract(const Duration(days: 7)), end: now);
+
+    final newDateRange = await showDateRangePicker(
+      context: context,
+      firstDate: DateTime(2020),
+      lastDate: now.add(const Duration(days: 365)),
+      initialDateRange: initialRange,
+    );
+
+    if (newDateRange != null) {
+      viewModel.fetchStatistics(
+        range: TimeRange.custom,
+        customRange: newDateRange,
+      );
+    }
+  }
+
+  String _buildActiveDateRangeText(StatisticsViewModel viewModel) {
+    if (viewModel.activeStartDate == null || viewModel.activeEndDate == null) {
+      return '';
+    }
+
+    final String start = Formatters.formatDate(viewModel.activeStartDate!);
+    final String end = Formatters.formatDate(viewModel.activeEndDate!);
+
+    return '$start - $end';
+  }
+
   @override
   Widget build(BuildContext context) {
     final viewModel = context.watch<StatisticsViewModel>();
@@ -65,11 +99,30 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
                       value: TimeRange.month,
                       label: Text(l10n.screensStatisticsTimeRangeMonth),
                     ),
+                    ButtonSegment(
+                      value: TimeRange.custom,
+                      icon: const Icon(Icons.calendar_today_outlined, size: 16),
+                    ),
                   ],
                   selected: {viewModel.selectedTimeRange},
                   onSelectionChanged: (newSelection) {
-                    viewModel.fetchStatistics(range: newSelection.first);
+                    final selected = newSelection.first;
+                    if (selected == TimeRange.custom) {
+                      _pickCustomDateRange();
+                    } else {
+                      viewModel.fetchStatistics(
+                        range: selected,
+                        customRange: null,
+                      );
+                    }
                   },
+                ),
+                const SizedBox(height: 12),
+                Text(
+                  _buildActiveDateRangeText(viewModel),
+                  style: theme.textTheme.titleSmall?.copyWith(
+                    color: theme.colorScheme.primary,
+                  ),
                 ),
               ],
             ),

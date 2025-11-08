@@ -29,6 +29,7 @@ class StatisticsViewModel extends ChangeNotifier {
   bool _isDirty = true;
   bool _isLoading = true;
   TimeRange _selectedTimeRange = TimeRange.month;
+  DateTimeRange? _customDateRange;
 
   double totalSpending = 0;
   double comparisonPercentage = 0;
@@ -36,11 +37,16 @@ class StatisticsViewModel extends ChangeNotifier {
   double averageDailySpending = 0;
   double lastMonthSpending = 0;
   int receiptCount = 0;
+  DateTime? _activeStartDate;
+  DateTime? _activeEndDate;
 
   List<StoreSpending> spendingByStore = [];
 
   bool get isLoading => _isLoading;
   TimeRange get selectedTimeRange => _selectedTimeRange;
+  DateTimeRange? get customDateRange => _customDateRange;
+  DateTime? get activeStartDate => _activeStartDate;
+  DateTime? get activeEndDate => _activeEndDate;
 
   @override
   void dispose() {
@@ -59,9 +65,14 @@ class StatisticsViewModel extends ChangeNotifier {
     }
   }
 
-  Future<void> fetchStatistics({TimeRange? range}) async {
+  Future<void> fetchStatistics({
+    TimeRange? range,
+    DateTimeRange? customRange,
+  }) async {
     _isLoading = true;
     _selectedTimeRange = range ?? _selectedTimeRange;
+    _customDateRange = customRange ?? _customDateRange;
+    
     notifyListeners();
 
     final now = DateTime.now();
@@ -77,6 +88,8 @@ class StatisticsViewModel extends ChangeNotifier {
       59,
     );
 
+    
+
     DateTime previousStartDate;
     DateTime previousEndDate;
 
@@ -84,11 +97,19 @@ class StatisticsViewModel extends ChangeNotifier {
       currentStartDate = today.subtract(Duration(days: today.weekday - 1));
       previousStartDate = currentStartDate.subtract(const Duration(days: 7));
       previousEndDate = currentStartDate.subtract(const Duration(days: 1));
-    } else {
+    } else if (_selectedTimeRange == TimeRange.month) {
       currentStartDate = DateTime(today.year, today.month, 1);
       previousStartDate = DateTime(today.year, today.month - 1, 1);
       previousEndDate = DateTime(today.year, today.month, 0);
+    } else {
+      currentStartDate = _customDateRange?.start ?? today;
+      currentEndDate = _customDateRange?.end ?? currentEndDate;
+      previousStartDate = now;
+      previousEndDate = now;
     }
+
+    _activeStartDate = currentStartDate;
+    _activeEndDate = currentEndDate;
 
     try {
       final results = await Future.wait([

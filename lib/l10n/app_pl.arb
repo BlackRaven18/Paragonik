@@ -312,8 +312,6 @@
     "@screensStatisticsScreenTitle": {
         "description": "Główny tytuł na ekranie statystyk."
     },
-
-
     "screensStatisticsCardSpendingTitle": "Wydatki",
     "@screensStatisticsCardSpendingTitle": {
         "description": "Tytuł karty pokazującej sumę wydatków."

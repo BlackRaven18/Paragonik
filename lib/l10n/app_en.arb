@@ -330,6 +330,8 @@
   "@screensStatisticsTimeRangeMonth": {
     "description": "Label for the 'Month' time range selection button."
   },
+
+  
   "screensStatisticsNoSpendingInRange": "No spending in this period.",
   "@screensStatisticsNoSpendingInRange": {
     "description": "Message displayed when there is no spending in the selected period."
