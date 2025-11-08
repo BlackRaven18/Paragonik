@@ -42,6 +42,7 @@ class ReceiptEditViewModel extends ChangeNotifier {
   }
 
   Future<void> loadReceiptData() async {
+    LoadingNotifier.show(delay: const Duration(milliseconds: 500));
     _receipt = await _receiptService.getReceiptById(_receiptId);
     if (_receipt != null) {
       selectedStoreName = _receipt!.storeName;
@@ -49,6 +50,7 @@ class ReceiptEditViewModel extends ChangeNotifier {
       updatedSum = _receipt!.amount.toStringAsFixed(2);
       isLoading = false;
       notifyListeners();
+      LoadingNotifier.hide();
     }
   }
 
@@ -57,7 +59,7 @@ class ReceiptEditViewModel extends ChangeNotifier {
 
     isLoading = true;
     notifyListeners();
-    LoadingNotifier.show();
+    LoadingNotifier.show(message: l10n.globalLoadingOverlayRotatingReceiptMessage);
 
     try {
       String cleanImagePath = _receipt!.imagePath.split('?').first;

@@ -9,7 +9,10 @@ class GlobalLoadingOverlay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isLoading = context.watch<LoadingNotifier>().isLoading;
+    final loadingNotifier = context.watch<LoadingNotifier>();
+
+    final bool isLoading = loadingNotifier.isLoading;
+    final String message = loadingNotifier.message;
 
     return Stack(
       children: [
@@ -17,7 +20,7 @@ class GlobalLoadingOverlay extends StatelessWidget {
         if (isLoading)
           BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
-            child: Container(color: Colors.black.withValues(alpha: 0.2)),
+            child: Container(color: Colors.black.withValues(alpha: 0.4)),
           ),
         if (isLoading)
           Center(
@@ -33,7 +36,7 @@ class GlobalLoadingOverlay extends StatelessWidget {
                   ),
                   const SizedBox(height: 16),
                   Text(
-                    '',
+                    message,
                     style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,

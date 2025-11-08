@@ -5,6 +5,7 @@ import 'package:paragonik/data/services/l10n_service.dart';
 import 'package:paragonik/data/services/notifications/notification_service.dart';
 import 'package:paragonik/data/services/receipt_service.dart';
 import 'package:paragonik/data/services/thumbnail_service.dart';
+import 'package:paragonik/notifiers/loading_notifier.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
@@ -34,12 +35,14 @@ class ReceiptNotifier extends ChangeNotifier {
   Future<void> fetchReceipts() async {
     isLoadingInitial = true;
     notifyListeners();
+    LoadingNotifier.show(delay: const Duration(milliseconds: 500));
 
     _currentPage = 0;
     _receipts = [];
     _hasMoreData = true;
 
     try {
+      await Future.delayed(const Duration(seconds: 1));
       final results = await Future.wait([
         _receiptService.getReceiptsPaginated(limit: _pageSize, offset: 0),
         _receiptService.getReceiptsCount(),
@@ -54,6 +57,7 @@ class ReceiptNotifier extends ChangeNotifier {
     } finally {
       isLoadingInitial = false;
       notifyListeners();
+      LoadingNotifier.hide();
     }
   }
 
@@ -135,7 +139,7 @@ class ReceiptNotifier extends ChangeNotifier {
 
     _receipts.insert(0, newReceipt);
     await updateReceiptCount();
-    
+
     notifyListeners();
   }
 

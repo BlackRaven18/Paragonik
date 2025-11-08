@@ -82,6 +82,16 @@
   },
 
 
+  "globalLoadingOverlayAnalyzingReceiptMessage": "Analizuję paragon...",
+  "@globalLoadingOverlayAnalyzingReceiptMessage": {
+      "description": "Tekst wyświetlany w oknie ładowania podczas analizowania paragonu."
+  },
+
+  "globalLoadingOverlayRotatingReceiptMessage": "Obracam paragon...",
+  "@globalLoadingOverlayRotatingReceiptMessage": {
+      "description": "Tekst wyświetlany w oknie ładowania podczas obracania paragonu."
+  },
+
 
   "unknownStore": "Unknown store",
   "@unknownStore": {

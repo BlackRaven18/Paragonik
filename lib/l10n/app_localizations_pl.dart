@@ -72,6 +72,13 @@ class AppLocalizationsPl extends AppLocalizations {
   String get notificationFlashlightError => 'Ups! Błąd latarki :(';
 
   @override
+  String get globalLoadingOverlayAnalyzingReceiptMessage =>
+      'Analizuję paragon...';
+
+  @override
+  String get globalLoadingOverlayRotatingReceiptMessage => 'Obracam paragon...';
+
+  @override
   String get unknownStore => 'Nieznany sklep';
 
   @override

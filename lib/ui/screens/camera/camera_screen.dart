@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:paragonik/ui/screens/camera/image_preview_view/image_preview_view.dart';
 import 'package:paragonik/ui/screens/camera/initial_view.dart';
-import 'package:paragonik/ui/screens/camera/processing_view.dart';
 import 'package:paragonik/view_models/screens/camera/camera_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -19,8 +18,6 @@ class CameraScreen extends StatelessWidget {
     switch (viewModel.uiState) {
       case CameraUIState.initial:
         return const InitialView();
-      case CameraUIState.processing:
-        return const ProcessingView();
       case CameraUIState.preview:
         return const ImagePreviewView();
     }

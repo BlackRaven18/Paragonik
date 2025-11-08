@@ -72,6 +72,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'Oops! Something went wrong with the flashlight :(';
 
   @override
+  String get globalLoadingOverlayAnalyzingReceiptMessage =>
+      'Analizuję paragon...';
+
+  @override
+  String get globalLoadingOverlayRotatingReceiptMessage => 'Obracam paragon...';
+
+  @override
   String get unknownStore => 'Unknown store';
 
   @override

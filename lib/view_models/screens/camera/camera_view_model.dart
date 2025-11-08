@@ -9,7 +9,7 @@ import 'package:paragonik/data/services/ocr_service.dart';
 import 'package:paragonik/notifiers/loading_notifier.dart';
 import 'package:paragonik/notifiers/receipt_notifier.dart';
 
-enum CameraUIState { initial, processing, preview }
+enum CameraUIState { initial, preview }
 
 class CameraViewModel extends ChangeNotifier {
   final OcrService _ocrService;
@@ -89,8 +89,8 @@ class CameraViewModel extends ChangeNotifier {
   Future<void> processImage() async {
     if (activeImageFile == null) return;
 
-    _uiState = CameraUIState.processing;
     notifyListeners();
+    LoadingNotifier.show(message: l10n.globalLoadingOverlayAnalyzingReceiptMessage);
 
     try {
       final fileToProcess = _getCleanFile(_originalImageFile!);
@@ -106,6 +106,7 @@ class CameraViewModel extends ChangeNotifier {
     } finally {
       _uiState = CameraUIState.preview;
       notifyListeners();
+      LoadingNotifier.hide();
     }
   }
 
@@ -115,7 +116,7 @@ class CameraViewModel extends ChangeNotifier {
     _isProcessing = true;
     notifyListeners();
 
-    LoadingNotifier.show();
+    LoadingNotifier.show(message: l10n.globalLoadingOverlayRotatingReceiptMessage);
 
     try {
       final cleanOriginalFile = _getCleanFile(_originalImageFile!);

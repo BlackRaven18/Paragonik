@@ -212,6 +212,18 @@ abstract class AppLocalizations {
   /// **'Ups! Błąd latarki :('**
   String get notificationFlashlightError;
 
+  /// Tekst wyświetlany w oknie ładowania podczas analizowania paragonu.
+  ///
+  /// In pl, this message translates to:
+  /// **'Analizuję paragon...'**
+  String get globalLoadingOverlayAnalyzingReceiptMessage;
+
+  /// Tekst wyświetlany w oknie ładowania podczas obracania paragonu.
+  ///
+  /// In pl, this message translates to:
+  /// **'Obracam paragon...'**
+  String get globalLoadingOverlayRotatingReceiptMessage;
+
   /// Domyślny tekst dla nierozpoznanej nazwy sklepu.
   ///
   /// In pl, this message translates to:
