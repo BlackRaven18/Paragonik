@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:paragonik/ui/core/app_bottom_navigation_bar.dart';
 import 'package:paragonik/ui/core/assets/asset_manager.dart';
 import 'package:paragonik/ui/core/themes/theme_notifier.dart';
@@ -39,11 +40,7 @@ class _BaseScaffoldState extends State<BaseScaffold> {
               leading: IconButton(
                 padding: EdgeInsets.zero,
                 icon: Image.asset(AssetManager.appLogo, width: 48, height: 48),
-                onPressed: () {
-                  setState(() {
-                    _isDrawerVisible = !_isDrawerVisible;
-                  });
-                },
+                onPressed: () => context.go('/camera'),
               ),
             ),
             body: widget.child,
