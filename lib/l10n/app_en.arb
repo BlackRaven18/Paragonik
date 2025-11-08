@@ -80,6 +80,10 @@
   "@notificationFlashlightError": {
      "description": "Message displayed after a failure to use the flashlight."
   },
+  "notificationsOpenUrlError": "Oops! Something went wrong opening the link.",
+  "@notificationsOpenUrlError": {
+      "description": "Message displayed after a failure to open a link."
+  },
 
 
   "globalLoadingOverlayAnalyzingReceiptMessage": "Analizuję paragon...",
@@ -425,6 +429,14 @@
   "screensSettingsLanguageDialogTitle": "Choose language",
   "@screensSettingsLanguageDialogTitle": {
     "description": "Title of the dialog box for language selection."
+  },
+  "screensSettingsAuthorLabel": "Author: Arkadiusz Wolski",
+  "@screensSettingsAuthorLabel": {
+    "description": "Label for the author's name."
+  },
+  "screensSettingsGitHubTooltip": "Visit author's GitHub profile",
+  "@screensSettingsGitHubTooltip": {
+    "description": "Tooltip for the button to visit the author's GitHub profile."
   },
 
 

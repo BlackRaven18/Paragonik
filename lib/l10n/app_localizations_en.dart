@@ -72,6 +72,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Oops! Something went wrong with the flashlight :(';
 
   @override
+  String get notificationsOpenUrlError =>
+      'Oops! Something went wrong opening the link.';
+
+  @override
   String get globalLoadingOverlayAnalyzingReceiptMessage =>
       'Analizuję paragon...';
 
@@ -320,6 +324,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get screensSettingsLanguageDialogTitle => 'Choose language';
+
+  @override
+  String get screensSettingsAuthorLabel => 'Author: Arkadiusz Wolski';
+
+  @override
+  String get screensSettingsGitHubTooltip => 'Visit author\'s GitHub profile';
 
   @override
   String get servicesCsvExportHeaderPurchaseDate => 'Purchase Date';

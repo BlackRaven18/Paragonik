@@ -32,6 +32,7 @@ dependencies:
   flutter_image_compress: ^2.4.0
   device_info_plus: ^12.2.0
   diacritic: ^0.1.6
+  url_launcher: ^6.3.2
 
 dev_dependencies:
   flutter_test:

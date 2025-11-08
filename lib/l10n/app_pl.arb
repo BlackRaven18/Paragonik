@@ -81,6 +81,10 @@
     "@notificationFlashlightError": {
         "description": "Komunikat wyświetlany po błędzie latarki."
     },
+    "notificationsOpenUrlError": "Ups! Coś poszło nie tak przy otwieraniu linku.",
+    "@notificationsOpenUrlError": {
+        "description": "Komunikat wyświetlany po błędzie otwierania linku."
+    },
 
     "globalLoadingOverlayAnalyzingReceiptMessage": "Analizuję paragon...",
     "@globalLoadingOverlayAnalyzingReceiptMessage": {
@@ -443,6 +447,14 @@
     "screensSettingsLanguageDialogTitle": "Wybierz język",
     "@screensSettingsLanguageDialogTitle": {
         "description": "Tytuł okna dialogowego do wyboru języka."
+    },
+    "screensSettingsAuthorLabel": "Autor: Arkadiusz Wolski",
+    "@screensSettingsAuthorLabel": {
+        "description": "Etykieta autora aplikacji."
+    },
+    "screensSettingsGitHubTooltip": "Odwiedź profil autora na GitHub",
+    "@screensSettingsGitHubTooltip": {
+        "description": "Etykieta tooltipa do odwiedzenia profilu autora na GitHub."
     },
 
 

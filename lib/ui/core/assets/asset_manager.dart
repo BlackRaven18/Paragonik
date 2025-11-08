@@ -12,4 +12,6 @@ class AssetManager {
   static const String storeSpolem = '$_iconsPath/spolem.png';
   static const String storeDefault = '$_iconsPath/default_icon.png';
 
+  static const String githubIcon = '$_imagesPath/github-icon.png';
+
 }

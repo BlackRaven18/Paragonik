@@ -212,6 +212,12 @@ abstract class AppLocalizations {
   /// **'Ups! Błąd latarki :('**
   String get notificationFlashlightError;
 
+  /// Komunikat wyświetlany po błędzie otwierania linku.
+  ///
+  /// In pl, this message translates to:
+  /// **'Ups! Coś poszło nie tak przy otwieraniu linku.'**
+  String get notificationsOpenUrlError;
+
   /// Tekst wyświetlany w oknie ładowania podczas analizowania paragonu.
   ///
   /// In pl, this message translates to:
@@ -645,6 +651,18 @@ abstract class AppLocalizations {
   /// In pl, this message translates to:
   /// **'Wybierz język'**
   String get screensSettingsLanguageDialogTitle;
+
+  /// Etykieta autora aplikacji.
+  ///
+  /// In pl, this message translates to:
+  /// **'Autor: Arkadiusz Wolski'**
+  String get screensSettingsAuthorLabel;
+
+  /// Etykieta tooltipa do odwiedzenia profilu autora na GitHub.
+  ///
+  /// In pl, this message translates to:
+  /// **'Odwiedź profil autora na GitHub'**
+  String get screensSettingsGitHubTooltip;
 
   /// Nagłówek kolumny 'Data Zakupu' w pliku CSV.
   ///

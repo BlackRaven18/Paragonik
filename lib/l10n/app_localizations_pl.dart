@@ -72,6 +72,10 @@ class AppLocalizationsPl extends AppLocalizations {
   String get notificationFlashlightError => 'Ups! Błąd latarki :(';
 
   @override
+  String get notificationsOpenUrlError =>
+      'Ups! Coś poszło nie tak przy otwieraniu linku.';
+
+  @override
   String get globalLoadingOverlayAnalyzingReceiptMessage =>
       'Analizuję paragon...';
 
@@ -320,6 +324,12 @@ class AppLocalizationsPl extends AppLocalizations {
 
   @override
   String get screensSettingsLanguageDialogTitle => 'Wybierz język';
+
+  @override
+  String get screensSettingsAuthorLabel => 'Autor: Arkadiusz Wolski';
+
+  @override
+  String get screensSettingsGitHubTooltip => 'Odwiedź profil autora na GitHub';
 
   @override
   String get servicesCsvExportHeaderPurchaseDate => 'Data Zakupu';
