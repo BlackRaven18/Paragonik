@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:paragonik/extensions/localization_extensions.dart';
-import 'package:paragonik/view_models/screens/receipts/receipts_view_model.dart';
-import 'package:provider/provider.dart';
 
 class ReceiptsSearchBar extends StatelessWidget {
-  const ReceiptsSearchBar({super.key});
+  final TextEditingController controller;
+
+  const ReceiptsSearchBar({
+    super.key,
+    required this.controller,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = context.read<ReceiptsViewModel>();
-
     return TextField(
-      onChanged: viewModel.setSearchQuery,
+      controller: controller,
       decoration: InputDecoration(
         labelText: context.l10n.screensReceiptsReceiptsScreenWidgetsSearchLabel,
         prefixIcon: const Icon(Icons.search),

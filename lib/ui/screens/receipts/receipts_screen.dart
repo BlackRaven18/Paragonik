@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:paragonik/data/services/l10n_service.dart';
 import 'package:paragonik/extensions/formatters.dart';
@@ -12,9 +14,42 @@ import 'package:paragonik/ui/screens/receipts/receipts_screen_widgets/receipts_s
 import 'package:paragonik/view_models/screens/receipts/receipts_view_model.dart';
 import 'package:provider/provider.dart';
 
-class ReceiptsScreen extends StatelessWidget {
+class ReceiptsScreen extends StatefulWidget {
   const ReceiptsScreen({super.key});
 
+  @override
+  State<ReceiptsScreen> createState() => _ReceiptsScreenState();
+}
+
+class _ReceiptsScreenState extends State<ReceiptsScreen> {
+  final TextEditingController _searchController = TextEditingController();
+  Timer? _debounce;
+
+  @override
+  void initState() {
+    super.initState();
+    _searchController.addListener(_onSearchChanged);
+  }
+
+  @override
+  void dispose() {
+    _debounce?.cancel();
+    _searchController.removeListener(_onSearchChanged);
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  void _onSearchChanged() {
+    if (_debounce?.isActive ?? false) _debounce!.cancel();
+    
+    _debounce = Timer(const Duration(milliseconds: 500), () {
+      final viewModel = context.read<ReceiptsViewModel>();
+      if (_searchController.text != viewModel.searchQuery) {
+        viewModel.setSearchQuery(_searchController.text);
+      }
+    });
+  }
+  
   Future<void> _showExportDialog(
     BuildContext context,
     ReceiptsViewModel viewModel,
@@ -61,7 +96,7 @@ class ReceiptsScreen extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: Row(
             children: [
-              const Expanded(child: ReceiptsSearchBar()),
+              Expanded(child: ReceiptsSearchBar(controller: _searchController,)),
               const SizedBox(width: 8),
               const DateRangeFilterButton(),
               const FilterButton(),
