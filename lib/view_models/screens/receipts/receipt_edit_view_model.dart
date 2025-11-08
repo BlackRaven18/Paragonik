@@ -59,7 +59,10 @@ class ReceiptEditViewModel extends ChangeNotifier {
 
     isLoading = true;
     notifyListeners();
-    LoadingNotifier.show(message: l10n.globalLoadingOverlayRotatingReceiptMessage);
+    LoadingNotifier.show(
+      delay: const Duration(milliseconds: 500),
+      message: l10n.globalLoadingOverlayRotatingReceiptMessage,
+    );
 
     try {
       String cleanImagePath = _receipt!.imagePath.split('?').first;

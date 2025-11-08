@@ -90,7 +90,9 @@ class CameraViewModel extends ChangeNotifier {
     if (activeImageFile == null) return;
 
     notifyListeners();
-    LoadingNotifier.show(message: l10n.globalLoadingOverlayAnalyzingReceiptMessage);
+    LoadingNotifier.show(
+      message: l10n.globalLoadingOverlayAnalyzingReceiptMessage,
+    );
 
     try {
       final fileToProcess = _getCleanFile(_originalImageFile!);
@@ -116,7 +118,10 @@ class CameraViewModel extends ChangeNotifier {
     _isProcessing = true;
     notifyListeners();
 
-    LoadingNotifier.show(message: l10n.globalLoadingOverlayRotatingReceiptMessage);
+    LoadingNotifier.show(
+      delay: const Duration(milliseconds: 500),
+      message: l10n.globalLoadingOverlayRotatingReceiptMessage,
+    );
 
     try {
       final cleanOriginalFile = _getCleanFile(_originalImageFile!);
