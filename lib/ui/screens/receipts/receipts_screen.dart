@@ -41,7 +41,7 @@ class _ReceiptsScreenState extends State<ReceiptsScreen> {
 
   void _onSearchChanged() {
     if (_debounce?.isActive ?? false) _debounce!.cancel();
-    
+
     _debounce = Timer(const Duration(milliseconds: 500), () {
       final viewModel = context.read<ReceiptsViewModel>();
       if (_searchController.text != viewModel.searchQuery) {
@@ -49,7 +49,7 @@ class _ReceiptsScreenState extends State<ReceiptsScreen> {
       }
     });
   }
-  
+
   Future<void> _showExportDialog(
     BuildContext context,
     ReceiptsViewModel viewModel,
@@ -70,12 +70,28 @@ class _ReceiptsScreenState extends State<ReceiptsScreen> {
       return Expanded(child: ReceiptsList());
     } else {
       return Expanded(
-        child: Stack(
-          children: [
-            Center(
-              child: Text(L10nService.l10n.screensReceiptsNoReceiptsSaved),
-            ),
-          ],
+        child: Consumer<ReceiptsViewModel>(
+          builder: (context, vm, _) {
+            if (vm.isLoadingInitial && vm.allReceipts.isEmpty) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            if (vm.allReceipts.isEmpty) {
+              return RefreshIndicator(
+                onRefresh: vm.fetchReceipts,
+                child: Stack(
+                  children: [
+                    Center(
+                      child: Text(
+                        L10nService.l10n.screensReceiptsNoReceiptsSaved,
+                      ),
+                    ),
+                    ListView(),
+                  ],
+                ),
+              );
+            }
+            return ReceiptsList();
+          },
         ),
       );
     }
@@ -83,7 +99,7 @@ class _ReceiptsScreenState extends State<ReceiptsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = context.watch<ReceiptsViewModel>();
+    final viewModel = context.read<ReceiptsViewModel>();
     final l10n = context.l10n;
 
     if (viewModel.isLoadingInitial && viewModel.allReceipts.isEmpty) {
@@ -96,7 +112,7 @@ class _ReceiptsScreenState extends State<ReceiptsScreen> {
           padding: const EdgeInsets.all(8.0),
           child: Row(
             children: [
-              Expanded(child: ReceiptsSearchBar(controller: _searchController,)),
+              Expanded(child: ReceiptsSearchBar(controller: _searchController)),
               const SizedBox(width: 8),
               const DateRangeFilterButton(),
               const FilterButton(),
@@ -113,56 +129,62 @@ class _ReceiptsScreenState extends State<ReceiptsScreen> {
         GroupingToggle(),
         ReceiptsCounter(),
 
-        if (viewModel.selectedStoreFilter != null ||
-            viewModel.dateRange != null)
-          SizedBox(
-            height: 50,
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Row(
-                children: [
-                  if (viewModel.selectedStoreFilter != null)
-                    Chip(
-                      label: Text(
-                        l10n.screensReceiptsActiveStoreFilterLabel(
-                          viewModel.selectedStoreFilter!,
+        Consumer<ReceiptsViewModel>(
+          builder: (context, vm, _) {
+            if (vm.selectedStoreFilter == null && vm.dateRange == null) {
+              return const SizedBox.shrink();
+            }
+            return SizedBox(
+              height: 50,
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Row(
+                  children: [
+                    if (vm.selectedStoreFilter != null)
+                      Chip(
+                        label: Text(
+                          l10n.screensReceiptsActiveStoreFilterLabel(
+                            vm.selectedStoreFilter!,
+                          ),
                         ),
-                      ),
-                      labelStyle: TextStyle(
-                        color: Theme.of(
+                        labelStyle: TextStyle(
+                          color: Theme.of(
+                            context,
+                          ).colorScheme.onSecondaryContainer,
+                        ),
+                        backgroundColor: Theme.of(
                           context,
-                        ).colorScheme.onSecondaryContainer,
+                        ).colorScheme.secondaryContainer,
+                        onDeleted: () {
+                          context.read<ReceiptsViewModel>().setStoreFilter(
+                            null,
+                          );
+                        },
+                        deleteButtonTooltipMessage:
+                            l10n.screensReceiptsClearFilterTooltip,
                       ),
-                      backgroundColor: Theme.of(
-                        context,
-                      ).colorScheme.secondaryContainer,
-                      onDeleted: () {
-                        context.read<ReceiptsViewModel>().setStoreFilter(null);
-                      },
-                      deleteButtonTooltipMessage:
-                          l10n.screensReceiptsClearFilterTooltip,
-                    ),
 
-                  if (viewModel.selectedStoreFilter != null &&
-                      viewModel.dateRange != null)
-                    const SizedBox(width: 8),
+                    if (vm.selectedStoreFilter != null && vm.dateRange != null)
+                      const SizedBox(width: 8),
 
-                  if (viewModel.dateRange != null)
-                    Chip(
-                      label: Text(
-                        l10n.screensReceiptsActiveDateFilterLabel(
-                          '${Formatters.formatDate(viewModel.dateRange!.start)} - ${Formatters.formatDate(viewModel.dateRange!.end)}',
+                    if (vm.dateRange != null)
+                      Chip(
+                        label: Text(
+                          l10n.screensReceiptsActiveDateFilterLabel(
+                            '${Formatters.formatDate(vm.dateRange!.start)} - ${Formatters.formatDate(vm.dateRange!.end)}',
+                          ),
                         ),
+                        onDeleted: () {
+                          context.read<ReceiptsViewModel>().setDateRange(null);
+                        },
                       ),
-                      onDeleted: () {
-                        viewModel.setDateRange(null);
-                      },
-                    ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ),
+            );
+          },
+        ),
 
         _buildReceiptsList(viewModel),
       ],
