@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:paragonik/data/services/l10n_service.dart';
 import 'package:paragonik/data/services/notifications/notification_service.dart';
 import 'package:paragonik/data/services/settings_service.dart';
@@ -13,6 +14,8 @@ import 'package:provider/provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
   await SettingsService.instance.init();
 
