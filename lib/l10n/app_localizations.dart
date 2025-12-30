@@ -158,6 +158,12 @@ abstract class AppLocalizations {
   /// **'Eksportuj'**
   String get commonExport;
 
+  /// Etykieta błędu.
+  ///
+  /// In pl, this message translates to:
+  /// **'Błąd'**
+  String get commonError;
+
   /// Komunikat wyświetlany po błędzie ładowania paragonów.
   ///
   /// In pl, this message translates to:
@@ -658,6 +664,12 @@ abstract class AppLocalizations {
   /// **'Wybierz język'**
   String get screensSettingsLanguageDialogTitle;
 
+  /// Tytuł okna do tworzenia kopii zapasowej.
+  ///
+  /// In pl, this message translates to:
+  /// **'Kopia zapasowa'**
+  String get screensSettingsBackupDialogTitle;
+
   /// Etykieta autora aplikacji.
   ///
   /// In pl, this message translates to:
@@ -669,6 +681,42 @@ abstract class AppLocalizations {
   /// In pl, this message translates to:
   /// **'Odwiedź profil autora na GitHub'**
   String get screensSettingsGitHubTooltip;
+
+  /// No description provided for @screensSettingsBackupDialogDescription.
+  ///
+  /// In pl, this message translates to:
+  /// **'Wybierz akcję. Przywrócenie kopii nadpisze obecne dane.'**
+  String get screensSettingsBackupDialogDescription;
+
+  /// No description provided for @screensSettingsBackupCreateAction.
+  ///
+  /// In pl, this message translates to:
+  /// **'Utwórz kopię zapasową'**
+  String get screensSettingsBackupCreateAction;
+
+  /// No description provided for @screensSettingsBackupRestoreAction.
+  ///
+  /// In pl, this message translates to:
+  /// **'Przywróć z kopii'**
+  String get screensSettingsBackupRestoreAction;
+
+  /// No description provided for @screensSettingsBackupRestoreSuccess.
+  ///
+  /// In pl, this message translates to:
+  /// **'Dane zostały przywrócone pomyślnie. Zrestartuj aplikację, aby zobaczyć zmiany.'**
+  String get screensSettingsBackupRestoreSuccess;
+
+  /// No description provided for @screensSettingsBackupRestoreError.
+  ///
+  /// In pl, this message translates to:
+  /// **'Błąd przywracania danych'**
+  String get screensSettingsBackupRestoreError;
+
+  /// No description provided for @screensSettingsBackupCreateError.
+  ///
+  /// In pl, this message translates to:
+  /// **'Nie udało się utworzyć kopii zapasowej'**
+  String get screensSettingsBackupCreateError;
 
   /// Nagłówek kolumny 'Data Zakupu' w pliku CSV.
   ///
@@ -699,6 +747,18 @@ abstract class AppLocalizations {
   /// In pl, this message translates to:
   /// **'Błąd podczas przetwarzania obrazu'**
   String get servicesImageProcessingError;
+
+  /// Tekst wiadomości przy udostępnianiu backupu
+  ///
+  /// In pl, this message translates to:
+  /// **'Kopia zapasowa danych aplikacji Paragonik'**
+  String get servicesBackupServiceBackupShareText;
+
+  /// Temat wiadomości przy udostępnianiu backupu
+  ///
+  /// In pl, this message translates to:
+  /// **'Kopia zapasowa Paragonik {date}'**
+  String servicesBackupServiceBackupShareSubject(String date);
 }
 
 class _AppLocalizationsDelegate

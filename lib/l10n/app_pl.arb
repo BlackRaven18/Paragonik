@@ -43,6 +43,10 @@
     "@commonExport": {
         "description": "Etykieta przycisku do eksportowania danych."
     },
+    "commonError": "Błąd",
+    "@commonError": {
+        "description": "Etykieta błędu."
+    },
 
 
     "notificationsErrorLoadingReceipts": "Ups! Coś poszło nie tak przy ładowaniu paragonów",
@@ -453,6 +457,10 @@
     "@screensSettingsLanguageDialogTitle": {
         "description": "Tytuł okna dialogowego do wyboru języka."
     },
+    "screensSettingsBackupDialogTitle": "Kopia zapasowa",
+    "@screensSettingsBackupDialogTitle": {
+        "description": "Tytuł okna do tworzenia kopii zapasowej."
+    },
     "screensSettingsAuthorLabel": "Autor: Arkadiusz Wolski",
     "@screensSettingsAuthorLabel": {
         "description": "Etykieta autora aplikacji."
@@ -461,6 +469,13 @@
     "@screensSettingsGitHubTooltip": {
         "description": "Etykieta tooltipa do odwiedzenia profilu autora na GitHub."
     },
+
+    "screensSettingsBackupDialogDescription": "Wybierz akcję. Przywrócenie kopii nadpisze obecne dane.",
+    "screensSettingsBackupCreateAction": "Utwórz kopię zapasową",
+    "screensSettingsBackupRestoreAction": "Przywróć z kopii",
+    "screensSettingsBackupRestoreSuccess": "Dane zostały przywrócone pomyślnie. Zrestartuj aplikację, aby zobaczyć zmiany.",
+    "screensSettingsBackupRestoreError": "Błąd przywracania danych",
+    "screensSettingsBackupCreateError": "Nie udało się utworzyć kopii zapasowej",
 
 
     "servicesCsvExportHeaderPurchaseDate": "Data Zakupu",
@@ -478,6 +493,20 @@
     "servicesImageProcessingError": "Błąd podczas przetwarzania obrazu",
     "@servicesImageProcessingError": {
         "description": "Komunikat błędu wyświetlany, gdy wystąpi błań podczas przetwarzania obrazu."
+    },
+
+    "servicesBackupServiceBackupShareText": "Kopia zapasowa danych aplikacji Paragonik",
+    "@servicesBackupServiceBackupShareText": {
+        "description": "Tekst wiadomości przy udostępnianiu backupu"
+    },
+    "servicesBackupServiceBackupShareSubject": "Kopia zapasowa Paragonik {date}",
+    "@servicesBackupServiceBackupShareSubject": {
+        "description": "Temat wiadomości przy udostępnianiu backupu",
+        "placeholders": {
+            "date": {
+                "type": "String"
+            }
+        }
     }
 
 }

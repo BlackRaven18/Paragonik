@@ -41,6 +41,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get commonExport => 'Export';
 
   @override
+  String get commonError => 'Error';
+
+  @override
   String get notificationsErrorLoadingReceipts =>
       'Oops! Something went wrong while loading receipts';
 
@@ -77,10 +80,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get globalLoadingOverlayAnalyzingReceiptMessage =>
-      'Analizuję paragon...';
+      'Analyzing receipt...';
 
   @override
-  String get globalLoadingOverlayRotatingReceiptMessage => 'Obracam paragon...';
+  String get globalLoadingOverlayRotatingReceiptMessage =>
+      'Rotating receipt...';
 
   @override
   String get unknownStore => 'Unknown store';
@@ -331,10 +335,33 @@ class AppLocalizationsEn extends AppLocalizations {
   String get screensSettingsLanguageDialogTitle => 'Choose language';
 
   @override
+  String get screensSettingsBackupDialogTitle => 'Backup';
+
+  @override
   String get screensSettingsAuthorLabel => 'Author: Arkadiusz Wolski';
 
   @override
   String get screensSettingsGitHubTooltip => 'Visit author\'s GitHub profile';
+
+  @override
+  String get screensSettingsBackupDialogDescription =>
+      'Choose an action. Restoring a backup will overwrite current data.';
+
+  @override
+  String get screensSettingsBackupCreateAction => 'Create backup';
+
+  @override
+  String get screensSettingsBackupRestoreAction => 'Restore from backup';
+
+  @override
+  String get screensSettingsBackupRestoreSuccess =>
+      'Data restored successfully. Please restart the application to see changes.';
+
+  @override
+  String get screensSettingsBackupRestoreError => 'Error restoring data';
+
+  @override
+  String get screensSettingsBackupCreateError => 'Failed to create backup';
 
   @override
   String get servicesCsvExportHeaderPurchaseDate => 'Purchase Date';
@@ -350,4 +377,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get servicesImageProcessingError => 'Image processing error';
+
+  @override
+  String get servicesBackupServiceBackupShareText => 'Paragonik backup';
+
+  @override
+  String servicesBackupServiceBackupShareSubject(String date) {
+    return 'Paragonik backup $date';
+  }
 }

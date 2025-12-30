@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:paragonik/data/services/backup_service.dart';
 import 'package:paragonik/data/services/l10n_service.dart';
 import 'package:paragonik/data/services/notifications/notification_service.dart';
 import 'package:paragonik/extensions/localization_extensions.dart';
@@ -54,6 +55,81 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 
+  void _showBackupSelectionDialog(BuildContext context) {
+    final l10n = context.l10n;
+
+    showDialog(
+      context: context,
+      builder: (BuildContext ctx) {
+        return AlertDialog(
+          title: Text(l10n.screensSettingsBackupDialogTitle),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(l10n.screensSettingsBackupDialogDescription),
+              const SizedBox(height: 20),
+              ListTile(
+                leading: const Icon(Icons.upload_file),
+                title: Text(l10n.screensSettingsBackupCreateAction),
+                onTap: () async {
+                  Navigator.of(ctx).pop();
+                  await _handleCreateBackup(context);
+                },
+              ),
+              const Divider(),
+              ListTile(
+                leading: const Icon(Icons.restore_page),
+                title: Text(l10n.screensSettingsBackupRestoreAction),
+                onTap: () async {
+                  Navigator.of(ctx).pop();
+                  await _handleRestoreBackup(context);
+                },
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(ctx).pop(),
+              child: Text(context.l10n.commonCancel),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> _handleCreateBackup(BuildContext context) async {
+    try {
+      await BackupService().createAndShareBackup();
+    } catch (e) {
+      if (context.mounted) {
+        NotificationService.showError('${context.l10n.commonError}: $e');
+      }
+    }
+  }
+
+  Future<void> _handleRestoreBackup(BuildContext context) async {
+    final l10n = context.l10n;
+
+    try {
+      final success = await BackupService().restoreBackup();
+
+      if (success && context.mounted) {
+        NotificationService.showSuccess(
+          l10n.screensSettingsBackupRestoreSuccess,
+        );
+
+        // context.read<ReceiptsViewModel>().fetchReceipts();
+      }
+    } catch (e) {
+      if (context.mounted) {
+        NotificationService.showError(
+          '${l10n.screensSettingsBackupRestoreError}: $e',
+        );
+      }
+    }
+  }
+
   String _getCurrentLanguageName(Locale locale) {
     switch (locale.languageCode) {
       case 'en':
@@ -99,6 +175,11 @@ class SettingsScreen extends StatelessWidget {
                     _getCurrentLanguageName(localeNotifier.locale),
                   ),
                   onTap: () => _showLanguageSelectionDialog(context),
+                ),
+                ListTile(
+                  leading: const Icon(Icons.backup),
+                  title: Text(l10n.screensSettingsBackupDialogTitle),
+                  onTap: () => _showBackupSelectionDialog(context),
                 ),
               ],
             ),

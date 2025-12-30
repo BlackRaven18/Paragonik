@@ -39,9 +39,13 @@
     "description": "Label for a button to continue an action."
   },
   "commonExport": "Export",
-    "@commonExport": {
-        "description": "Label for a button to export data."
-    },
+  "@commonExport": {
+      "description": "Label for a button to export data."
+  },
+  "commonError": "Error",
+  "@commonError": {
+      "description": "Label for an error message."
+  },
 
 
   "notificationsErrorLoadingReceipts": "Oops! Something went wrong while loading receipts",
@@ -86,14 +90,14 @@
   },
 
 
-  "globalLoadingOverlayAnalyzingReceiptMessage": "Analizuję paragon...",
+  "globalLoadingOverlayAnalyzingReceiptMessage": "Analyzing receipt...",
   "@globalLoadingOverlayAnalyzingReceiptMessage": {
-      "description": "Tekst wyświetlany w oknie ładowania podczas analizowania paragonu."
+      "description": "Message displayed in the loading overlay while analyzing a receipt."
   },
 
-  "globalLoadingOverlayRotatingReceiptMessage": "Obracam paragon...",
+  "globalLoadingOverlayRotatingReceiptMessage": "Rotating receipt...",
   "@globalLoadingOverlayRotatingReceiptMessage": {
-      "description": "Tekst wyświetlany w oknie ładowania podczas obracania paragonu."
+      "description": "Message displayed in the loading overlay while rotating a receipt."
   },
 
 
@@ -440,6 +444,10 @@
   "@screensSettingsLanguageDialogTitle": {
     "description": "Title of the dialog box for language selection."
   },
+  "screensSettingsBackupDialogTitle": "Backup",
+  "@screensSettingsBackupDialogTitle": {
+      "description": "Title of the dialog box for backing up the database."
+  },
   "screensSettingsAuthorLabel": "Author: Arkadiusz Wolski",
   "@screensSettingsAuthorLabel": {
     "description": "Label for the author's name."
@@ -448,6 +456,12 @@
   "@screensSettingsGitHubTooltip": {
     "description": "Tooltip for the button to visit the author's GitHub profile."
   },
+  "screensSettingsBackupDialogDescription": "Choose an action. Restoring a backup will overwrite current data.",
+  "screensSettingsBackupCreateAction": "Create backup",
+  "screensSettingsBackupRestoreAction": "Restore from backup",
+  "screensSettingsBackupRestoreSuccess": "Data restored successfully. Please restart the application to see changes.",
+  "screensSettingsBackupRestoreError": "Error restoring data",
+  "screensSettingsBackupCreateError": "Failed to create backup",
 
 
   "servicesCsvExportHeaderPurchaseDate": "Purchase Date",
@@ -466,5 +480,19 @@
   "servicesImageProcessingError": "Image processing error",
   "@servicesImageProcessingError": {
       "description": "Error message displayed when an error occurs during image processing."
+  },
+
+  "servicesBackupServiceBackupShareText": "Paragonik backup",
+  "@servicesBackupServiceBackupShareText": {
+      "description": "Text of the e-mail sent when backing up the database."
+  },
+  "servicesBackupServiceBackupShareSubject": "Paragonik backup {date}",
+  "@servicesBackupServiceBackupShareSubject": {
+      "description": "Subject of the e-mail sent when backing up the database.",
+      "placeholders": {
+          "date": {
+              "type": "String"
+          }
+      }
   }
 }

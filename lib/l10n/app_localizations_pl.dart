@@ -41,6 +41,9 @@ class AppLocalizationsPl extends AppLocalizations {
   String get commonExport => 'Eksportuj';
 
   @override
+  String get commonError => 'Błąd';
+
+  @override
   String get notificationsErrorLoadingReceipts =>
       'Ups! Coś poszło nie tak przy ładowaniu paragonów';
 
@@ -331,10 +334,34 @@ class AppLocalizationsPl extends AppLocalizations {
   String get screensSettingsLanguageDialogTitle => 'Wybierz język';
 
   @override
+  String get screensSettingsBackupDialogTitle => 'Kopia zapasowa';
+
+  @override
   String get screensSettingsAuthorLabel => 'Autor: Arkadiusz Wolski';
 
   @override
   String get screensSettingsGitHubTooltip => 'Odwiedź profil autora na GitHub';
+
+  @override
+  String get screensSettingsBackupDialogDescription =>
+      'Wybierz akcję. Przywrócenie kopii nadpisze obecne dane.';
+
+  @override
+  String get screensSettingsBackupCreateAction => 'Utwórz kopię zapasową';
+
+  @override
+  String get screensSettingsBackupRestoreAction => 'Przywróć z kopii';
+
+  @override
+  String get screensSettingsBackupRestoreSuccess =>
+      'Dane zostały przywrócone pomyślnie. Zrestartuj aplikację, aby zobaczyć zmiany.';
+
+  @override
+  String get screensSettingsBackupRestoreError => 'Błąd przywracania danych';
+
+  @override
+  String get screensSettingsBackupCreateError =>
+      'Nie udało się utworzyć kopii zapasowej';
 
   @override
   String get servicesCsvExportHeaderPurchaseDate => 'Data Zakupu';
@@ -351,4 +378,13 @@ class AppLocalizationsPl extends AppLocalizations {
   @override
   String get servicesImageProcessingError =>
       'Błąd podczas przetwarzania obrazu';
+
+  @override
+  String get servicesBackupServiceBackupShareText =>
+      'Kopia zapasowa danych aplikacji Paragonik';
+
+  @override
+  String servicesBackupServiceBackupShareSubject(String date) {
+    return 'Kopia zapasowa Paragonik $date';
+  }
 }

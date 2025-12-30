@@ -52,4 +52,17 @@ class DatabaseService {
       }
     }
   }
+
+  Future<String> getDatabasePath() async {
+    final dbPath = await getDatabasesPath();
+    return join(dbPath, 'paragonik.db');
+  }
+
+  Future<void> close() async {
+    final db = _database;
+    if (db != null && db.isOpen) {
+      await db.close();
+      _database = null;
+    }
+  }
 }
