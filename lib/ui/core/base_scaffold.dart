@@ -15,7 +15,6 @@ class BaseScaffold extends StatefulWidget {
 }
 
 class _BaseScaffoldState extends State<BaseScaffold> {
-  bool _isDrawerVisible = true;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +23,6 @@ class _BaseScaffoldState extends State<BaseScaffold> {
 
     return LayoutBuilder(
       builder: (context, constraints) {
-        final bool isMobile = constraints.maxWidth < 600;
         final themeToggleButton = IconButton(
           icon: Icon(switchThemeIcon),
           onPressed: () {
@@ -32,7 +30,6 @@ class _BaseScaffoldState extends State<BaseScaffold> {
           },
         );
 
-        if (isMobile) {
           return Scaffold(
             appBar: AppBar(
               title: const Text("Paragonik"),
@@ -46,31 +43,7 @@ class _BaseScaffoldState extends State<BaseScaffold> {
             body: widget.child,
             bottomNavigationBar: const AppBottomNavigationBar(),
           );
-        } else {
-          return Scaffold(
-            appBar: AppBar(
-              title: const Text("Paragonik"),
-              actions: [themeToggleButton],
-              leading: IconButton(
-                padding: EdgeInsets.zero,
-                icon: Image.asset(AssetManager.appLogo, width: 48, height: 48),
-                onPressed: () {
-                  setState(() {
-                    _isDrawerVisible = !_isDrawerVisible;
-                  });
-                },
-              ),
-            ),
-            body: Row(
-              children: [
-                if (_isDrawerVisible) const Placeholder(),
-                if (_isDrawerVisible)
-                  const VerticalDivider(thickness: 1, width: 1),
-                Expanded(child: widget.child),
-              ],
-            ),
-          );
-        }
+       
       },
     );
   }
