@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:paragonik/data/services/backup_service.dart';
 import 'package:paragonik/data/services/l10n_service.dart';
 import 'package:paragonik/data/services/notifications/notification_service.dart';
@@ -149,11 +150,15 @@ class SettingsScreen extends StatelessWidget {
   }
 
   Future<void> _launchPrivacyPolicy(BuildContext context) async {
-    final url = Uri.parse('https://sites.google.com/view/paragonik-polityka-prywatnosci'); 
-    
+    final url = Uri.parse(
+      'https://sites.google.com/view/paragonik-polityka-prywatnosci',
+    );
+
     if (!await launchUrl(url)) {
       if (context.mounted) {
-         NotificationService.showError(L10nService.l10n.notificationsOpenUrlError); 
+        NotificationService.showError(
+          L10nService.l10n.notificationsOpenUrlError,
+        );
       }
     }
   }
@@ -210,6 +215,26 @@ class SettingsScreen extends StatelessWidget {
                 style: theme.textTheme.bodySmall,
               ),
             ),
+          ),
+
+          const SizedBox(height: 4),
+
+          FutureBuilder<PackageInfo>(
+            future: PackageInfo.fromPlatform(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                final version = snapshot.data!.version;
+                final buildNumber = snapshot.data!.buildNumber;
+
+                return Text(
+                  'v$version ($buildNumber)',
+                  style: theme.textTheme.labelMedium?.copyWith(
+                    color: Colors.grey.shade500, 
+                  ),
+                );
+              }
+              return const SizedBox();
+            },
           ),
         ],
       ),
