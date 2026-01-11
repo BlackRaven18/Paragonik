@@ -670,6 +670,12 @@ abstract class AppLocalizations {
   /// **'Kopia zapasowa'**
   String get screensSettingsBackupDialogTitle;
 
+  /// Etykieta linku do polityki prywatności.
+  ///
+  /// In pl, this message translates to:
+  /// **'Polityka prywatności'**
+  String get screensSettingsPrivacyPolicyTitle;
+
   /// Etykieta autora aplikacji.
   ///
   /// In pl, this message translates to:

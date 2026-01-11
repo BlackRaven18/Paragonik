@@ -148,6 +148,16 @@ class SettingsScreen extends StatelessWidget {
     }
   }
 
+  Future<void> _launchPrivacyPolicy(BuildContext context) async {
+    final url = Uri.parse('https://sites.google.com/view/paragonik-polityka-prywatnosci'); 
+    
+    if (!await launchUrl(url)) {
+      if (context.mounted) {
+         NotificationService.showError(L10nService.l10n.notificationsOpenUrlError); 
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final localeNotifier = context.watch<LocaleNotifier>();
@@ -180,6 +190,11 @@ class SettingsScreen extends StatelessWidget {
                   leading: const Icon(Icons.backup),
                   title: Text(l10n.screensSettingsBackupDialogTitle),
                   onTap: () => _showBackupSelectionDialog(context),
+                ),
+                ListTile(
+                  leading: const Icon(Icons.privacy_tip),
+                  title: Text(l10n.screensSettingsPrivacyPolicyTitle),
+                  onTap: () => _launchPrivacyPolicy(context),
                 ),
               ],
             ),

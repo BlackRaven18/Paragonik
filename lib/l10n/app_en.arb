@@ -446,7 +446,11 @@
   },
   "screensSettingsBackupDialogTitle": "Backup",
   "@screensSettingsBackupDialogTitle": {
-      "description": "Title of the dialog box for backing up the database."
+    "description": "Title of the dialog box for backing up the database."
+  },
+  "screensSettingsPrivacyPolicyTitle": "Privacy Policy",
+  "@screensSettingsPrivacyPolicyTitle": {
+    "description": "Label for the privacy policy link."
   },
   "screensSettingsAuthorLabel": "Author: Arkadiusz Wolski",
   "@screensSettingsAuthorLabel": {

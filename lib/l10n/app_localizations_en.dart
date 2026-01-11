@@ -338,6 +338,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get screensSettingsBackupDialogTitle => 'Backup';
 
   @override
+  String get screensSettingsPrivacyPolicyTitle => 'Privacy Policy';
+
+  @override
   String get screensSettingsAuthorLabel => 'Author: Arkadiusz Wolski';
 
   @override

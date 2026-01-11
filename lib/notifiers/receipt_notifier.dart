@@ -191,9 +191,4 @@ class ReceiptNotifier extends ChangeNotifier {
   Future<void> updateReceiptCount() async {
     _totalReceiptsCount = await _receiptService.getReceiptsCount();
   }
-
-  void _setLoading(bool value) {
-    isLoading = value;
-    notifyListeners();
-  }
 }

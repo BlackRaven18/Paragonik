@@ -461,6 +461,10 @@
     "@screensSettingsBackupDialogTitle": {
         "description": "Tytuł okna do tworzenia kopii zapasowej."
     },
+    "screensSettingsPrivacyPolicyTitle": "Polityka prywatności",
+    "@screensSettingsPrivacyPolicyTitle": {
+        "description": "Etykieta linku do polityki prywatności."
+    },
     "screensSettingsAuthorLabel": "Autor: Arkadiusz Wolski",
     "@screensSettingsAuthorLabel": {
         "description": "Etykieta autora aplikacji."

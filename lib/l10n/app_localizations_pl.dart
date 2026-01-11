@@ -337,6 +337,9 @@ class AppLocalizationsPl extends AppLocalizations {
   String get screensSettingsBackupDialogTitle => 'Kopia zapasowa';
 
   @override
+  String get screensSettingsPrivacyPolicyTitle => 'Polityka prywatności';
+
+  @override
   String get screensSettingsAuthorLabel => 'Autor: Arkadiusz Wolski';
 
   @override
