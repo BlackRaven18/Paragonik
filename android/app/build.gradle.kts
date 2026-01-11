@@ -14,7 +14,7 @@ plugins {
 
 android {
     // ... (sekcje namespace, compileSdk, compileOptions, kotlinOptions, defaultConfig, signingConfigs - bez zmian)
-    namespace = "com.example.paragonik"
+    namespace = "com.wolski.paragonik"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -28,9 +28,9 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.example.paragonik"
-        minSdk = flutter.minSdkVersion
-        targetSdk = flutter.targetSdkVersion
+        applicationId = "com.wolski.paragonik"
+        minSdk = 26
+        targetSdk = 35
         versionCode = flutter.versionCode
         versionName = flutter.versionName
     }

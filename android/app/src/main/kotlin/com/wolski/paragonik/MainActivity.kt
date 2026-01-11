@@ -1,4 +1,4 @@
-package com.example.paragonik
+package com.wolski.paragonik
 
 import io.flutter.embedding.android.FlutterActivity
 
